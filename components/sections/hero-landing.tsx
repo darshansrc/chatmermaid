@@ -3,6 +3,7 @@ import { cn, nFormatter } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 import { ModeToggle } from "../mode-toggle";
+import { ArrowRight } from "lucide-react";
 
 export async function HeroLanding() {
   return (
@@ -13,11 +14,12 @@ export async function HeroLanding() {
           href="https://twitter.com/miickasmt/status/1719892161095745801"
           className={cn(
             buttonVariants({ variant: "outline", size: "sm" }),
-            "px-4"
+            "px-4 rounded-full"
           )}
           target="_blank"
         >
-          <span className="mr-3">🎉</span> Introducing support for GPT-4
+          <span className="mr-3 ">🎉</span> Introducing support for GPT 4{" "}
+          <ArrowRight className="ml-2" size={16} />
         </Link>
 
         <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
@@ -31,40 +33,22 @@ export async function HeroLanding() {
           className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
           style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
         >
-          ChatMermaid simplifies diagram creation with text. Integrated with
-          mermaid.js, it enables quick generation of flowcharts, sequence
-          diagrams, Gantt charts, and more.
+          ChatMermaid is the easiest way to create professional diagrams using
+          mermaid.js. No more struggling with complex syntax. Let the AI do the
+          work.
         </p>
 
         <div
-          className="flex justify-center space-x-2 md:space-x-4"
+          className="flex justify-center rounded-full space-x-2 md:space-x-4"
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
           <Link
             href="/pricing"
-            className={cn(buttonVariants({ size: "lg" }), "gap-2")}
+            className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
           >
-            <span>Start </span>
+            <span>Start Designing </span>
             <Icons.arrowRight className="size-4" />
           </Link>
-          <Link
-            href="/"
-            target="_blank"
-            rel="noreferrer"
-            className={cn(
-              buttonVariants({
-                variant: "outline",
-                size: "lg",
-              }),
-              "px-5"
-            )}
-          >
-            <Icons.gitHub className="mr-2 size-4" />
-            <p>
-              <span className="hidden sm:inline-block">Sign up</span>
-            </p>
-          </Link>
-          <ModeToggle />
         </div>
       </div>
     </section>

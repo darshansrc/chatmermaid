@@ -43,6 +43,7 @@ export function NavBar({
 
         <div className="flex items-center space-x-3">
           {rightElements}
+
           <ModeToggle />
           {user ? (
             <UserAccountNav user={user} />

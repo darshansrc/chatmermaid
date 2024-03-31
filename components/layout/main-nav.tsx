@@ -73,8 +73,16 @@ export function MainNav({ items, children }: MainNavProps) {
         className="flex items-center space-x-2 md:hidden"
         onClick={toggleMobileMenu}
       >
-        {showMobileMenu ? <Icons.close /> : <Icons.logo />}
-        <span className="font-bold">Menu</span>
+        {showMobileMenu ? (
+          <Icons.close />
+        ) : (
+          <GanttChart
+            strokeWidth={3}
+            color="#6366f1"
+            className="text-gradient_indigo-purple font-extrabold"
+          />
+        )}
+        <span className="font-bold">ChatMermaid</span>
       </button>
       {showMobileMenu && items && (
         <MobileNav items={items}>{children}</MobileNav>
