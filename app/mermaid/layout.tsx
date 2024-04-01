@@ -6,7 +6,13 @@ import { marketingConfig } from "@/config/marketing";
 import { Suspense } from "react";
 import { DropdownMenuDemo } from "./DropDownMenu";
 import { Dashboard } from "./Aside";
-import { PanelLeftOpen } from "lucide-react";
+import { GanttChart, PanelLeftOpen, Share } from "lucide-react";
+import { SidebarDesktop } from "@/components/sidebar-desktop";
+import { SidebarProvider } from "@/hooks/use-sidebar";
+import { SidebarToggle } from "@/components/sidebar-toggle";
+import { Button } from "@/components/ui/button";
+import { IconSeparator } from "@/components/ui/icons";
+import { siteConfig } from "@/config/site";
 
 interface MarketingLayoutProps {
   children: React.ReactNode;
@@ -18,20 +24,38 @@ export default async function MarketingLayout({
   //   const user = await getCurrentUser();
 
   return (
-    <div className="h-screen flex flex-col w-screen dark:bg-[rgb(24,24,24)]  ">
-      <header
-        className={`flex   justify-center dark:bg-[rgb(24,24,24)] border-b border-gray-200 dark:border-gray-800 `}
-      >
-        <div className="container flex h-12 items-center justify-between py-2">
-          <PanelLeftOpen />
-          <div className="flex w-full justify-end items-center space-x-3">
-            <ModeToggle />
-            <DropdownMenuDemo />
-          </div>
-        </div>
-      </header>
+    <SidebarProvider>
+      <div className="h-screen flex flex-col w-screen dark:bg-[rgb(24,24,24)]  ">
+        <SidebarDesktop />
 
-      <main className="flex-1  dark:bg-[rgb(24,24,24)]">{children}</main>
-    </div>
+        <header
+          className={` pl-0  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-[rgb(24,24,24)] border-b border-gray-200 dark:border-neutral-800 `}
+        >
+          <div className="w-full m-auto px-4 flex h-12 items-center justify-around ">
+            <SidebarToggle />
+            <IconSeparator className="size-6 text-muted-foreground/50" />
+            <Button className="flex flex-row " variant={"ghost"}>
+              Sequence
+            </Button>
+            <div className="flex w-full justify-end items-center ">
+              <Button
+                variant="outline"
+                size="sm"
+                className="ml-auto gap-1.5 text-sm"
+              >
+                <Share className="size-3.5" />
+                Share
+              </Button>
+              <ModeToggle />
+              <DropdownMenuDemo />
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1  duration-300 pl-0 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px] dark:bg-[rgb(24,24,24)]">
+          {children}
+        </main>
+      </div>
+    </SidebarProvider>
   );
 }

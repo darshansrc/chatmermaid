@@ -16,15 +16,51 @@ import {
 import { ModeToggle } from "@/components/mode-toggle";
 import CodeMirror from "@uiw/react-codemirror";
 import { langs } from "@uiw/codemirror-extensions-langs";
-import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { andromeda } from "@uiw/codemirror-theme-andromeda";
+import { createTheme } from "@uiw/codemirror-themes";
+import { githubDark, githubDarkInit } from "@uiw/codemirror-theme-github";
 import mermaid from "mermaid";
 import ZoomControls from "./zoom-controls";
 import Mermaid from "./Mermaid";
 import useMermaidTheme from "./useMermaidTheme";
 import MermaidSelect from "./select-mermaid-theme"; // Import the new component
 import { useTheme } from "next-themes";
+import { tags as t } from "@lezer/highlight";
+import { tokyoNight, tokyoNightInit } from "@uiw/codemirror-theme-tokyo-night";
 
 const Page = () => {
+  const myTheme = createTheme({
+    theme: "light",
+    settings: {
+      background: "#ffffff",
+      backgroundImage: "",
+      foreground: "#75baff",
+      caret: "#5d00ff",
+      selection: "#036dd626",
+      selectionMatch: "#036dd626",
+      lineHighlight: "#8a91991a",
+      gutterBorder: "1px solid #ffffff10",
+      gutterBackground: "#fff",
+      gutterForeground: "#8a919966",
+    },
+    styles: [
+      { tag: t.comment, color: "#787b8099" },
+      { tag: t.variableName, color: "#0080ff" },
+      { tag: [t.string, t.special(t.brace)], color: "#5c6166" },
+      { tag: t.number, color: "#5c6166" },
+      { tag: t.bool, color: "#5c6166" },
+      { tag: t.null, color: "#5c6166" },
+      { tag: t.keyword, color: "#5c6166" },
+      { tag: t.operator, color: "#5c6166" },
+      { tag: t.className, color: "#5c6166" },
+      { tag: t.definition(t.typeName), color: "#5c6166" },
+      { tag: t.typeName, color: "#5c6166" },
+      { tag: t.angleBracket, color: "#5c6166" },
+      { tag: t.tagName, color: "#5c6166" },
+      { tag: t.attributeName, color: "#5c6166" },
+    ],
+  });
+
   const [code, setCode] = useState("");
   const { mermaidTheme, setMermaidTheme } = useMermaidTheme();
   const { theme } = useTheme();
@@ -49,6 +85,7 @@ const Page = () => {
         theme: mermaidTheme || "default",
       });
       document.getElementById(id)?.removeAttribute("data-processed");
+      console.log(chart);
       mermaid.contentLoaded();
     }, [chart, id]);
 
@@ -81,7 +118,6 @@ const Page = () => {
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel className="flex m-2 flex-col  relative items-center justify-center">
           <div className="w-full h-full text-sm overflow-hidden rounded-xl ">
-            <ModeToggle />
             <MermaidSelect
               defaultValue={mermaidTheme}
               onValueChange={setMermaidTheme}
@@ -90,12 +126,21 @@ const Page = () => {
               value={code}
               minHeight="100%"
               minWidth="100%"
-              className="w-full h-full p-2 text-[12px] rounded-xl"
+              basicSetup
+              className="w-full h-full  text-[12px] rounded-xl"
               lang="mermaid"
               extensions={[langs.mermaid()]}
               onChange={onChange}
               height="100px"
-              theme={theme === "dark" ? vscodeDark : "none"}
+              // theme={theme === "dark" ? tokyoNight : "none"}
+              theme={githubDarkInit({
+                settings: {
+                  caret: "rgb(42 42 42)",
+                  fontFamily: "monospace",
+                  background: "rgb(24, 24, 24)",
+                  gutterBackground: "rgb(24, 24, 24)",
+                },
+              })}
             />
           </div>
         </ResizablePanel>
@@ -109,7 +154,14 @@ const Page = () => {
             selectionOnDrag={false}
             nodesDraggable={false}
           >
-            <MiniMap zoomable pannable />
+            <MiniMap
+              style={{
+                backgroundColor: theme === "dark" ? "rgb(30,30,30)" : "",
+                borderRadius: "4px",
+              }}
+              zoomable
+              pannable
+            />
             <Background color={theme === "dark" ? "rgb(50,50,50)" : ""} />
             <ZoomControls />
           </ReactFlow>
