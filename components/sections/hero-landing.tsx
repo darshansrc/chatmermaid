@@ -43,7 +43,7 @@ export async function HeroLanding() {
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
           <Link
-            href="/pricing"
+            href="/mermaid"
             className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
           >
             <span>Start Designing </span>

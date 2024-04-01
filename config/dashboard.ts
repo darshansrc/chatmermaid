@@ -1,4 +1,4 @@
-import { DashboardConfig } from "types"
+import { DashboardConfig } from "@/types/index";
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
@@ -29,4 +29,4 @@ export const dashboardConfig: DashboardConfig = {
       icon: "settings",
     },
   ],
-}
+};

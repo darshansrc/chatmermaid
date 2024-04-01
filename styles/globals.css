@@ -81,3 +81,12 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+.react-flow__panel.react-flow__attribution {
+  display: none !important;
+}
+
+svg[id^="mermaid"] {
+  min-height: 70vh;
+  max-height: 70vh;
+}
