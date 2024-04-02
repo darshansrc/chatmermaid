@@ -72,11 +72,6 @@ const Page = () => {
   const SVGNode = () => {
     const id = "mermaid";
     const chart = code;
-    const reactFlowInstance = useReactFlow();
-
-    useEffect(() => {
-      reactFlowInstance.fitView();
-    }, [chart, reactFlowInstance]);
 
     useEffect(() => {
       mermaid.initialize({
@@ -84,9 +79,6 @@ const Page = () => {
         securityLevel: "loose",
         theme: mermaidTheme || "default",
       });
-      document.getElementById(id)?.removeAttribute("data-processed");
-      console.log(chart);
-      mermaid.contentLoaded();
     }, [chart, id]);
 
     const config = {
@@ -145,7 +137,7 @@ const Page = () => {
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel className="flex w-full items-center relative justify-center">
+        <ResizablePanel>
           <ReactFlow
             nodes={nodes}
             nodeTypes={nodeTypes}

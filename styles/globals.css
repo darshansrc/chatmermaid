@@ -88,5 +88,11 @@
 
 svg[id^="mermaid"] {
   min-height: 70vh;
-  max-height: 70vh;
+  min-width: 70vh;
+  margin: auto;
+}
+
+.mermaid {
+  min-width: 1200px;
+  min-height: 1200px;
 }

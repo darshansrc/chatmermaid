@@ -56,7 +56,7 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, config = {} }) => {
 
   if (!chart) return null;
   return (
-    <div className="mermaid" id="1">
+    <div className="mermaid" id="mermaid">
       {chart}
     </div>
   );
