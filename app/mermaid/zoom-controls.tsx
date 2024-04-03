@@ -20,13 +20,13 @@ const ZoomControls = () => {
   return (
     <div className="absolute z-40 flex flex-col gap-2 left-2 bottom-2">
       <Button size="icon" variant="secondary" onClick={handleZoomIn}>
-        <ZoomIn className="m-2" size={16} />
+        <ZoomIn className="m-1" size={15} />
       </Button>
       <Button size="icon" variant="secondary" onClick={handleReset}>
-        <Scan className="m-2" size={16} />
+        <Scan className="m-1" size={15} />
       </Button>
       <Button size="icon" variant="secondary" onClick={handleZoomOut}>
-        <ZoomOut className="m-2" size={16} />
+        <ZoomOut className="m-1" size={15} />
       </Button>
     </div>
   );

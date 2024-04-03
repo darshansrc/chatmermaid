@@ -25,11 +25,11 @@ export default async function MarketingLayout({
 
   return (
     <SidebarProvider>
-      <div className="h-screen flex flex-col w-screen dark:bg-[rgb(24,24,24)]  ">
+      <div className="h-screen flex flex-col w-screen dark:bg-neutral-900  ">
         <SidebarDesktop />
 
         <header
-          className={` pl-0  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-[rgb(24,24,24)] border-b border-gray-200 dark:border-neutral-800 `}
+          className={` pl-0  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
         >
           <div className="w-full m-auto px-4 flex h-12 items-center justify-around ">
             <SidebarToggle />
@@ -37,7 +37,7 @@ export default async function MarketingLayout({
             <Button className="flex flex-row " variant={"ghost"}>
               Sequence
             </Button>
-            <div className="flex w-full justify-end items-center ">
+            <div className="flex w-full gap-2 justify-end items-center ">
               <Button
                 variant="outline"
                 size="sm"
@@ -52,7 +52,7 @@ export default async function MarketingLayout({
           </div>
         </header>
 
-        <main className="flex-1  duration-300 pl-0 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px] dark:bg-[rgb(24,24,24)]">
+        <main className="flex-1  duration-300 pl-0 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px] dark:bg-neutral-900">
           {children}
         </main>
       </div>

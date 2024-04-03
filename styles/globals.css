@@ -73,6 +73,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .text-gradient_indigo-purple {
@@ -85,14 +88,21 @@
 .react-flow__panel.react-flow__attribution {
   display: none !important;
 }
-
-svg[id^="mermaid"] {
+.pan-zoom-active svg[id^="mermaid"] {
   min-height: 70vh;
   min-width: 70vh;
   margin: auto;
 }
 
+.pan-zoom-active .mermaid {
+  min-width: 1174px;
+  min-height: 1174px;
+}
+
 .mermaid {
-  min-width: 1200px;
-  min-height: 1200px;
+  margin: auto;
+}
+
+svg[id^="mermaid"] {
+  margin: auto;
 }

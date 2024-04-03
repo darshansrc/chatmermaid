@@ -66,7 +66,7 @@ export function NavBar({
             <Button
               className="gap-2 px-4 rounded-full"
               variant="default"
-              size="sm"
+              size="icon"
               onClick={signInModal.onOpen}
             >
               <span>Sign In</span>

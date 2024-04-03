@@ -13,17 +13,17 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EllipsisVertical, Menu } from "lucide-react";
+import { Ellipsis, Menu } from "lucide-react";
 
 export function DropdownMenuDemo() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          <EllipsisVertical />
+          <Ellipsis />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 dark:bg-[rgb(24,24,24)] ">
+      <DropdownMenuContent className="w-56 dark:bg-neutral-900 ">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
