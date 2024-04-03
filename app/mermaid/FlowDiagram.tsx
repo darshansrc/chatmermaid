@@ -156,31 +156,24 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
         <div
           className={cn(
             "h-full w-full mb-1 overflow-auto mx-1 rounded-b-lg border border-neutral-100 dark:border-neutral-800 ",
-            mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900",
-            panZoom ? "pan-zoom-active" : ""
+            mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900"
           )}
         >
-          {panZoom ? (
-            <ReactFlow
-              nodes={nodes}
-              nodeTypes={nodeTypes}
-              fitView
-              snapToGrid
-              selectionOnDrag={false}
-              nodesDraggable={false}
-            >
-              <Background
-                color={
-                  mermaidTheme === "dark" ? "rgb(60,60,60)" : "rgb(200,200,200)"
-                }
-              />
-              <ZoomControls />
-            </ReactFlow>
-          ) : (
-            <div className="w-full h-full mt-10">
-              <Mermaid chart={code} config={config} />
-            </div>
-          )}
+          <ReactFlow
+            nodes={nodes}
+            nodeTypes={nodeTypes}
+            fitView
+            snapToGrid
+            selectionOnDrag={false}
+            nodesDraggable={false}
+          >
+            {/* <Background
+              color={
+                mermaidTheme === "dark" ? "rgb(60,60,60)" : "rgb(200,200,200)"
+              }
+            /> */}
+            <ZoomControls />
+          </ReactFlow>
         </div>
       </div>
       <Dialog

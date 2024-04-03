@@ -16,8 +16,6 @@ const MermaidSelect = ({
   defaultValue: string;
   onValueChange: any;
 }) => {
-  const { mermaidTheme, setMermaidTheme } = useMermaidTheme();
-
   return (
     <Select defaultValue={defaultValue} onValueChange={onValueChange}>
       <SelectTrigger className="border-none outline-none w-auto focus:none">
