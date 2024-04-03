@@ -12,11 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ModeToggle } from "@/components/mode-toggle";
 import { GanttChart } from "lucide-react";
+import { signup } from "@/actions/actions";
 import { siteConfig } from "@/config/site";
+import GoogleSignInButton from "@/components/auth/google-oauth-button";
+import GithubSignInButton from "@/components/auth/github-oauth-button";
 
 export default function LoginForm() {
   return (
-    <div className="w-full h-screen flex items-center justify-center dark:bg-zinc-900">
+    <div className="w-full h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-900">
       <div className="absolute top-4 right-4">
         <ModeToggle />
       </div>
@@ -39,41 +42,42 @@ export default function LoginForm() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="first-name">First name</Label>
-                <Input id="first-name" placeholder="Max" required />
+            <form className="grid gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="first-name">First name</Label>
+                  <Input id="first-name" placeholder="Max" required />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="last-name">Last name</Label>
+                  <Input id="last-name" placeholder="Robinson" required />
+                </div>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="last-name">Last name</Label>
-                <Input id="last-name" placeholder="Robinson" required />
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="m@example.com"
+                  required
+                />
               </div>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" />
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-neutral-900 dark:bg-white"
-            >
-              Create an account
-            </Button>
-            <Button variant="outline" className="w-full">
-              Sign up with Google
-            </Button>
-            <Button variant="outline" className="w-full">
-              Sign up with GitHub
-            </Button>
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input id="password" name="password" type="password" />
+              </div>
+
+              <Button
+                type="submit"
+                formAction={signup}
+                className="w-full bg-neutral-900  dark:bg-white"
+              >
+                Create an account
+              </Button>
+            </form>
+            <GoogleSignInButton />
+            <GithubSignInButton />
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}

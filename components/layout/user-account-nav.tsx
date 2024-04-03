@@ -3,7 +3,6 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
-import { UserAvatar } from "@/components/shared/user-avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,12 +20,7 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 export function UserAccountNav({ user }: UserAccountNavProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <UserAvatar
-          user={{ name: user?.name || null, image: user?.image || null }}
-          className="size-8"
-        />
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger></DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
