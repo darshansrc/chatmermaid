@@ -7,15 +7,27 @@ import { SidebarList } from "@/components/sidebar-list";
 import { buttonVariants } from "@/components/ui/button";
 import { IconPlus } from "@/components/ui/icons";
 import { createNewDiagram } from "@/actions/actions";
+import { useRouter } from "next/navigation";
 
 interface ChatHistoryProps {
   userId?: string;
 }
 
+interface diagram {
+  id: string;
+  diagram_name: string;
+  user_id: string;
+  code: string;
+  created_at: string;
+  last_updated_at: string;
+  is_public: boolean;
+}
 export function ChatHistory() {
+  const router = useRouter();
   const handleNewDiagram = async () => {
     try {
-      const data = await createNewDiagram();
+      const uuid = await createNewDiagram();
+      router.push(`/mermaid/${uuid}`);
     } catch (error) {
       console.error(error);
     }
@@ -35,7 +47,7 @@ export function ChatHistory() {
           )}
         >
           <IconPlus className="-translate-x-2 stroke-2" />
-          New Chat
+          New Diagram
         </Link>
       </div>
       <React.Suspense

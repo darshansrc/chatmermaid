@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 import { PostgrestError } from "@supabase/supabase-js";
+import { v4 as uuidv4 } from "uuid";
 
 type DiagramData = {
   data: any[] | null;
@@ -65,7 +66,8 @@ export async function getAllDiagrams() {
   const { data, error } = await supabase
     .from("diagrams")
     .select("*")
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .order("last_updated_at", { ascending: false });
 
   if (error) {
     return error.message;
@@ -74,15 +76,9 @@ export async function getAllDiagrams() {
   return data;
 }
 
-type data = {
-  id: string;
-  code: string;
-  user_id: string;
-  diagram_name: string;
-};
-
 export async function createNewDiagram() {
   const supabase = createClient();
+  const uuid = uuidv4();
 
   const {
     data: { user },
@@ -97,23 +93,20 @@ export async function createNewDiagram() {
     .from("diagrams")
     .insert([
       {
+        id: uuid,
         user_id: user.id,
-        diagram_name: "New Diagram",
+        diagram_name: "New Diagram 1",
         code: "graph TD\n  A --> B",
       },
     ])
     .select();
-
   if (data) {
-    console.log(data);
-    redirect(`/mermaid/${data[0].id}`);
+    return uuid;
   }
 
   if (error) {
     return error.message;
   }
-
-  return data;
 }
 
 export async function updateDiagram(id: string, code: string) {

@@ -66,6 +66,11 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
           <IconMessage className="mr-2 mt-1 text-zinc-500" />
         )}
       </div> */}
+      <div className="absolute left-2 top-1 flex size-6 items-center justify-center">
+        {" "}
+        <IconMessage className="mr-2 mt-1 text-blue-500" />
+      </div>
+
       <Link
         href={diagram.id}
         className={cn(
