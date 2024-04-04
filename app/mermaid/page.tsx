@@ -8,9 +8,11 @@ import {
 import CodeEditor from "./CodeEditor";
 import FlowDiagram from "./FlowDiagram";
 import Header from "./Header";
+import { useTheme } from "next-themes";
 
 const Page: React.FC = () => {
   const [code, setCode] = useState("");
+  const { theme } = useTheme();
 
   const onChange = useCallback((val: string) => {
     setCode(val);
@@ -28,7 +30,11 @@ const Page: React.FC = () => {
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel>
-            <FlowDiagram code={code} />
+            <FlowDiagram
+              code={code}
+              diagramTheme={theme === "dark" ? "dark" : "default"}
+              diagramId=""
+            />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
