@@ -2,6 +2,7 @@ import { SidebarItems } from "@/components/sidebar-items";
 import { cache } from "react";
 import { ModeToggle } from "./mode-toggle";
 import { getAllDiagrams } from "@/actions/actions";
+import UserCard from "./user-card";
 
 interface SidebarListProps {
   userId?: string;
@@ -27,7 +28,7 @@ export async function SidebarList() {
         )}
       </div>
       <div className="flex items-center justify-between p-4">
-        <ModeToggle />
+        <UserCard />
         {/* <ClearHistory clearChats={clearChats} isEnabled={chats?.length > 0} /> */}
       </div>
     </div>

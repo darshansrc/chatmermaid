@@ -11,7 +11,14 @@ import Mermaid from "./Mermaid";
 import ZoomControls from "./zoom-controls";
 import { useTheme } from "next-themes";
 import "reactflow/dist/style.css";
-import { SwatchBook, Minimize2, Fullscreen, Maximize2 } from "lucide-react";
+import {
+  SwatchBook,
+  Minimize2,
+  Fullscreen,
+  Maximize2,
+  ChevronsDownUp,
+  ChevronsUpDown,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Dialog from "@mui/material/Dialog";
@@ -30,6 +37,14 @@ import {
 } from "@/components/ui/tooltip";
 import { TransitionProps } from "@mui/material/transitions";
 import { changeDiagramTheme } from "@/actions/actions";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface FlowDiagramProps {
   code: any;
@@ -113,8 +128,10 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
     <>
       <div className=" h-full w-full flex flex-col">
         <div className="mt-1 mx-1 h-8 overflow-hidden   rounded-t-lg flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
-          <div>
+          <div className="flex flex-row gap-2">
             <Select
+              key={mermaidTheme}
+              value={mermaidTheme}
               defaultValue={mermaidTheme}
               onValueChange={onMermaidThemeChange}
             >
@@ -124,7 +141,10 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
                   {mermaidTheme}
                 </span>
               </SelectTrigger>
-              <SelectContent className="dark:bg-neutral-800">
+              <SelectContent
+                defaultValue={mermaidTheme}
+                className="dark:bg-neutral-800"
+              >
                 <SelectItem
                   className="text-sm py-1 hover:dark:bg-neutral-700"
                   value="default"
@@ -157,6 +177,31 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
                 </SelectItem>
               </SelectContent>
             </Select>
+            {/* <DropdownMenu>
+              <DropdownMenuTrigger
+                asChild
+                className="border-none cursor-pointer outline-none flex items-center justify-center w-auto focus:none"
+              >
+                <div className="flex flex-row ">
+                  <SwatchBook size={14} className="m-1" />
+                  <span className="text-[11px] font-semibold">
+                    {mermaidTheme}
+                  </span>
+                  <ChevronsUpDown size={12} className="m-1 text-gray-500" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="dark:bg-neutral-800">
+                <DropdownMenuCheckboxItem
+                  checked
+                  className="text-sm py-1 hover:dark:bg-neutral-600"
+                  
+                >
+                  Fulfilled
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu> */}
           </div>
           <div className="flex flex-row items-center gap-2 mr-2">
             <TooltipProvider>

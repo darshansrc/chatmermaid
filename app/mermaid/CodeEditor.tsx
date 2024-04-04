@@ -1,9 +1,9 @@
-import React, { useCallback } from "react";
+import React from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
 import { useTheme } from "next-themes";
-import { CodeXml, History, Copy } from "lucide-react";
+import { CodeXml, History, Copy, Forward, CirclePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -18,7 +18,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import useCopyToClipboard from "@/hooks/use-copy-to-clipboard";
 import CopyButton from "@/components/copy-button";
 
 interface CodeEditorProps {
@@ -72,7 +71,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
           </TooltipProvider>
         </div>
       </div>
-      <div className="h-full mb-1 overflow-auto mx-1 rounded-b-lg border border-neutral-100  dark:border-neutral-800 ">
+      <div className="h-full mb-1 relative overflow-auto mx-1 rounded-b-lg border border-neutral-100  dark:border-neutral-800 ">
         <CodeMirror
           value={code}
           minHeight="100%"
@@ -105,6 +104,20 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                 })
           }
         />
+        <div className="absolute  flex justify-center items-center bottom-8 w-full   ">
+          <CirclePlus
+            size={25}
+            className="absolute left-4 dark:text-neutral-200 rounded-full ml-4 z-50 p-1"
+          />
+          <input
+            className="h-10 mx-4  w-11/12 py-4 px-10 rounded-lg focus:ring-0 bg-neutral-200/50 dark:bg-neutral-700/50 backdrop-blur-md dark:bg-transparent/6 "
+            placeholder="Ask AI "
+          ></input>
+          <Forward
+            size={24}
+            className="absolute right-4 text-white rounded-full mr-4 bg-blue-600 p-1"
+          />
+        </div>
       </div>
     </div>
   );

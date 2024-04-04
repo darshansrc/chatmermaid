@@ -198,3 +198,18 @@ export async function changeDiagramTheme(id: string, theme: string) {
 
   return data;
 }
+
+export async function getUser() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    return user;
+  }
+
+  return null;
+}
