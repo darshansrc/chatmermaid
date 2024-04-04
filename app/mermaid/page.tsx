@@ -7,6 +7,7 @@ import {
 } from "@/components/resizeable";
 import CodeEditor from "./CodeEditor";
 import FlowDiagram from "./FlowDiagram";
+import Header from "./Header";
 
 const Page: React.FC = () => {
   const [code, setCode] = useState("");
@@ -16,19 +17,22 @@ const Page: React.FC = () => {
   }, []);
 
   return (
-    <div className=" h-[calc(100vh-48px)]">
-      <ResizablePanelGroup
-        direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
-      >
-        <ResizablePanel>
-          <CodeEditor code={code} onChange={onChange} />
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel>
-          <FlowDiagram code={code} />
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </div>
+    <>
+      <Header diagramName="Mermaid Diagram" diagramId="null" />
+      <div className=" h-[calc(100vh-48px)]">
+        <ResizablePanelGroup
+          direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
+        >
+          <ResizablePanel>
+            <CodeEditor code={code} onChange={onChange} />
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel>
+            <FlowDiagram code={code} />
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
+    </>
   );
 };
 

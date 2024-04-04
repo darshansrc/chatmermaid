@@ -1,22 +1,33 @@
 "use client";
-import { useState } from "react";
 
-function useCopyToClipboard() {
-  const [copied, setCopied] = useState(false);
+import * as React from "react";
 
-  const copyToClipboard = (text: any) => {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000); // Reset to default after 2 seconds
-      })
-      .catch((err) => {
-        console.error("Failed to copy:", err);
-      });
-  };
-
-  return [copied, copyToClipboard];
+export interface useCopyToClipboardProps {
+  timeout?: number;
 }
 
-export default useCopyToClipboard;
+export function useCopyToClipboard({
+  timeout = 2000,
+}: useCopyToClipboardProps) {
+  const [isCopied, setIsCopied] = React.useState<Boolean>(false);
+
+  const copyToClipboard = (value: string) => {
+    if (typeof window === "undefined" || !navigator.clipboard?.writeText) {
+      return;
+    }
+
+    if (!value) {
+      return;
+    }
+
+    navigator.clipboard.writeText(value).then(() => {
+      setIsCopied(true);
+
+      setTimeout(() => {
+        setIsCopied(false);
+      }, timeout);
+    });
+  };
+
+  return { isCopied, copyToClipboard };
+}
