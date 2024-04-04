@@ -63,7 +63,10 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
 
   const MermaidNode = () => {
     const id = "mermaid";
-
+    const reactFlowInstance = useReactFlow();
+    if (fullScreenModalOpen) {
+      reactFlowInstance.fitView();
+    }
     const config = {
       theme: mermaidTheme,
     };
@@ -134,7 +137,6 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
                     className="h-4 w-4"
                     onClick={() => {
                       setFullScreenModalOpen(true);
-                      // document.documentElement.requestFullscreen();
                     }}
                   />
                 </TooltipTrigger>
@@ -151,19 +153,27 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
             mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900"
           )}
         >
-          <ReactFlow
-            nodes={nodes}
-            nodeTypes={nodeTypes}
-            selectionOnDrag={false}
-            nodesDraggable={false}
-          >
-            <Background
-              color={
-                mermaidTheme === "dark" ? "rgb(60,60,60)" : "rgb(200,200,200)"
-              }
-            />
-            <ZoomControls />
-          </ReactFlow>
+          {panZoom ? (
+            <ReactFlow
+              nodes={nodes}
+              nodeTypes={nodeTypes}
+              selectionOnDrag={false}
+              nodesDraggable={false}
+              // defaultViewport={{ x: 0, y: 0, zoom: 0.5 }}
+            >
+              <Background
+                color={
+                  mermaidTheme === "dark" ? "rgb(60,60,60)" : "rgb(200,200,200)"
+                }
+              />
+
+              <ZoomControls />
+            </ReactFlow>
+          ) : (
+            <div className="m-auto p-5 overflow-auto">
+              <Mermaid chart={code} config={config} theme={mermaidTheme} />
+            </div>
+          )}
         </div>
       </div>
       <Dialog
@@ -178,8 +188,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
         <div
           className={cn(
             "h-full  w-full ",
-            mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900",
-            panZoom ? "pan-zoom-active" : ""
+            mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900"
           )}
         >
           <Button
@@ -204,10 +213,23 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
             nodesDraggable={false}
           >
             <MiniMap
-              style={{
-                backgroundColor: theme === "dark" ? "" : "",
-                borderRadius: "4px",
-              }}
+              maskColor={
+                mermaidTheme === "dark"
+                  ? "rgba(0,0,0,0.8)"
+                  : "rgba(200,200,200,0.5)"
+              }
+              maskStrokeColor={
+                mermaidTheme === "dark"
+                  ? "rgba(0,0,0,0.8)"
+                  : "rgba(200,200,200,200.8)"
+              }
+              nodeColor={
+                mermaidTheme === "dark"
+                  ? "rgba(0,0,0,0.7)"
+                  : "rgba(200,200,200,0.5)"
+              }
+              nodeBorderRadius={20}
+              maskStrokeWidth={2}
               zoomable
               pannable
             />

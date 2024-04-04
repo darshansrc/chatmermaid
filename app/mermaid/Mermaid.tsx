@@ -37,7 +37,7 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, config = {}, theme }) => {
   // Render the SVG as an <img> element
   return svgUrl ? (
     <div className="w-full h-full">
-      <img src={svgUrl} className=" h-[600px]" alt="Mermaid Chart" />
+      <Image src={svgUrl} height={600} width={600} alt="Mermaid Chart" />
     </div>
   ) : null;
 };

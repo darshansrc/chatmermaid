@@ -5,10 +5,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/resizeable";
-import CodeEditor from "./CodeEditor";
-import FlowDiagram from "./FlowDiagram";
+import CodeEditor from "../CodeEditor";
+import FlowDiagram from "../FlowDiagram";
 
-const Page: React.FC = () => {
+const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState("");
 
   const onChange = useCallback((val: string) => {

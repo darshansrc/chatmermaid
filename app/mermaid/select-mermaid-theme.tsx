@@ -39,7 +39,7 @@ const MermaidSelect = ({
           className="text-sm py-1 hover:dark:bg-neutral-700"
           value="neutral"
         >
-          Neutral
+          neutral
         </SelectItem>
         <SelectItem
           className="text-sm py-1 hover:dark:bg-neutral-700"
