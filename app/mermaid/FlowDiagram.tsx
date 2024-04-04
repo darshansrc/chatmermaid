@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useNodesState,
   Background,
@@ -7,31 +7,21 @@ import {
   ReactFlow,
   useReactFlow,
 } from "reactflow";
-import mermaid from "mermaid";
 import Mermaid from "./Mermaid";
 import ZoomControls from "./zoom-controls";
-import useMermaidTheme from "./useMermaidTheme";
 import { useTheme } from "next-themes";
 import "reactflow/dist/style.css";
-import {
-  CodeXml,
-  History,
-  SwatchBook,
-  Copy,
-  Minimize2,
-  Fullscreen,
-  Maximize2,
-} from "lucide-react";
+import { SwatchBook, Minimize2, Fullscreen, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
-
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import CopyButton from "@/components/copy-button";
-import MermaidSelect from "./select-mermaid-theme";
-import { Toggle } from "@/components/ui/toggle";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 import {
   Tooltip,
   TooltipContent,
@@ -39,10 +29,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TransitionProps } from "@mui/material/transitions";
-import Fade from "@mui/material/Fade";
+import { changeDiagramTheme } from "@/actions/actions";
 
 interface FlowDiagramProps {
   code: any;
+  diagramTheme: string;
+  diagramId: string;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -54,19 +46,36 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
-  const { mermaidTheme, setMermaidTheme } = useMermaidTheme();
+const FlowDiagram: React.FC<FlowDiagramProps> = ({
+  code,
+  diagramTheme,
+  diagramId,
+}) => {
   const { theme } = useTheme();
-  const [panZoom, setPanZoom] = useState<boolean>(true);
+  const [mermaidTheme, setMermaidTheme] = useState<string>(
+    theme === "dark" ? "dark" : "default"
+  );
   const [fullScreenModalOpen, setFullScreenModalOpen] =
     useState<boolean>(false);
+
+  useEffect(() => {
+    if (diagramTheme) {
+      setMermaidTheme(diagramTheme);
+    }
+  }, [diagramTheme]);
+  const [panZoom, setPanZoom] = useState<boolean>(true);
+
+  const onMermaidThemeChange = async (theme: string) => {
+    setMermaidTheme(theme);
+    await changeDiagramTheme(diagramId, theme);
+  };
 
   const MermaidNode = () => {
     const id = "mermaid";
     const reactFlowInstance = useReactFlow();
-    if (fullScreenModalOpen) {
-      reactFlowInstance.fitView();
-    }
+
+    reactFlowInstance.fitView();
+
     const config = {
       theme: mermaidTheme,
     };
@@ -78,9 +87,9 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
     {
       id: "1",
       type: "svgNode",
-      width: 1800,
-      height: 1800,
-      position: { x: 0, y: 0 },
+      width: 100,
+      height: 100,
+      position: { x: 128, y: 128 },
       data: { label: "Mermaid" },
     },
   ];
@@ -105,10 +114,49 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
       <div className=" h-full w-full flex flex-col">
         <div className="mt-1 mx-1 h-8 overflow-hidden   rounded-t-lg flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
           <div>
-            <MermaidSelect
+            <Select
               defaultValue={mermaidTheme}
-              onValueChange={setMermaidTheme}
-            />
+              onValueChange={onMermaidThemeChange}
+            >
+              <SelectTrigger className="border-none outline-none w-auto focus:none">
+                <SwatchBook size={14} className="m-1" />
+                <span className="text-[11px] font-semibold">
+                  {mermaidTheme}
+                </span>
+              </SelectTrigger>
+              <SelectContent className="dark:bg-neutral-800">
+                <SelectItem
+                  className="text-sm py-1 hover:dark:bg-neutral-700"
+                  value="default"
+                >
+                  default
+                </SelectItem>
+                <SelectItem
+                  className="text-sm py-1 hover:dark:bg-neutral-700"
+                  value="dark"
+                >
+                  dark
+                </SelectItem>
+                <SelectItem
+                  className="text-sm py-1 hover:dark:bg-neutral-700"
+                  value="neutral"
+                >
+                  neutral
+                </SelectItem>
+                <SelectItem
+                  className="text-sm py-1 hover:dark:bg-neutral-700"
+                  value="forest"
+                >
+                  forest
+                </SelectItem>
+                <SelectItem
+                  className="text-sm py-1 hover:dark:bg-neutral-600"
+                  value="base"
+                >
+                  base
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex flex-row items-center gap-2 mr-2">
             <TooltipProvider>
@@ -157,16 +205,11 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
             <ReactFlow
               nodes={nodes}
               nodeTypes={nodeTypes}
+              fitView
+              snapToGrid
               selectionOnDrag={false}
               nodesDraggable={false}
-              // defaultViewport={{ x: 0, y: 0, zoom: 0.5 }}
             >
-              <Background
-                color={
-                  mermaidTheme === "dark" ? "rgb(60,60,60)" : "rgb(200,200,200)"
-                }
-              />
-
               <ZoomControls />
             </ReactFlow>
           ) : (

@@ -1,7 +1,6 @@
+"use client";
 import * as React from "react";
-
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 import { SidebarList } from "@/components/sidebar-list";
 import { buttonVariants } from "@/components/ui/button";
@@ -38,8 +37,7 @@ export function ChatHistory() {
         <h4 className="text-sm font-medium">Chat History</h4>
       </div>
       <div className="mb-2 px-2">
-        <Link
-          href="/"
+        <div
           onClick={handleNewDiagram}
           className={cn(
             buttonVariants({ variant: "outline" }),
@@ -48,7 +46,7 @@ export function ChatHistory() {
         >
           <IconPlus className="-translate-x-2 stroke-2" />
           New Diagram
-        </Link>
+        </div>
       </div>
       <React.Suspense
         fallback={

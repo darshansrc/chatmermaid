@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
-import useMermaidTheme from "./useMermaidTheme";
 import { useTheme } from "next-themes";
 import { CodeXml, History, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -28,7 +27,6 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
-  const { mermaidTheme, setMermaidTheme } = useMermaidTheme();
   const { theme } = useTheme();
 
   const appTheme = theme;

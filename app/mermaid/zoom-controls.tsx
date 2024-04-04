@@ -5,6 +5,8 @@ import { useReactFlow } from "reactflow";
 const ZoomControls = () => {
   const reactFlowInstance = useReactFlow();
 
+  reactFlowInstance.fitView();
+
   const handleZoomIn = () => {
     reactFlowInstance.zoomIn();
   };

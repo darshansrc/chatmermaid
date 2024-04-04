@@ -15,6 +15,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [diagramName, setDiagramName] = useState<string>("");
   const [diagram, setDiagram] = useState<any>(null);
   const [diagramId, setDiagramId] = useState<string>("");
+  const [diagramTheme, setDiagramTheme] = useState<string>("default");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
           setCode(data.code);
           setDiagramName(data.diagram_name);
           setDiagramId(data.id);
+          setDiagramTheme(data.diagram_theme);
         }
       } catch (error) {
         console.error(error);
@@ -63,7 +65,11 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel>
-            <FlowDiagram code={code} />
+            <FlowDiagram
+              code={code}
+              diagramTheme={diagramTheme}
+              diagramId={diagramId}
+            />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>

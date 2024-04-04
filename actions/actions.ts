@@ -29,7 +29,6 @@ export async function login(formData: FormData) {
     return error.message;
   }
 
-  revalidatePath("/mermaid", "layout");
   redirect("/mermaid");
 }
 
@@ -47,7 +46,6 @@ export async function signup(formData: FormData) {
     return error.message;
   }
 
-  revalidatePath("/mermaid", "layout");
   redirect("/mermaid");
 }
 
@@ -175,6 +173,22 @@ export async function changeDiagramName(id: string, name: string) {
   const { data, error } = await supabase
     .from("diagrams")
     .update({ diagram_name: name })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    return error.message;
+  }
+
+  return data;
+}
+
+export async function changeDiagramTheme(id: string, theme: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("diagrams")
+    .update({ diagram_theme: theme })
     .eq("id", id)
     .select();
 

@@ -5,7 +5,7 @@ import * as React from "react";
 import { useSidebar } from "@/hooks/use-sidebar";
 import { Button } from "@/components/ui/button";
 
-import { PanelLeft, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 
 export function SidebarToggle() {
   const { toggleSidebar } = useSidebar();

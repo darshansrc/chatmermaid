@@ -72,7 +72,7 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
       </div>
 
       <Link
-        href={diagram.id}
+        href={`/mermaid/${diagram.id}`}
         className={cn(
           buttonVariants({ variant: "ghost" }),
           "group w-full px-8 transition-colors hover:bg-zinc-200/40 dark:hover:bg-zinc-300/10",
