@@ -1,65 +1,45 @@
-import React, { useEffect } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { useEffect, useState } from "react";
 import mermaid from "mermaid";
+import Image from "next/image";
 
 interface MermaidProps {
   chart: string;
-  config?: Partial<typeof DEFAULT_CONFIG>;
+  config: any;
+  theme: string;
 }
 
-const DEFAULT_CONFIG = {
-  // startOnLoad: true,
-  // theme: "forest",
-  // logLevel: "fatal",
-  // securityLevel: "loose",
-  // arrowMarkerAbsolute: false,
-  // flowchart: {
-  //   htmlLabels: true,
-  //   curve: "linear",
-  // },
-  // sequence: {
-  //   diagramMarginX: 50,
-  //   diagramMarginY: 10,
-  //   actorMargin: 50,
-  //   width: 500,
-  //   height: 65,
-  //   boxMargin: 10,
-  //   boxTextMargin: 5,
-  //   noteMargin: 10,
-  //   messageMargin: 35,
-  //   mirrorActors: true,
-  //   bottomMarginAdj: 1,
-  //   useMaxWidth: true,
-  //   rightAngles: false,
-  //   showSequenceNumbers: false,
-  // },
-  // gantt: {
-  //   titleTopMargin: 25,
-  //   barHeight: 20,
-  //   barGap: 4,
-  //   topPadding: 50,
-  //   leftPadding: 75,
-  //   gridLineStartPadding: 35,
-  //   fontSize: 11,
-  //   fontFamily: '"Open-Sans", "sans-serif"',
-  //   numberSectionStyles: 4,
-  //   axisFormat: "%Y-%m-%d",
-  // },
-};
-
-const Mermaid: React.FC<MermaidProps> = ({ chart, config = {} }) => {
-  // Mermaid initialize its config
-  mermaid.initialize({ ...DEFAULT_CONFIG, ...config });
+const Mermaid: React.FC<MermaidProps> = ({ chart, config = {}, theme }) => {
+  const [svgUrl, setSvgUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    mermaid.contentLoaded();
-  }, [config]);
+    mermaid.initialize({
+      ...config,
+      startOnLoad: true,
+      securityLevel: "loose",
+      theme: theme,
+    });
 
-  if (!chart) return null;
-  return (
-    <div className="mermaid" id="mermaid">
-      {chart}
+    const renderChart = async () => {
+      try {
+        const { svg } = await mermaid.render("graphDiv", chart);
+        const blob = new Blob([svg], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(blob);
+        setSvgUrl(url);
+      } catch (error: any) {
+        console.error("Error rendering chart:", error.message);
+      }
+    };
+
+    renderChart();
+  }, [chart, config, theme]);
+
+  // Render the SVG as an <img> element
+  return svgUrl ? (
+    <div className="w-full h-full">
+      <img src={svgUrl} className=" h-[600px]" alt="Mermaid Chart" />
     </div>
-  );
+  ) : null;
 };
 
 export default Mermaid;

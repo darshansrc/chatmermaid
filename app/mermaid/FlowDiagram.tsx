@@ -64,27 +64,19 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
   const MermaidNode = () => {
     const id = "mermaid";
 
-    useEffect(() => {
-      mermaid.initialize({
-        startOnLoad: true,
-        securityLevel: "loose",
-        theme: mermaidTheme || "default",
-      });
-    }, [id]);
-
     const config = {
       theme: mermaidTheme,
     };
 
-    return <Mermaid chart={code} config={config} />;
+    return <Mermaid chart={code} config={config} theme={mermaidTheme} />;
   };
 
   const initialNodes = [
     {
       id: "1",
       type: "svgNode",
-      width: 1200,
-      height: 1200,
+      width: 1800,
+      height: 1800,
       position: { x: 0, y: 0 },
       data: { label: "Mermaid" },
     },
@@ -162,16 +154,14 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({ code }) => {
           <ReactFlow
             nodes={nodes}
             nodeTypes={nodeTypes}
-            fitView
-            snapToGrid
             selectionOnDrag={false}
             nodesDraggable={false}
           >
-            {/* <Background
+            <Background
               color={
                 mermaidTheme === "dark" ? "rgb(60,60,60)" : "rgb(200,200,200)"
               }
-            /> */}
+            />
             <ZoomControls />
           </ReactFlow>
         </div>
