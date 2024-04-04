@@ -6,7 +6,7 @@ export interface useCopyToClipboardProps {
   timeout?: number;
 }
 
-export function useCopyToClipboard({
+export default function useCopyToClipboard({
   timeout = 2000,
 }: useCopyToClipboardProps) {
   const [isCopied, setIsCopied] = React.useState<Boolean>(false);

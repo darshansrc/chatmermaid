@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { IconSpinner } from "@/components/ui/icons";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import useCopyToClipboard from "@/hooks/use-copy-to-clipboard";
 
 interface ChatShareDialogProps extends DialogProps {
   chat: any;
@@ -27,7 +27,7 @@ export function ChatShareDialog({
   onCopy,
   ...props
 }: ChatShareDialogProps) {
-  const { copyToClipboard } = useCopyToClipboard({ timeout: 1000 });
+  // const { copyToClipboard } = useCopyToClipboard({ timeout: 1000 });
   const [isSharePending, startShareTransition] = React.useTransition();
 
   const copyShareLink = React.useCallback(
@@ -38,11 +38,11 @@ export function ChatShareDialog({
 
       const url = new URL(window.location.href);
       url.pathname = chat.id;
-      copyToClipboard(url.toString());
+      // copyToClipboard(url.toString());
       onCopy();
       toast.success("Share link copied to clipboard");
     },
-    [copyToClipboard, onCopy]
+    [, onCopy]
   );
 
   return (
