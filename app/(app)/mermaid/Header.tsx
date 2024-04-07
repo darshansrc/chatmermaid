@@ -7,6 +7,8 @@ import { Share } from "lucide-react";
 import React, { useState } from "react";
 import { DropdownMenuDemo } from "./DropDownMenu";
 import { changeDiagramName, getDiagram } from "@/actions/actions";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import {
   Popover,
   PopoverContent,
@@ -35,29 +37,42 @@ const Header = ({ diagramName, diagramId }: AppLayoutProps) => {
     <header
       className={` pl-0  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
     >
-      <div className="w-full m-auto px-4 flex h-12 items-center justify-around ">
-        <SidebarToggle />
-        <IconSeparator className="size-6 text-muted-foreground/50" />
+      <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
+        <div className=" w-full px-4 flex h-12 items-center  ">
+          <SidebarToggle />
+          <IconSeparator className="size-6 text-muted-foreground/50" />
 
-        <Popover>
-          <PopoverTrigger>
-            <p className="text-sm flex flex-row font-medium truncate">
-              {diagramName}
-            </p>
-          </PopoverTrigger>
-          <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
-            <Input
-              value={editedName}
-              defaultValue={editedName}
-              onChange={(e) => setEditedName(e.target.value)}
-            ></Input>
-            <Button onClick={handleNameChange} variant={"outline"}>
-              Save Changes
-            </Button>
-          </PopoverContent>
-        </Popover>
+          <Popover>
+            <PopoverTrigger>
+              <p className="text-sm flex flex-row font-medium truncate">
+                {diagramName}
+              </p>
+            </PopoverTrigger>
+            <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
+              <Input
+                value={editedName}
+                defaultValue={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+              ></Input>
+              <Button onClick={handleNameChange} variant={"outline"}>
+                Save Changes
+              </Button>
+            </PopoverContent>
+          </Popover>
+        </div>
 
-        <div className="flex w-full gap-2 justify-end items-center ">
+        <div className="w-full flex pl-[210px] justify-center">
+          {/* <TabsList>
+            <TabsTrigger value="editor">Editor</TabsTrigger>
+            <TabsTrigger value="chat">Chat</TabsTrigger>
+          </TabsList> */}
+          {/* <TabsContent value="editor">
+            Make changes to your account here.
+          </TabsContent>
+          <TabsContent value="password">Change your password here.</TabsContent> */}
+        </div>
+
+        <div className="flex w-full gap-2  items-center ">
           <Button
             variant="outline"
             size="sm"

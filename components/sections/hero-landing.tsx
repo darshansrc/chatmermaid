@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 
 export async function HeroLanding() {
   return (
-    <section className="space-y-6 py-12 sm:py-20 lg:py-20">
+    <section className="space-y-6   py-10 sm:py-10 lg:py-10">
       <div className="container flex max-w-5xl flex-col items-center gap-5 text-center">
         {/* Want animations? Check here: https://github.com/mickasmt/next-saas-stripe-starter/blob/76eb9f2b70b29c7a734ff0e5b047796ed2dac28d/app/(marketing)/page.tsx */}
         <Link
@@ -22,7 +22,7 @@ export async function HeroLanding() {
           <ArrowRight className="ml-2" size={16} />
         </Link>
 
-        <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
+        <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[50px]">
           The Visual Way to {""}
           <span className="text-gradient_indigo-purple font-extrabold">
             Diagram
@@ -30,12 +30,11 @@ export async function HeroLanding() {
         </h1>
 
         <p
-          className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
+          className=" text-balance text-sm leading-normal text-muted-foreground sm:text-xl sm:leading-2"
           style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
         >
-          ChatMermaid is the easiest way to create professional diagrams using
-          mermaid.js. No more struggling with complex syntax. Let the AI do the
-          work.
+          Easily create complex diagrams from markdown-style code and
+          collaborate with team members in real-time.
         </p>
 
         <div

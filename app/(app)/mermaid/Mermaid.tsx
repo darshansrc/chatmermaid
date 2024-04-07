@@ -6,7 +6,7 @@ import Image from "next/image";
 interface MermaidProps {
   chart: string;
   config: any;
-  theme: string;
+  theme: string | undefined;
 }
 
 const Mermaid: React.FC<MermaidProps> = ({ chart, config = {}, theme }) => {
@@ -17,7 +17,7 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, config = {}, theme }) => {
       ...config,
       startOnLoad: true,
       securityLevel: "loose",
-      theme: theme,
+      darkMode: theme === "dark" ? true : false,
     });
 
     const renderChart = async () => {

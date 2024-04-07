@@ -7,6 +7,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { IconPlus } from "@/components/ui/icons";
 import { createNewDiagram } from "@/actions/actions";
 import { useRouter } from "next/navigation";
+import { GanttChart } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
 interface ChatHistoryProps {
   userId?: string;
@@ -33,15 +35,23 @@ export function ChatHistory() {
   };
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between p-4">
-        <h4 className="text-sm font-medium">Chat History</h4>
+      <div className="flex items-center justify-between px-4 py-6">
+        <Link href="/" className="hidden items-center space-x-2 md:flex">
+          <GanttChart
+            strokeWidth={3}
+            className="text-blue-500 font-extrabold"
+          />
+          <span className="hidden font-urban text-xl font-bold sm:inline-block">
+            {siteConfig.name}
+          </span>
+        </Link>
       </div>
       <div className="mb-2 px-2">
         <div
           onClick={handleNewDiagram}
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10"
+            "h-10 w-full justify-start cursor-pointer bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10"
           )}
         >
           <IconPlus className="-translate-x-2 stroke-2" />

@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { customAlphabet } from "nanoid";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -13,6 +14,11 @@ export function formatDate(input: string | number): string {
     year: "numeric",
   });
 }
+
+export const nanoid = customAlphabet(
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  7
+); // 7-character random string
 
 export async function fetcher<JSON = any>(
   input: RequestInfo,

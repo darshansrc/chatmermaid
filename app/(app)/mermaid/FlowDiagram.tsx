@@ -95,7 +95,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
       theme: mermaidTheme,
     };
 
-    return <Mermaid chart={code} config={config} theme={mermaidTheme} />;
+    return <Mermaid chart={code} config={config} theme={theme} />;
   };
 
   const initialNodes = [

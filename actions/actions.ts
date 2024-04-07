@@ -6,11 +6,19 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { PostgrestError } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
+import { customAlphabet, nanoid } from "nanoid";
+import { kv } from "@vercel/kv";
+import { Chat } from "@/lib/types";
 
 type DiagramData = {
   data: any[] | null;
   error: PostgrestError | null;
 };
+
+// export const nanoid = customAlphabet(
+//   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+//   7
+// ); // 7-character random string
 
 export async function login(formData: FormData) {
   const supabase = createClient();
@@ -76,7 +84,13 @@ export async function getAllDiagrams() {
 
 export async function createNewDiagram() {
   const supabase = createClient();
-  const uuid = uuidv4();
+
+  const newNanoid = customAlphabet(
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+    7
+  );
+
+  const id = nanoid();
 
   const {
     data: { user },
@@ -91,15 +105,15 @@ export async function createNewDiagram() {
     .from("diagrams")
     .insert([
       {
-        id: uuid,
+        id: id,
         user_id: user.id,
-        diagram_name: "New Diagram 1",
+        diagram_name: "Untitled Diagram",
         code: "graph TD\n  A --> B",
       },
     ])
     .select();
   if (data) {
-    return uuid;
+    return id;
   }
 
   if (error) {
@@ -109,6 +123,8 @@ export async function createNewDiagram() {
 
 export async function updateDiagram(id: string, code: string) {
   const supabase = createClient();
+
+  await supabase.auth.getUser();
 
   const { data, error } = await supabase
     .from("diagrams")
@@ -125,6 +141,7 @@ export async function updateDiagram(id: string, code: string) {
 
 export async function deleteDiagram(id: string) {
   const supabase = createClient();
+  await supabase.auth.getUser();
 
   const { error } = await supabase.from("diagrams").delete().eq("id", id);
 
@@ -137,6 +154,7 @@ export async function deleteDiagram(id: string) {
 
 export async function getDiagram(id: string) {
   const supabase = createClient();
+  await supabase.auth.getUser();
 
   const { data, error } = await supabase
     .from("diagrams")
@@ -153,6 +171,7 @@ export async function getDiagram(id: string) {
 
 export async function makeDiagramPublic(id: string) {
   const supabase = createClient();
+  await supabase.auth.getUser();
 
   const { data, error } = await supabase
     .from("diagrams")
@@ -169,6 +188,7 @@ export async function makeDiagramPublic(id: string) {
 
 export async function changeDiagramName(id: string, name: string) {
   const supabase = createClient();
+  await supabase.auth.getUser();
 
   const { data, error } = await supabase
     .from("diagrams")
@@ -213,3 +233,151 @@ export async function getUser() {
 
   return null;
 }
+
+// export async function getMissingKeys() {
+//   const keysRequired = ["OPENAI_API_KEY"];
+//   return keysRequired
+//     .map((key) => (process.env[key] ? "" : key))
+//     .filter((key) => key !== "");
+// }
+
+// export async function getChats(userId?: string | null) {
+//   if (!userId) {
+//     return [];
+//   }
+
+//   try {
+//     const pipeline = kv.pipeline();
+//     const chats: string[] = await kv.zrange(`user:chat:${userId}`, 0, -1, {
+//       rev: true,
+//     });
+
+//     for (const chat of chats) {
+//       pipeline.hgetall(chat);
+//     }
+
+//     const results = await pipeline.exec();
+
+//     return results as Chat[];
+//   } catch (error) {
+//     return [];
+//   }
+// }
+
+// export async function getChat(id: string, userId: string) {
+//   const chat = await kv.hgetall<Chat>(`chat:${id}`);
+
+//   if (!chat || (userId && chat.userId !== userId)) {
+//     return null;
+//   }
+
+//   return chat;
+// }
+
+// export async function removeChat({ id, path }: { id: string; path: string }) {
+//   const user = await getUser();
+
+//   if (!user) {
+//     return {
+//       error: "Unauthorized",
+//     };
+//   }
+
+//   //Convert uid to string for consistent comparison with session.user.id
+//   const uid = String(await kv.hget(`chat:${id}`, "userId"));
+
+//   if (uid !== user?.id) {
+//     return {
+//       error: "Unauthorized",
+//     };
+//   }
+
+//   await kv.del(`chat:${id}`);
+//   await kv.zrem(`user:chat:${user.id}`, `chat:${id}`);
+
+//   revalidatePath("/");
+//   return revalidatePath(path);
+// }
+
+// export async function clearChats() {
+//   const user = await getUser();
+
+//   if (!user?.id) {
+//     return {
+//       error: "Unauthorized",
+//     };
+//   }
+
+//   const chats: string[] = await kv.zrange(`user:chat:${user.id}`, 0, -1);
+//   if (!chats.length) {
+//     return redirect("/");
+//   }
+//   const pipeline = kv.pipeline();
+
+//   for (const chat of chats) {
+//     pipeline.del(chat);
+//     pipeline.zrem(`user:chat:${user.id}`, chat);
+//   }
+
+//   await pipeline.exec();
+
+//   revalidatePath("/");
+//   return redirect("/");
+// }
+
+// export async function getSharedChat(id: string) {
+//   const chat = await kv.hgetall<Chat>(`chat:${id}`);
+
+//   if (!chat || !chat.sharePath) {
+//     return null;
+//   }
+
+//   return chat;
+// }
+
+// export async function shareChat(id: string) {
+//   const user = await getUser();
+
+//   if (!user?.id) {
+//     return {
+//       error: "Unauthorized",
+//     };
+//   }
+
+//   const chat = await kv.hgetall<Chat>(`chat:${id}`);
+
+//   if (!chat || chat.userId !== user.id) {
+//     return {
+//       error: "Something went wrong",
+//     };
+//   }
+
+//   const payload = {
+//     ...chat,
+//     sharePath: `/share/${chat.id}`,
+//   };
+
+//   await kv.hmset(`chat:${chat.id}`, payload);
+
+//   return payload;
+// }
+
+// export async function saveChat(chat: Chat) {
+//   const user = await getUser();
+
+//   if (user) {
+//     const pipeline = kv.pipeline();
+//     pipeline.hmset(`chat:${chat.id}`, chat);
+//     pipeline.zadd(`user:chat:${chat.userId}`, {
+//       score: Date.now(),
+//       member: `chat:${chat.id}`,
+//     });
+//     await pipeline.exec();
+//   } else {
+//     return;
+//   }
+// }
+
+// export async function refreshHistory(path: string) {
+//   redirect(path);
+// }
