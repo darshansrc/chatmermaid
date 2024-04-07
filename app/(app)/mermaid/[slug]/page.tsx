@@ -138,7 +138,11 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                 <CodeEditor code={code} onChange={onChange} />
               </TabsContent>
               <TabsContent className="h-full overflow-hidden" value="chat">
-                <ChatBox diagramId={diagramId} />
+                <ChatBox
+                  diagramId={diagramId}
+                  code={code}
+                  onChange={onChange}
+                />
               </TabsContent>
             </ResizablePanel>
             <ResizableHandle withHandle />

@@ -3,7 +3,7 @@
 
 "use client";
 
-import { FC, memo } from "react";
+import { FC } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
@@ -56,7 +56,15 @@ export const generateRandomString = (length: number, lowercase = false) => {
   return lowercase ? result.toLowerCase() : result;
 };
 
-const CodeBlock: FC<Props> = memo(({ language, value }) => {
+const CodeBlock = ({
+  language,
+  value,
+  onChange,
+}: {
+  language: string;
+  value: string;
+  onChange: (val: string) => void;
+}) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
 
   const downloadAsFile = () => {
@@ -92,11 +100,22 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
     copyToClipboard(value);
   };
 
+  const handleReplace = () => {
+    onChange(value);
+  };
+
   return (
     <div className="relative w-full rounded-lg font-sans codeblock bg-zinc-950">
       <div className="flex items-center rounded justify-between w-full px-6 py-2 pr-4 bg-zinc-800 text-zinc-100">
         <span className="text-xs lowercase">{language}</span>
         <div className="flex items-center space-x-1">
+          <Button
+            variant="secondary"
+            className="hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
+            onClick={handleReplace}
+          >
+            Replace
+          </Button>
           <Button
             variant="ghost"
             className="hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
@@ -142,7 +161,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
       </SyntaxHighlighter>
     </div>
   );
-});
+};
 CodeBlock.displayName = "CodeBlock";
 
 export { CodeBlock };
