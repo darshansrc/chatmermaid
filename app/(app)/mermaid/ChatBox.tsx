@@ -71,10 +71,6 @@ export default function ChatBox({ diagramId }: ChatBoxProps) {
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       initialMessages: initialChats,
-      body: { diagramId },
-      onFinish: async () => {
-        window.scrollTo(0, document.body.scrollHeight);
-      },
     });
 
   useEffect(() => {
