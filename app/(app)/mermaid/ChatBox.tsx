@@ -8,7 +8,11 @@ import React, {
   useCallback,
 } from "react";
 
-import { BotMessage, UserMessage } from "@/components/chat/message";
+import {
+  BotMessage,
+  SpinnerMessage,
+  UserMessage,
+} from "@/components/chat/message";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { useChat } from "ai/react";
@@ -19,15 +23,44 @@ import { getCodeString } from "rehype-rewrite";
 import mermaid from "mermaid";
 import Image from "next/image";
 import { toast } from "sonner";
+import { spinner } from "@/components/chat/spinner";
+import { getChats, updateChats } from "@/actions/actions";
+import { ChatRequestOptions, Message, RequestOptions } from "ai";
 
-export default function ChatBox() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+type ChatBoxProps = {
+  diagramId: string;
+};
+
+export default function ChatBox({ diagramId }: ChatBoxProps) {
+  const [initialChats, setInitialChats] = useState<Message[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getChats(diagramId);
+      if (data) setInitialChats(data.messages);
+    };
+    fetchData();
+  }, [diagramId]);
+
+  const { messages, input, isLoading, handleInputChange, handleSubmit } =
+    useChat({ initialMessages: initialChats, body: { diagramId } });
+
+  useEffect(() => {
+    const updateData = async () => {
+      if (messages[0]) {
+        const data = await updateChats(diagramId, messages);
+        if (data) toast.success("Chat saved successfully");
+      }
+    };
+    if (!isLoading) updateData();
+  }, [messages, diagramId, isLoading]);
 
   const randomid = () =>
     parseInt(String(Math.random() * 1e15), 10).toString(36);
+
   const Code = ({ inline, children = [], className, ...props }) => {
     const demoid = useRef(`dome${randomid()}`);
     const [container, setContainer] = useState(null);
+
     const isMermaid =
       className && /^language-mermaid/.test(className.toLocaleLowerCase());
     const code =
@@ -35,47 +68,50 @@ export default function ChatBox() {
         ? getCodeString(props.node.children)
         : children[0] || "";
 
-    const [svgUrl, setSvgUrl] = useState<string>("");
-
     useEffect(() => {
-      mermaid.initialize({
-        startOnLoad: true,
-        securityLevel: "loose",
-        darkMode: true,
-        theme: "dark",
-      });
-
-      const renderChart = async () => {
-        try {
-          const { svg } = await mermaid.render("graphDiv", code);
-          const blob = new Blob([svg], { type: "image/svg+xml" });
-          const url = URL.createObjectURL(blob);
-          setSvgUrl(url);
-        } catch (error: any) {
-          console.error("Error rendering chart:", error.message);
-          toast.error("Error rendering chart:", error.message);
+      const reRender = async () => {
+        if (container && isMermaid) {
+          try {
+            const str = await mermaid.render(demoid.current, code);
+            toast.success("Mermaid diagram rendered successfully");
+            (container as HTMLElement).innerHTML = str.svg;
+          } catch (error) {
+            toast.error("Failed to render Mermaid diagram");
+          }
         }
       };
 
-      renderChart();
-    }, [code]);
+      if (!isLoading) reRender();
+    }, [container, isMermaid, code, demoid]);
+
+    const refElement = useCallback((node) => {
+      if (node !== null) {
+        setContainer(node);
+      }
+    }, []);
 
     if (isMermaid) {
       return (
         <>
           <code id={demoid.current} />
-          <Image
-            src={svgUrl}
-            width={500}
-            height={500}
-            className="h-[50vh] w-full"
-            alt="Mermaid Chart"
-          />
+          <code ref={refElement} data-name="mermaid" />
+          <div className="w-full m-auto py-16"> {isLoading && spinner}</div>
           <code>{children}</code>
         </>
       );
     }
+
     return <code>{children}</code>;
+  };
+
+  const handleChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit(e, {
+      options: {
+        body: {
+          diagramId: diagramId,
+        },
+      },
+    });
   };
 
   return (
@@ -101,9 +137,10 @@ export default function ChatBox() {
               <Separator className="my-4" />
             </div>
           ))}
+          {isLoading && <SpinnerMessage />}
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleChatSubmit}>
           <div className="absolute  flex justify-center items-center bottom-8 w-full   ">
             <CirclePlus
               size={25}
