@@ -16,7 +16,7 @@ export default function Chat() {
             {m.role === "user" ? (
               <UserMessage>{m.content}</UserMessage>
             ) : (
-              <BotMessage content={m.content} />
+              <BotMessage>{m.content}</BotMessage>
             )}
             <Separator className="my-4" />
           </div>

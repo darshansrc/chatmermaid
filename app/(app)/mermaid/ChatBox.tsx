@@ -18,6 +18,7 @@ import MarkdownPreview from "@uiw/react-markdown-preview";
 import { getCodeString } from "rehype-rewrite";
 import mermaid from "mermaid";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function ChatBox() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
@@ -52,6 +53,7 @@ export default function ChatBox() {
           setSvgUrl(url);
         } catch (error: any) {
           console.error("Error rendering chart:", error.message);
+          toast.error("Error rendering chart:", error.message);
         }
       };
 
@@ -73,7 +75,7 @@ export default function ChatBox() {
         </>
       );
     }
-    return;
+    return <code>{children}</code>;
   };
 
   return (
@@ -85,7 +87,7 @@ export default function ChatBox() {
               {m.role === "user" ? (
                 <UserMessage>{m.content}</UserMessage>
               ) : (
-                <UserMessage>
+                <BotMessage>
                   <MarkdownPreview
                     className="bg-neutral-900"
                     source={m.content}
@@ -94,7 +96,7 @@ export default function ChatBox() {
                     }}
                     style={{ backgroundColor: "rgb(23 23 23)" }}
                   />
-                </UserMessage>
+                </BotMessage>
               )}
               <Separator className="my-4" />
             </div>

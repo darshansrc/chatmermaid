@@ -127,7 +127,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
   return (
     <>
       <div className=" h-full w-full flex flex-col">
-        <div className="mt-1 mx-1 h-8 overflow-hidden   rounded-t-lg flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
+        <div className=" h-8 overflow-hidden    flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
           <div className="flex flex-row gap-2">
             <Select
               key={mermaidTheme}
@@ -242,7 +242,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
         </div>
         <div
           className={cn(
-            "h-full w-full mb-1 overflow-auto mx-1 rounded-b-lg border border-neutral-100 dark:border-neutral-800 ",
+            "h-full w-full overflow-auto  ",
             mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900"
           )}
         >

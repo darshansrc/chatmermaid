@@ -31,7 +31,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
   const appTheme = theme;
   return (
     <div className=" h-full w-full flex flex-col">
-      <div className="mt-1 mx-1 h-8 overflow-hidden  rounded-t-lg flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
+      <div className=" h-8 overflow-hidden   flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
         <div>
           <Select>
             <SelectTrigger className="border-none outline-none w-auto focus:border-none">
@@ -71,7 +71,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
           </TooltipProvider>
         </div>
       </div>
-      <div className="h-full mb-1 relative overflow-auto mx-1 rounded-b-lg border border-neutral-100  dark:border-neutral-800 ">
+      <div className="h-full  relative overflow-auto ">
         <CodeMirror
           value={code}
           minHeight="100%"
