@@ -68,34 +68,40 @@ export default function ChatBox({ diagramId }: ChatBoxProps) {
         ? getCodeString(props.node.children)
         : children[0] || "";
 
+    const [svgUrl, setSvgUrl] = useState<string>("");
+
     useEffect(() => {
-      const reRender = async () => {
-        if (container && isMermaid) {
+      mermaid.initialize({
+        startOnLoad: true,
+        securityLevel: "loose",
+        darkMode: true,
+        theme: "dark",
+      });
+
+      if (!isLoading) {
+        const renderChart = async () => {
           try {
-            const str = await mermaid.render(demoid.current, code);
-            toast.success("Mermaid diagram rendered successfully");
-            (container as HTMLElement).innerHTML = str.svg;
-          } catch (error) {
-            toast.error("Failed to render Mermaid diagram");
+            const { svg } = await mermaid.render("graphDiv", code);
+            const blob = new Blob([svg], { type: "image/svg+xml" });
+            const url = URL.createObjectURL(blob);
+            setSvgUrl(url);
+          } catch (error: any) {
+            console.error("Error rendering chart:", error.message);
           }
-        }
-      };
-
-      if (!isLoading) reRender();
-    }, [container, isMermaid, code, demoid]);
-
-    const refElement = useCallback((node) => {
-      if (node !== null) {
-        setContainer(node);
+        };
+        renderChart();
       }
-    }, []);
+    }, [code]);
 
     if (isMermaid) {
       return (
         <>
-          <code id={demoid.current} />
-          <code ref={refElement} data-name="mermaid" />
-          <div className="w-full m-auto py-16"> {isLoading && spinner}</div>
+          {/* <code id={demoid.current} className="hidden" /> */}
+          {svgUrl && (
+            <img src={svgUrl} className="h-[50vh] w-full" alt="Mermaid Chart" />
+          )}
+
+          {isLoading && <div className="w-full m-auto py-16"> {spinner}</div>}
           <code>{children}</code>
         </>
       );
