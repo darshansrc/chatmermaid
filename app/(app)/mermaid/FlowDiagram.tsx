@@ -242,8 +242,8 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
         </div>
         <div
           className={cn(
-            "h-full w-full overflow-auto  ",
-            mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900"
+            "h-full w-full overflow-auto  "
+            // mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900"
           )}
         >
           {panZoom ? (

@@ -14,10 +14,11 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, config = {}, theme }) => {
 
   useEffect(() => {
     mermaid.initialize({
-      ...config,
       startOnLoad: true,
       securityLevel: "loose",
       darkMode: theme === "dark" ? true : false,
+      theme: theme === "dark" ? "dark" : config.theme,
+      // ...config,
     });
 
     const renderChart = async () => {
