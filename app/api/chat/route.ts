@@ -1,4 +1,3 @@
-import { getUser } from "@/actions/actions";
 import Anthropic from "@anthropic-ai/sdk";
 import { AnthropicStream, StreamingTextResponse } from "ai";
 
@@ -24,23 +23,7 @@ export async function POST(req: Request) {
   });
 
   // Convert the response into a friendly text-stream
-  const stream = AnthropicStream(response, {
-    onStart: async () => {
-      // This callback is called when the stream starts
-      // You can use this to save the prompt to your database
-      await getUser();
-    },
-    onToken: async (token: string) => {
-      // This callback is called for each token in the stream
-      // You can use this to debug the stream or save the tokens to your database
-    },
-    onCompletion: async (completion: string) => {
-      // This callback is called when the completion is ready
-      // You can use this to save the final completion to your database
-      console.log("completion: ", completion);
-      await getUser();
-    },
-  });
+  const stream = AnthropicStream(response);
 
   // Respond with the stream
   return new StreamingTextResponse(stream);
