@@ -50,8 +50,8 @@ export function BotMessage({
 
   return (
     <div className="group relative flex items-start md:-ml-12">
-      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
-        <Bot className="p-1" />
+      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-black dark:bg-neutral-200 shadow-sm">
+        <Bot className="p-1 text-black" />
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
         {nonMermaidText && (

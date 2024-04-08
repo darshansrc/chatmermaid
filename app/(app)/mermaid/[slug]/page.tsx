@@ -93,7 +93,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                 <PopoverTrigger>
                   <p className="text-sm   flex flex-row gap-1 items-center font-medium truncate">
                     {diagramName}{" "}
-                    <Pencil className="size-4 pt-1 dark:text-neutral-600" />
+                    <Pencil className="size-3 dark:text-neutral-600" />
                   </p>
                 </PopoverTrigger>
                 <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
