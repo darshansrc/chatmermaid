@@ -16,7 +16,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { SidebarToggle } from "@/components/sidebar-toggle";
 import { Button } from "@/components/ui/button";
 import { IconSeparator } from "@/components/ui/icons";
-import { Share } from "lucide-react";
+import { Pencil, Share } from "lucide-react";
 import { DropdownMenuDemo } from "../DropDownMenu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -91,15 +91,19 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
               <IconSeparator className="size-6 text-muted-foreground/50" />
               <Popover>
                 <PopoverTrigger>
-                  <p className="text-sm flex flex-row font-medium truncate">
-                    {diagramName}
+                  <p className="text-sm   flex flex-row gap-1 items-center font-medium truncate">
+                    {diagramName}{" "}
+                    <Pencil className="size-4 pt-1 dark:text-neutral-600" />
                   </p>
                 </PopoverTrigger>
                 <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
                   <Input
                     value={diagramName}
-                    onChange={(e) => setDiagramName(e.target.value)}
+                    onChange={(e) => {
+                      setDiagramName(e.target.value);
+                    }}
                   ></Input>
+
                   <Button onClick={handleNameChange} variant={"outline"}>
                     Save Changes
                   </Button>

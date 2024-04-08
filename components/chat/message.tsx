@@ -14,6 +14,8 @@ import MermaidRaw from "@/app/(app)/mermaid/MermaidRaw";
 import ReactMarkdown from "react-markdown";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import Mermaid from "@/app/(app)/mermaid/Mermaid";
+import { useTheme } from "next-themes";
+import { Bot } from "lucide-react";
 
 // Different types of message bubbles.
 
@@ -34,11 +36,14 @@ export function BotMessage({
   text,
   code,
   onChange,
+  isLoading,
 }: {
   text: string;
   code: string;
   onChange: (val: string) => void;
+  isLoading: boolean;
 }) {
+  const { theme } = useTheme();
   const mermaidRegex = /```mermaid\n([\s\S]*?)\n```/;
   const mermaidMatch = text.match(mermaidRegex);
   const nonMermaidText = mermaidMatch ? text.replace(mermaidRegex, "") : text;
@@ -46,24 +51,35 @@ export function BotMessage({
   return (
     <div className="group relative flex items-start md:-ml-12">
       <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
-        <IconOpenAI />
+        <Bot className="p-1" />
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
+        {nonMermaidText && (
+          <MarkdownPreview
+            source={text}
+            // className={theme === "dark" ? "dark:bg-neutral-900" : "bg-white"}
+            style={{
+              backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
+              color: theme === "dark" ? "#fff" : "#000",
+            }}
+          />
+        )}
         {mermaidMatch && (
           <>
-            <MermaidRaw chart={mermaidMatch[1]} isLoading={false} />
-            <CodeBlock
+            {!isLoading && (
+              <MermaidRaw
+                chart={mermaidMatch[1]}
+                isLoading={false}
+                onChange={onChange}
+              />
+            )}
+            {/* <CodeBlock
               language="mermaid"
               value={mermaidMatch[1]}
               onChange={onChange}
-            />
+            /> */}
+            {/* <code>{mermaidMatch[1]}</code> */}
           </>
-        )}
-        {nonMermaidText && (
-          <MarkdownPreview
-            source={nonMermaidText}
-            className="bg-white dark:bg-neutral-900"
-          />
         )}
       </div>
     </div>

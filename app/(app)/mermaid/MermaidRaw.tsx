@@ -2,8 +2,10 @@
 import React, { useEffect } from "react";
 import mermaid from "mermaid";
 import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
-const MermaidRaw = ({ chart, isLoading }) => {
+const MermaidRaw = ({ chart, isLoading, onChange }) => {
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -18,7 +20,23 @@ const MermaidRaw = ({ chart, isLoading }) => {
     }
   }, [isLoading, theme]);
 
-  return <div className="mermaid">{chart}</div>;
+  const handleReplace = () => {
+    onChange(chart);
+    toast.success("Diagram replaced!");
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <div className="mermaid">{chart}</div>{" "}
+      <Button
+        variant={"outline"}
+        className="w-11/12 my-2"
+        onClick={handleReplace}
+      >
+        Use this diagram
+      </Button>
+    </div>
+  );
 };
 
 export default MermaidRaw;

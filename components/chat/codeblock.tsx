@@ -6,10 +6,13 @@
 import { FC } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-
+import CodeMirror from "@uiw/react-codemirror";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { IconCheck, IconCopy, IconDownload } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
+import { langs } from "@uiw/codemirror-extensions-langs";
+import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
+import { useTheme } from "next-themes";
 
 interface Props {
   language: string;
@@ -66,6 +69,7 @@ const CodeBlock = ({
   onChange: (val: string) => void;
 }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
+  const { theme } = useTheme();
 
   const downloadAsFile = () => {
     if (typeof window === "undefined") {
@@ -106,7 +110,7 @@ const CodeBlock = ({
 
   return (
     <div className="relative w-full rounded-lg font-sans codeblock bg-zinc-950">
-      <div className="flex items-center rounded justify-between w-full px-6 py-2 pr-4 bg-zinc-800 text-zinc-100">
+      <div className="flex items-center rounded justify-between w-full px-6 py-2 pr-4 dark:bg-zinc-800 text-zinc-100">
         <span className="text-xs lowercase">{language}</span>
         <div className="flex items-center space-x-1">
           <Button
@@ -136,29 +140,37 @@ const CodeBlock = ({
           </Button>
         </div>
       </div>
-      <SyntaxHighlighter
-        language={language}
-        style={coldarkDark}
-        PreTag="div"
-        showLineNumbers
-        customStyle={{
-          margin: 0,
-          width: "100%",
-          background: "transparent",
-          padding: "1.5rem 1rem",
-        }}
-        lineNumberStyle={{
-          userSelect: "none",
-        }}
-        codeTagProps={{
-          style: {
-            fontSize: "0.9rem",
-            fontFamily: "var(--font-mono)",
-          },
-        }}
-      >
-        {value}
-      </SyntaxHighlighter>
+      <CodeMirror
+        value={value}
+        minHeight="100%"
+        minWidth="100%"
+        className="w-full h-full rounded-b-lg active:outline-none border-none  text-[12px] rounded-xl"
+        lang="mermaid"
+        extensions={[langs.mermaid()]}
+        onChange={onChange}
+        height="100%"
+        readOnly
+        aria-disabled
+        theme={
+          theme === "dark"
+            ? githubDarkInit({
+                settings: {
+                  fontFamily: "monospace",
+                  background: "rgb(24, 24, 24)",
+                  gutterBackground: "rgb(24, 24, 24)",
+                  lineHighlight: "rgb(40 40 40)",
+                  selection: "#036dd626",
+                },
+              })
+            : githubLightInit({
+                settings: {
+                  fontFamily: "monospace",
+                  background: "rgb(255, 255, 255)",
+                  gutterBackground: "rgb(255, 255, 255)",
+                },
+              })
+        }
+      />
     </div>
   );
 };
