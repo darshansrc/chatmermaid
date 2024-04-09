@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { GanttChart } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { spinner } from "./chat/spinner";
+import useDiagramStore from "@/store/diagram-store";
 
 interface ChatHistoryProps {
   userId?: string;
@@ -26,10 +27,12 @@ interface diagram {
 }
 export function ChatHistory() {
   const router = useRouter();
+  const { fetchDiagrams } = useDiagramStore();
   const handleNewDiagram = async () => {
     try {
       const uuid = await createNewDiagram();
       router.push(`/mermaid/${uuid}`);
+      fetchDiagrams();
     } catch (error) {
       console.error(error);
     }

@@ -70,21 +70,21 @@ export async function getAllDiagrams() {
     error: userError,
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    return;
+  if (user) {
+    const { data, error } = await supabase
+      .from("diagrams")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("last_updated_at", { ascending: false });
+
+    // if (error) {
+    //   return error.message;
+    // }
+
+    return data;
   }
 
-  const { data, error } = await supabase
-    .from("diagrams")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("last_updated_at", { ascending: false });
-
-  if (error) {
-    return error.message;
-  }
-
-  return data;
+  return [];
 }
 
 export async function createNewDiagram() {

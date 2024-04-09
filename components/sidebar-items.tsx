@@ -11,35 +11,28 @@ import {
   makeDiagramPublic,
 } from "@/actions/actions";
 import { SidebarActions } from "./sidebar-actions";
+import useDiagramStore from "@/store/diagram-store";
 
 interface SidebarItemsProps {
   chats?: any;
 }
 
 export function SidebarItems() {
-  const [diagrams, setDiagrams] = useState<any>([]);
+  const [diagramss, setDiagramss] = useState<any>([]);
+  const { diagrams, fetchDiagrams } = useDiagramStore();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllDiagrams();
-        setDiagrams(data);
-        console.log("data", data);
+        fetchDiagrams();
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, []);
+  }, [fetchDiagrams]);
 
   return (
-    //  {diagrams?.map((diagram) => (
-    //       <li key={diagram.id}>
-    //         <Button onClick={() => router.push(`/mermaid/${diagram.id}`)}>
-    //           {diagram.diagram_name}
-    //         </Button>
-    //       </li>
-    //     ))}
     <AnimatePresence>
       {diagrams?.map(
         (diagram, index) =>
