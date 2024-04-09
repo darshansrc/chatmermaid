@@ -242,6 +242,8 @@ export async function getUser() {
 export async function updateChats(id: string, messages: Message[]) {
   const supabase = createClient();
 
+  await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("chats")
     .upsert([{ id: id, messages: messages, last_updated_at: new Date() }])
@@ -251,19 +253,19 @@ export async function updateChats(id: string, messages: Message[]) {
   if (error) {
     return error.message;
   }
-  console.log("data", data);
+  // console.log("data", data);
 
   return data;
 }
 
 export async function getChats(id: string) {
   const supabase = createClient();
-
+  await supabase.auth.getUser();
+  console.log("getting chats");
   const { data, error } = await supabase
-    .from("chats")
+    .from("messages")
     .select("*")
-    .eq("id", id)
-    .single();
+    .eq("diagramId", id);
 
   if (error) {
     return error.message;
@@ -272,44 +274,24 @@ export async function getChats(id: string) {
   return data;
 }
 
-// Create an Anthropic API client (that's edge friendly)
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || "",
-});
+export async function saveMessage(
+  content: string,
+  role: string,
+  diagramId: string
+) {
+  const supabase = createClient();
+  await supabase.auth.getUser();
+  const id = nanoid();
+  const createdAt = new Date();
 
-// IMPORTANT! Set the runtime to edge
-// export const runtime = "edge";
+  const { data, error } = await supabase
+    .from("messages")
+    .insert([{ content, role, diagramId, id, createdAt }])
+    .select();
 
-export async function getUserMessage(messages: any) {
-  // Extract the `prompt` from the body of the request
+  if (error) {
+    return error.message;
+  }
 
-  // Ask Claude for a streaming chat completion given the prompt
-  const response = await anthropic.messages.create({
-    messages,
-    model: "claude-3-haiku-20240307",
-    stream: true,
-    max_tokens: 1024,
-  });
-
-  // Convert the response into a friendly text-stream
-  const stream = AnthropicStream(response, {
-    onStart: async () => {
-      // This callback is called when the stream starts
-      // You can use this to save the prompt to your database
-      await getUser();
-    },
-    onToken: async (token: string) => {
-      // This callback is called for each token in the stream
-      // You can use this to debug the stream or save the tokens to your database
-    },
-    onCompletion: async (completion: string) => {
-      // This callback is called when the completion is ready
-      // You can use this to save the final completion to your database
-      console.log("completion: ", completion);
-      await getUser();
-    },
-  });
-
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
+  return data;
 }

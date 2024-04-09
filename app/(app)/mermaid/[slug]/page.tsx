@@ -27,17 +27,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import ChatBox from "../ChatBox";
+import useChatStore from "@/store/chat-store";
+import useDiagramStore from "@/store/diagram-store";
 
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
   const [diagramName, setDiagramName] = useState<string>("");
+  const [editedName, setEditedName] = useState<string>("");
   const [diagram, setDiagram] = useState<any>(null);
   const [diagramId, setDiagramId] = useState<string>("");
   const [diagramTheme, setDiagramTheme] = useState<string>("default");
+  const { fetchChat } = useChatStore();
+  const { diagrams } = useDiagramStore();
+  const [toggleTabs, setToggleTabs] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        fetchChat(params.slug);
         const data = await getDiagram(params.slug);
         if (data) {
           setCode(data.code);
@@ -51,7 +58,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
     };
 
     fetchData();
-  }, [params.slug]);
+  }, [params.slug, fetchChat]);
 
   const onChange = useCallback(
     (val: string) => {
@@ -71,7 +78,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   );
 
   const handleNameChange = async () => {
-    const data = await changeDiagramName(diagramId, diagramName);
+    const data = await changeDiagramName(diagramId, editedName);
     if (data) {
       toast.success("Diagram name changed successfully");
     } else {
@@ -98,23 +105,32 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                 </PopoverTrigger>
                 <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
                   <Input
-                    value={diagramName}
+                    value={editedName}
                     onChange={(e) => {
-                      setDiagramName(e.target.value);
+                      setEditedName(e.target.value);
                     }}
                   ></Input>
 
-                  <Button onClick={handleNameChange} variant={"outline"}>
-                    Save Changes
-                  </Button>
+                  <Button onClick={handleNameChange}>Save Changes</Button>
                 </PopoverContent>
               </Popover>
             </div>
 
             <div className="w-full flex  justify-center">
               <TabsList>
-                <TabsTrigger value="editor">Editor</TabsTrigger>
-                <TabsTrigger value="chat">Chat</TabsTrigger>
+                <TabsTrigger
+                  className="data-[state=active]:dark:bg-neutral-900"
+                  value="editor"
+                >
+                  Editor
+                </TabsTrigger>
+                <TabsTrigger
+                  className="data-[state=active]:dark:bg-neutral-900"
+                  value="chat"
+                  onClick={() => setToggleTabs(!toggleTabs)}
+                >
+                  Chat
+                </TabsTrigger>
               </TabsList>
             </div>
 

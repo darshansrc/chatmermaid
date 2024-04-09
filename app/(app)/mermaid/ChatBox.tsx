@@ -1,6 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { BotMessage, UserMessage } from "@/components/chat/message";
+import {
+  BotMessage,
+  SpinnerMessage,
+  UserMessage,
+} from "@/components/chat/message";
 import { Separator } from "@/components/ui/separator";
 import { useChat } from "ai/react";
 import { ArrowUp, CirclePlus, Forward, TextCursor } from "lucide-react";
@@ -8,6 +12,7 @@ import { toast } from "sonner";
 import { spinner } from "@/components/chat/spinner";
 import { getChats, updateChats } from "@/actions/actions";
 import { Message } from "ai";
+import useChatStore from "@/store/chat-store";
 
 type ChatBoxProps = {
   diagramId: string;
@@ -16,29 +21,50 @@ type ChatBoxProps = {
 };
 
 export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
+  const [prompt, setPrompt] = useState<string>("");
   const [initialChats, setInitialChats] = useState<Message[]>([]);
+  const [hasResponseStarted, setHasResponseStarted] = useState(false);
+  const { chat, fetchChat } = useChatStore();
+  const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getChats(diagramId);
-      if (data) setInitialChats(data.messages);
+      setInitialChats(chat);
+      console.log("chat", chat);
+      scrollDown();
     };
     fetchData();
-  }, [diagramId]);
+  }, [chat, diagramId]);
 
   const { messages, input, data, isLoading, handleInputChange, handleSubmit } =
     useChat({
       initialMessages: initialChats,
+      onResponse: () => setHasResponseStarted(true),
+      onFinish: () => {
+        setHasResponseStarted(false);
+        fetchChat(diagramId);
+      },
+      onError: (error) =>
+        toast.error("Unknown error occured. Please try again after some time."),
+      body: { diagramId, prompt },
     });
 
   useEffect(() => {
-    const updateData = async () => {
-      if (messages[0]) {
-        const data = await updateChats(diagramId, messages);
-        if (data) toast.success("Chat saved successfully");
-      }
-    };
-    if (!isLoading) updateData();
-  }, [messages, diagramId, isLoading]);
+    setPrompt(input);
+  }, [input]);
+
+  useEffect(() => {
+    scrollDown();
+  }, [messages]);
+
+  // useEffect(() => {
+  //   const updateData = async () => {
+  //     if (messages[0]) {
+  //       const data = await updateChats(diagramId, messages);
+  //       if (data) toast.success("Chat saved successfully");
+  //     }
+  //   };
+  //   if (!isLoading) updateData();
+  // }, [messages, diagramId, isLoading]);
 
   function scrollDown() {
     var myDiv = document.getElementById("chatbox");
@@ -51,9 +77,6 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
     if (isLoading) scrollDown();
   });
 
-  useEffect(() => {
-    scrollDown();
-  }, [messages]);
   return (
     <>
       <div className="relative h-full  pb-20">
@@ -73,11 +96,10 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
                   onChange={onChange}
                 />
               )}
-
               <Separator className="my-4" />
             </div>
           ))}
-          {isLoading && spinner}
+          {isLoading && !hasResponseStarted && <SpinnerMessage />}
         </div>
 
         <form onSubmit={handleSubmit}>

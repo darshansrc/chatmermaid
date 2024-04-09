@@ -77,7 +77,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
           minHeight="100%"
           minWidth="100%"
           basicSetup
-          className="w-full h-full rounded-b-lg active:outline-none border-none  text-[12px] rounded-xl"
+          className="w-full h-full rounded-b-lg active:outline-none border-none   text-[12px] rounded-xl"
           lang="mermaid"
           extensions={[langs.mermaid()]}
           onChange={onChange}
@@ -90,7 +90,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                     fontFamily: "monospace",
                     background: "rgb(24, 24, 24)",
                     gutterBackground: "rgb(24, 24, 24)",
-                    lineHighlight: "rgb(40 40 40)",
+                    lineHighlight: "#28282850",
                     selection: "#036dd626",
                   },
                 })
@@ -104,6 +104,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                 })
           }
         />
+
         <div className="absolute  flex justify-center items-center bottom-8 w-full   ">
           <CirclePlus
             size={25}

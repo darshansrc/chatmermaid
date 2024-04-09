@@ -54,7 +54,10 @@ const Header = ({ diagramName, diagramId }: AppLayoutProps) => {
                 defaultValue={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
               ></Input>
-              <Button onClick={handleNameChange} variant={"outline"}>
+              <Button
+                onClick={handleNameChange}
+                className="dark:text-black dark:bg-white"
+              >
                 Save Changes
               </Button>
             </PopoverContent>

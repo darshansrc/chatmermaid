@@ -11,6 +11,7 @@ import { GanttChart } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { spinner } from "./chat/spinner";
 import useDiagramStore from "@/store/diagram-store";
+import Image from "next/image";
 
 interface ChatHistoryProps {
   userId?: string;
@@ -41,12 +42,15 @@ export function ChatHistory() {
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between px-4 py-6">
         <Link href="/" className="hidden items-center space-x-2 md:flex">
-          <GanttChart
-            strokeWidth={3}
-            className="text-blue-500 font-extrabold"
+          <Image
+            src="/mermaid.png"
+            alt="logo"
+            className="bg-white m-[2px] rounded-full"
+            width={30}
+            height={30}
           />
-          <span className="hidden font-urban text-xl font-bold sm:inline-block">
-            {siteConfig.name}
+          <span className="hidden font-urban text-lg font-semibold sm:inline-block">
+            chatmermaid
           </span>
         </Link>
       </div>

@@ -50,19 +50,20 @@ export function BotMessage({
 
   return (
     <div className="group relative flex items-start md:-ml-12">
-      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-black dark:bg-neutral-200 shadow-sm">
+      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border  bg-neutral-200 dark:bg-neutral-200 shadow-sm">
         <Bot className="p-1 text-black" />
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
         {nonMermaidText && (
-          <MarkdownPreview
-            source={text}
-            // className={theme === "dark" ? "dark:bg-neutral-900" : "bg-white"}
-            style={{
-              backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
-              color: theme === "dark" ? "#fff" : "#000",
-            }}
-          />
+          <div data-color-mode={theme}>
+            <MarkdownPreview
+              source={text}
+              // className={theme === "dark" ? "dark:bg-neutral-900" : "bg-white"}
+              style={{
+                backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
+              }}
+            />
+          </div>
         )}
         {mermaidMatch && (
           <>
@@ -122,9 +123,9 @@ export function SystemMessage({ children }: { children: React.ReactNode }) {
 
 export function SpinnerMessage() {
   return (
-    <div className="group relative flex items-start md:-ml-12">
-      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
-        <IconOpenAI />
+    <div className="group relative flex items-start md:-ml-12 mb-4">
+      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border  bg-neutral-200 dark:bg-neutral-200 shadow-sm">
+        <Bot className="p-1 text-black" />
       </div>
       <div className="ml-4 h-[24px] flex flex-row items-center flex-1 space-y-2 overflow-hidden px-1">
         {spinner}
