@@ -62,16 +62,16 @@ export function ChatHistory() {
           New Diagram
         </div>
       </div>
-      <React.Suspense
+      {/* <React.Suspense
         fallback={
           <div className="flex items-center justify-center h-full w-full">
             <p className="text-sm text-muted-foreground">{spinner}</p>
           </div>
         }
-      >
-        {/* @ts-ignore */}
-        <SidebarList />
-      </React.Suspense>
+      > */}
+      {/* @ts-ignore */}
+      <SidebarList />
+      {/* </React.Suspense> */}
     </div>
   );
 }

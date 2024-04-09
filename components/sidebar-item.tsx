@@ -8,12 +8,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 import { buttonVariants } from "@/components/ui/button";
-import { IconMessage, IconUsers } from "@/components/ui/icons";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { IconMessage } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 interface SidebarItemProps {

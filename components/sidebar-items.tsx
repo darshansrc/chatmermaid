@@ -12,13 +12,9 @@ import {
 } from "@/actions/actions";
 import { SidebarActions } from "./sidebar-actions";
 import useDiagramStore from "@/store/diagram-store";
-
-interface SidebarItemsProps {
-  chats?: any;
-}
+import { spinner } from "./chat/spinner";
 
 export function SidebarItems() {
-  const [diagramss, setDiagramss] = useState<any>([]);
   const { diagrams, fetchDiagrams } = useDiagramStore();
 
   useEffect(() => {
@@ -31,6 +27,13 @@ export function SidebarItems() {
     };
     fetchData();
   }, [fetchDiagrams]);
+
+  if (!diagrams)
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <p className="text-sm text-muted-foreground">{spinner}</p>
+      </div>
+    );
 
   return (
     <AnimatePresence>
