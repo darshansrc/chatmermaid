@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     // Ask Claude for a streaming chat completion given the prompt
     const response = await anthropic.messages.create({
       messages,
-      model: process.env.ANTHROPIC_MODEL_ID || "",
+      model: "claude-3-haiku-20240307" || "",
       stream: true,
       max_tokens: 300,
     });
