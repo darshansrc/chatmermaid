@@ -16,7 +16,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { SidebarToggle } from "@/components/sidebar-toggle";
 import { Button } from "@/components/ui/button";
 import { IconSeparator } from "@/components/ui/icons";
-import { Pencil, Share } from "lucide-react";
+import { BotMessageSquare, CodeXml, Pencil, Share } from "lucide-react";
 import { DropdownMenuDemo } from "../DropDownMenu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -90,7 +90,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
     <>
       <Tabs defaultValue="chat">
         <header
-          className={` pl-0  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
+          className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
         >
           <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
             <div className=" w-full px-4 flex h-12 items-center  ">
@@ -117,19 +117,21 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
             </div>
 
             <div className="w-full flex  justify-center">
-              <TabsList>
+              <TabsList className="p-1 m-1">
                 <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-900"
+                  className="data-[state=active]:dark:bg-neutral-950 flex text-[12px]  flex-row gap-1 items-center"
                   value="editor"
                 >
-                  Editor
+                  <CodeXml className="size-3" />{" "}
+                  <p className="text-[12px] ">Editor</p>
                 </TabsTrigger>
                 <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-900"
+                  className="data-[state=active]:dark:bg-neutral-950 text-[12px] flex flex-row gap-1 items-center"
                   value="chat"
                   onClick={() => setToggleTabs(!toggleTabs)}
                 >
-                  Chat
+                  <BotMessageSquare className="size-3" />{" "}
+                  <p className="text-[12px]">Chat</p>
                 </TabsTrigger>
               </TabsList>
             </div>
