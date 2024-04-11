@@ -30,8 +30,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
 
   const appTheme = theme;
   return (
-    <div className=" h-full w-full flex flex-col">
-      <div className=" h-8 overflow-hidden   flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
+    <div className=" h-full w-full flex relative flex-col">
+      <div className="absolute z-40 flex bg-neutral-900 border border-neutral-700 rounded-md flex-row  left-[50%] translate-x-[-50%] bottom-4">
         <div>
           <Select>
             <SelectTrigger className="border-none outline-none w-auto focus:border-none">
@@ -43,16 +43,18 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                 Mermaid
               </SelectItem>
               <SelectItem disabled className="text-sm py-1" value="uml">
-                UML (coming soon)
+                plantuml (coming soon)
               </SelectItem>
             </SelectContent>
           </Select>
         </div>
-        <div className="flex flex-row gap-2 pr-2">
+        <div className="flex flex-row ">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <History size={15} className="text-neutral-400" />
+                <Button variant={"ghost"} size={"icon"}>
+                  <History className="size-4 text-neutral-400" />
+                </Button>
               </TooltipTrigger>
               <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
                 History
@@ -62,7 +64,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <CopyButton textToCopy={code} />
+                <Button variant={"ghost"} size={"icon"}>
+                  <CopyButton textToCopy={code} />
+                </Button>
               </TooltipTrigger>
               <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
                 Copy

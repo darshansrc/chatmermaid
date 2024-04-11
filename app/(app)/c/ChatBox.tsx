@@ -7,13 +7,21 @@ import {
 } from "@/components/chat/message";
 import { Separator } from "@/components/ui/separator";
 import { useChat } from "ai/react";
-import { ArrowUp, CirclePlus, Forward, TextCursor } from "lucide-react";
+import {
+  ArrowUp,
+  CircleArrowRight,
+  CirclePlus,
+  Forward,
+  Key,
+  TextCursor,
+} from "lucide-react";
 import { toast } from "sonner";
 import { spinner } from "@/components/chat/spinner";
 import { getChats, updateChats } from "@/actions/actions";
 import { Message } from "ai";
 import useChatStore from "@/store/chat-store";
 import Textarea from "react-textarea-autosize";
+import { TextareaAutosize as BaseTextareaAutosize } from "@mui/base/TextareaAutosize";
 import {
   Tooltip,
   TooltipContent,
@@ -23,6 +31,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { IconArrowElbow, IconPlus } from "@/components/ui/icons";
 import ReactTextareaAutosize from "react-textarea-autosize";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type ChatBoxProps = {
   diagramId: string;
@@ -55,7 +64,9 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
         fetchChat(diagramId);
       },
       onError: (error) =>
-        toast.error("Unknown error occured. Please try again after some time."),
+        toast.error(
+          error.message || "An error occurred. Please try again later."
+        ),
       body: { diagramId, prompt },
     });
 
@@ -88,12 +99,19 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
     if (isLoading) scrollDown();
   });
 
+  const handleKeyDown = (e) => {
+    if ((e.key === "Enter" || e.key === "Return") && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   return (
     <>
-      <div className="relative h-full  pb-20">
+      <div className="relative h-full">
         <div
           id="chatbox"
-          className="relative h-full overflow-scroll max-w-full  pl-16 pr-4 pt-4"
+          className="relative h-full overflow-scroll pb-32  max-w-full  pl-16 pr-4 pt-4"
         >
           {messages.map((m) => (
             <div key={m.id}>
@@ -107,77 +125,61 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
                   onChange={onChange}
                 />
               )}
-              <Separator className="my-4" />
+
+              {m.id !== messages[messages.length - 1].id || isLoading ? (
+                <Separator className="my-4" />
+              ) : (
+                <div className="my-4" />
+              )}
             </div>
           ))}
-          {isLoading && !hasResponseStarted && <SpinnerMessage />}
+          <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="w-full relative flex items-center justify-center"
-        >
-          <div className="relative flex max-h-60 mx-4  w-11/12 grow flex-col overflow-hidden  px-8 sm:rounded-lg sm:border sm:px-12 bg-neutral-950">
-            {/* <CirclePlus
-              size={25}
-              className="absolute left-[4%] dark:text-neutral-200 rounded-full ml-4 z-50 p-1"
-            /> */}
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="absolute left-0 top-[50%] translate-y-[-50%] size-8 rounded-full  p-0 sm:left-4"
-                  >
-                    <IconPlus />
-                    <span className="sr-only">New Chat</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>New Chat</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            <ReactTextareaAutosize
-              tabIndex={0}
-              placeholder="Send a message."
-              className="min-h-[30px] w-11/12 resize-none bg-transparent px-2 py-4 focus-within:outline-none sm:text-sm"
-              autoFocus
-              spellCheck={false}
-              autoComplete="off"
-              autoCorrect="off"
-              name="message"
-              rows={1}
-              value={input}
-              onChange={handleInputChange}
-            />
-
-            {/* <input
-              value={input}
-              className="h-10 mx-4  w-11/12 py-4 px-12 rounded-lg focus:ring-0 bg-neutral-200/50 dark:bg-neutral-700/50 backdrop-blur-md dark:bg-transparent/6 "
-              placeholder="Ask AI "
-              onChange={handleInputChange}
-            ></input> */}
-            <div className="absolute right-0 top-[50%] translate-y-[-50%]  sm:right-4 ">
-              <Button type="submit" size="icon" disabled={input === ""}>
-                <IconArrowElbow />
-              </Button>
-
-              {/* <button
-                type="submit"
-                className="absolute right-0 top-[50%] translate-y-[-50%] text-white rounded-full   bg-blue-600 "
+        <div className="absolute bottom-0 left-0 w-full border-t  dark:bg-neutral-900 bg-white  flex justify-center items-center">
+          <form onSubmit={handleSubmit} className="w-full p-[8px] rounded-sm">
+            <div className="relative flex max-h-60   grow flex-col overflow-hidden   rounded-md  sm:border sm:px-2 bg-neutral-50 dark:bg-neutral-800">
+              {/* <Button
+                variant="outline"
+                size="icon"
+                className="absolute left-0  top-[50%] translate-y-[-50%] size-8 rounded-full  sm:left-4"
               >
-                <ArrowUp size={24} className="p-1" />
-              </button> */}
+                <IconPlus />
+              </Button> */}
+
+              <Textarea
+                maxRows={4}
+                aria-label="maximum height"
+                placeholder="Describe your diagram..."
+                onKeyDown={handleKeyDown}
+                className="min-h-[30px] w-11/12 resize-none bg-transparent px-2 pt-4 pb-10 focus-within:outline-none sm:text-sm"
+                value={input}
+                onChange={handleInputChange}
+              />
+
+              <div className="absolute right-2 bottom-2 flex flex-row gap-2   ">
+                {/* <div className="flex items-center pt-1 space-x-1">
+                  <Checkbox className="size-3 p-0" id="terms2" />
+                  <label
+                    htmlFor="terms2"
+                    className="font-medium text-[10px] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    use current diagram
+                  </label>
+                </div> */}
+                <Button
+                  type="submit"
+                  className="flex flex-row gap-1"
+                  size={"sm"}
+                  disabled={input === ""}
+                >
+                  Send
+                  <CircleArrowRight className="size-3" />
+                </Button>
+              </div>
             </div>
-            {/* <button
-              type="submit"
-              className="absolute right-[4%] text-white rounded-full  mr-4 bg-blue-600 "
-            >
-              <ArrowUp size={24} className="p-1" />
-            </button> */}
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </>
   );

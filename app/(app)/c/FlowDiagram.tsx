@@ -8,7 +8,6 @@ import {
   useReactFlow,
 } from "reactflow";
 import Mermaid from "./Mermaid";
-import ZoomControls from "./zoom-controls";
 import { useTheme } from "next-themes";
 import "reactflow/dist/style.css";
 import {
@@ -18,6 +17,8 @@ import {
   Maximize2,
   ChevronsDownUp,
   ChevronsUpDown,
+  Lock,
+  LockOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -45,6 +46,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Scan, ZoomIn, ZoomOut } from "lucide-react";
 
 interface FlowDiagramProps {
   code: any;
@@ -124,122 +126,127 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
     theme: mermaidTheme,
   };
 
+  const ZoomControls = () => {
+    const reactFlowInstance = useReactFlow();
+
+    reactFlowInstance.fitView();
+
+    const handleZoomIn = () => {
+      reactFlowInstance.zoomIn();
+    };
+
+    const handleZoomOut = () => {
+      reactFlowInstance.zoomOut();
+    };
+
+    const handleReset = () => {
+      reactFlowInstance.fitView();
+    };
+
+    return (
+      <div className="absolute z-40 flex bg-neutral-900 border border-neutral-700 rounded-md flex-row gap-2 left-[50%] translate-x-[-50%] bottom-4">
+        <Button size="icon" variant="ghost" onClick={handleZoomIn}>
+          <ZoomIn className="m-1" size={15} />
+        </Button>
+        <Button size="icon" variant="ghost" onClick={handleReset}>
+          <Scan className="m-1" size={15} />
+        </Button>
+        <Button size="icon" variant="ghost" onClick={handleZoomOut}>
+          <ZoomOut className="m-1" size={15} />
+        </Button>
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={() => setPanZoom(!panZoom)}
+        >
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                {panZoom ? (
+                  <Lock className="h-4 w-4 text-neutral-800  dark:text-white " />
+                ) : (
+                  <LockOpen className="h-4 w-4 text-neutral-800  dark:text-white " />
+                )}
+              </TooltipTrigger>
+              <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
+                Pan and Zoom
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => {
+                  setFullScreenModalOpen(true);
+                }}
+              >
+                <Maximize2 className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
+              Full Screen
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <div className="flex flex-row gap-2">
+          <Select
+            key={mermaidTheme}
+            value={mermaidTheme}
+            defaultValue={mermaidTheme}
+            onValueChange={onMermaidThemeChange}
+          >
+            <SelectTrigger className="border-none outline-none w-auto focus:none">
+              <SwatchBook size={14} className="m-1" />
+              <span className="text-[11px] font-semibold">{mermaidTheme}</span>
+            </SelectTrigger>
+            <SelectContent
+              defaultValue={mermaidTheme}
+              className="dark:bg-neutral-800"
+            >
+              <SelectItem
+                className="text-sm py-1 hover:dark:bg-neutral-700"
+                value="default"
+              >
+                default
+              </SelectItem>
+              <SelectItem
+                className="text-sm py-1 hover:dark:bg-neutral-700"
+                value="dark"
+              >
+                dark
+              </SelectItem>
+              <SelectItem
+                className="text-sm py-1 hover:dark:bg-neutral-700"
+                value="neutral"
+              >
+                neutral
+              </SelectItem>
+              <SelectItem
+                className="text-sm py-1 hover:dark:bg-neutral-700"
+                value="forest"
+              >
+                forest
+              </SelectItem>
+              <SelectItem
+                className="text-sm py-1 hover:dark:bg-neutral-600"
+                value="base"
+              >
+                base
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className=" h-full w-full flex flex-col">
-        <div className=" h-8 overflow-hidden    flex flex-row justify-between items-center bg-neutral-100 dark:bg-neutral-800">
-          <div className="flex flex-row gap-2">
-            <Select
-              key={mermaidTheme}
-              value={mermaidTheme}
-              defaultValue={mermaidTheme}
-              onValueChange={onMermaidThemeChange}
-            >
-              <SelectTrigger className="border-none outline-none w-auto focus:none">
-                <SwatchBook size={14} className="m-1" />
-                <span className="text-[11px] font-semibold">
-                  {mermaidTheme}
-                </span>
-              </SelectTrigger>
-              <SelectContent
-                defaultValue={mermaidTheme}
-                className="dark:bg-neutral-800"
-              >
-                <SelectItem
-                  className="text-sm py-1 hover:dark:bg-neutral-700"
-                  value="default"
-                >
-                  default
-                </SelectItem>
-                <SelectItem
-                  className="text-sm py-1 hover:dark:bg-neutral-700"
-                  value="dark"
-                >
-                  dark
-                </SelectItem>
-                <SelectItem
-                  className="text-sm py-1 hover:dark:bg-neutral-700"
-                  value="neutral"
-                >
-                  neutral
-                </SelectItem>
-                <SelectItem
-                  className="text-sm py-1 hover:dark:bg-neutral-700"
-                  value="forest"
-                >
-                  forest
-                </SelectItem>
-                <SelectItem
-                  className="text-sm py-1 hover:dark:bg-neutral-600"
-                  value="base"
-                >
-                  base
-                </SelectItem>
-              </SelectContent>
-            </Select>
-            {/* <DropdownMenu>
-              <DropdownMenuTrigger
-                asChild
-                className="border-none cursor-pointer outline-none flex items-center justify-center w-auto focus:none"
-              >
-                <div className="flex flex-row ">
-                  <SwatchBook size={14} className="m-1" />
-                  <span className="text-[11px] font-semibold">
-                    {mermaidTheme}
-                  </span>
-                  <ChevronsUpDown size={12} className="m-1 text-gray-500" />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="dark:bg-neutral-800">
-                <DropdownMenuCheckboxItem
-                  checked
-                  className="text-sm py-1 hover:dark:bg-neutral-600"
-                  
-                >
-                  Fulfilled
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu> */}
-          </div>
-          <div className="flex flex-row items-center gap-2 mr-2">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() => setPanZoom(!panZoom)}
-                  >
-                    {panZoom ? (
-                      <Fullscreen className="h-4 w-4 text-neutral-800  dark:text-white " />
-                    ) : (
-                      <Fullscreen className="h-4 w-4 text-neutral-400 dark:text-neutral-600" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-                  Pan and Zoom
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Maximize2
-                    className="h-4 w-4"
-                    onClick={() => {
-                      setFullScreenModalOpen(true);
-                    }}
-                  />
-                </TooltipTrigger>
-                <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-                  Full Screen
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        </div>
         <div
           className={cn(
             "h-full w-full overflow-auto  "
@@ -270,7 +277,6 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
         open={fullScreenModalOpen}
         onClose={() => {
           setFullScreenModalOpen(false);
-          // document.exitFullscreen();
         }}
       >
         <div
@@ -288,7 +294,6 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
               className="text-neutral-700 dark:text-neutral-200"
               onClick={() => {
                 setFullScreenModalOpen(false);
-                // document.exitFullscreen();
               }}
             />
           </Button>

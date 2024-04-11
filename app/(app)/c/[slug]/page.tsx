@@ -133,14 +133,14 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
             <div className="w-full flex  justify-center">
               <TabsList className="p-1 m-1">
                 <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-950 flex text-[12px]  flex-row gap-1 items-center"
+                  className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
                   value="editor"
                 >
                   <CodeXml className="size-3" />{" "}
                   <p className="text-[12px] ">Editor</p>
                 </TabsTrigger>
                 <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-950 text-[12px] flex flex-row gap-1 items-center"
+                  className="data-[state=active]:dark:bg-neutral-900 text-[12px] flex flex-row gap-1 items-center"
                   value="chat"
                   onClick={() => setToggleTabs(!toggleTabs)}
                 >
@@ -148,7 +148,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                   <p className="text-[12px]">Chat</p>
                 </TabsTrigger>
                 <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-950 flex text-[12px]  flex-row gap-1 items-center"
+                  className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
                   value="both"
                   onClick={handleCloseSidebar}
                 >

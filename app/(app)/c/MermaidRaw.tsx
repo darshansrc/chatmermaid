@@ -26,7 +26,7 @@ const MermaidRaw = ({ chart, isLoading, onChange }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center dark:bg-neutral-800 rounded-lg p-2">
       <div className="mermaid">{chart}</div>{" "}
       <Button
         variant={"outline"}
