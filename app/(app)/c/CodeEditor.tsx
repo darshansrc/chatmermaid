@@ -105,7 +105,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
           }
         />
 
-        <div className="absolute  flex justify-center items-center bottom-8 w-full   ">
+        {/* <div className="absolute  flex justify-center items-center bottom-8 w-full   ">
           <CirclePlus
             size={25}
             className="absolute left-4 dark:text-neutral-200 rounded-full ml-4 z-50 p-1"
@@ -118,7 +118,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
             size={24}
             className="absolute right-4 text-white rounded-full mr-4 bg-blue-600 p-1"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
-import { SidebarItems } from "@/components/sidebar-items";
+import { SidebarItems } from "@/components/sidebar/sidebar-items";
 import { cache } from "react";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "../mode-toggle";
 import { getAllDiagrams } from "@/actions/actions";
-import UserCard from "./user-card";
+import UserCard from "../user-card";
 
 interface SidebarListProps {
   userId?: string;

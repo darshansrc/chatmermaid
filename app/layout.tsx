@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/react";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -36,7 +37,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AppRouterCacheProvider>
-            <main>{children}</main> <Toaster />
+            <main>
+              {children} <Analytics />
+            </main>
+            <Toaster />
           </AppRouterCacheProvider>
         </ThemeProvider>
       </body>

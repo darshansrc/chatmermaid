@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const UserCard = () => {
   const [user, setUser] = useState<any>(null);
@@ -25,20 +26,20 @@ const UserCard = () => {
   }, []);
 
   return (
-    <div>
-      {user && (
+    <div className="w-full">
+      {user ? (
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant="ghost">
-              <div className="flex flex-row items-center gap-2">
+          <DropdownMenuTrigger className="w-full">
+            <Button variant="ghost" className="p-2 w-full justify-start">
+              <div className="flex flex-row items-center  gap-2">
                 <Image
-                  width={35}
-                  height={35}
-                  className="rounded-full"
+                  width={25}
+                  height={25}
+                  className="rounded-full "
                   src={user.user_metadata.avatar_url}
                   alt={user.name}
                 />
-                <div className="flex text-sm font-medium  flex-col text-left truncate ">
+                <div className="flex text-sm font-medium   flex-col text-left truncate ">
                   {user.user_metadata.full_name}
                 </div>
               </div>
@@ -56,6 +57,14 @@ const UserCard = () => {
             </form>
           </DropdownMenuContent>
         </DropdownMenu>
+      ) : (
+        <div className="flex items-center space-x-4">
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
       )}
     </div>
   );

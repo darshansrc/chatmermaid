@@ -10,10 +10,10 @@ import remarkMath from "remark-math";
 import { StreamableValue } from "ai/rsc";
 import { useStreamableText } from "@/hooks/use-streamable-text";
 import { AnthropicStream } from "ai";
-import MermaidRaw from "@/app/(app)/mermaid/MermaidRaw";
+import MermaidRaw from "@/app/(app)/c/MermaidRaw";
 import ReactMarkdown from "react-markdown";
 import MarkdownPreview from "@uiw/react-markdown-preview";
-import Mermaid from "@/app/(app)/mermaid/Mermaid";
+import Mermaid from "@/app/(app)/c/Mermaid";
 import { useTheme } from "next-themes";
 import { Bot } from "lucide-react";
 

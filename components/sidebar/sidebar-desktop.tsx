@@ -2,9 +2,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Sidebar } from "@/components/sidebar";
+import { Sidebar } from "@/components/sidebar/sidebar";
 import { createNewDiagram, getAllDiagrams } from "@/actions/actions";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { ChatHistory } from "./chat-history";
 
 export function SidebarDesktop() {
@@ -25,7 +25,7 @@ export function SidebarDesktop() {
   }, []);
 
   return (
-    <Sidebar className="peer absolute dark:bg-zinc-600 inset-y-0 z-30 hidden -translate-x-full border-r bg-muted duration-300 ease-in-out data-[state=open]:translate-x-0 lg:flex lg:w-[200px] xl:w-[250px]">
+    <Sidebar className="peer absolute dark:bg-zinc-600 inset-y-0 z-30 hidden -translate-x-full border-r bg-muted duration-300 ease-in-out data-[state=open]:translate-x-0 lg:flex lg:w-[200px] xl:w-[220px]">
       <ChatHistory />
     </Sidebar>
   );

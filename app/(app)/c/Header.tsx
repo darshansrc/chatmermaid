@@ -1,6 +1,6 @@
 "use client";
 import { ModeToggle } from "@/components/mode-toggle";
-import { SidebarToggle } from "@/components/sidebar-toggle";
+import { SidebarToggle } from "@/components/sidebar/sidebar-toggle";
 import { Button } from "@/components/ui/button";
 import { IconSeparator } from "@/components/ui/icons";
 import { Share } from "lucide-react";
@@ -35,7 +35,7 @@ const Header = ({ diagramName, diagramId }: AppLayoutProps) => {
   };
   return (
     <header
-      className={` pl-0  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
+      className={` pl-0  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
     >
       <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
         <div className=" w-full px-4 flex h-12 items-center  ">

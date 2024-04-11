@@ -276,7 +276,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
         <div
           className={cn(
             "h-full  w-full ",
-            mermaidTheme !== "dark" ? "bg-white" : "bg-neutral-900"
+            theme !== "dark" ? "bg-white" : "bg-neutral-900"
           )}
         >
           <Button
@@ -300,33 +300,8 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
             selectionOnDrag={false}
             nodesDraggable={false}
           >
-            <MiniMap
-              maskColor={
-                mermaidTheme === "dark"
-                  ? "rgba(0,0,0,0.8)"
-                  : "rgba(200,200,200,0.5)"
-              }
-              maskStrokeColor={
-                mermaidTheme === "dark"
-                  ? "rgba(0,0,0,0.8)"
-                  : "rgba(200,200,200,200.8)"
-              }
-              nodeColor={
-                mermaidTheme === "dark"
-                  ? "rgba(0,0,0,0.7)"
-                  : "rgba(200,200,200,0.5)"
-              }
-              nodeBorderRadius={20}
-              maskStrokeWidth={2}
-              zoomable
-              pannable
-            />
-            <Background
-              color={
-                mermaidTheme === "dark" ? "rgb(60,60,60)" : "rgb(200,200,200)"
-              }
-            />
             <ZoomControls />
+            <MiniMap />
           </ReactFlow>
         </div>
       </Dialog>

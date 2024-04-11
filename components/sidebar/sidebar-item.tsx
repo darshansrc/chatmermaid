@@ -15,7 +15,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import MermaidRaw from "@/app/(app)/mermaid/MermaidRaw";
+import MermaidRaw from "@/app/(app)/c/MermaidRaw";
+import { MessageCircleCode } from "lucide-react";
 
 interface SidebarItemProps {
   index: number;
@@ -26,7 +27,7 @@ interface SidebarItemProps {
 export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
   const pathname = usePathname();
 
-  const isActive = pathname === `/mermaid/${diagram?.id}`;
+  const isActive = pathname === `/c/${diagram?.id}`;
   //   const [newChatId, setNewChatId] = useLocalStorage("newChatId", null);
   const shouldAnimate = index === 0 && isActive;
 
@@ -73,13 +74,13 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
       </div> */}
       <div className="absolute left-2 top-1 flex size-6 items-center justify-center">
         {" "}
-        <IconMessage className="mr-2 mt-1 text-blue-500" />
+        <MessageCircleCode className="mr-2 mt-1 text-blue-500" />
       </div>
 
       <HoverCard>
         <HoverCardTrigger>
           <Link
-            href={`/mermaid/${diagram.id}`}
+            href={`/c/${diagram.id}`}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "group w-full px-8 transition-colors hover:bg-zinc-200/40 dark:hover:bg-zinc-300/10",

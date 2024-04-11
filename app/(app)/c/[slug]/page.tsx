@@ -13,10 +13,17 @@ import {
   changeDiagramName,
 } from "@/actions/actions";
 import { ModeToggle } from "@/components/mode-toggle";
-import { SidebarToggle } from "@/components/sidebar-toggle";
+import { SidebarToggle } from "@/components/sidebar/sidebar-toggle";
 import { Button } from "@/components/ui/button";
 import { IconSeparator } from "@/components/ui/icons";
-import { BotMessageSquare, CodeXml, Pencil, Share } from "lucide-react";
+import {
+  BotMessageSquare,
+  CodeXml,
+  LayoutDashboard,
+  LayoutPanelLeft,
+  Pencil,
+  Share,
+} from "lucide-react";
 import { DropdownMenuDemo } from "../DropDownMenu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -29,6 +36,7 @@ import { toast } from "sonner";
 import ChatBox from "../ChatBox";
 import useChatStore from "@/store/chat-store";
 import useDiagramStore from "@/store/diagram-store";
+import { useSidebar } from "@/hooks/use-sidebar";
 
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
@@ -40,6 +48,8 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const { fetchChat } = useChatStore();
   const { diagrams } = useDiagramStore();
   const [toggleTabs, setToggleTabs] = useState(false);
+
+  const { toggleSidebar, isSidebarOpen } = useSidebar();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,11 +96,15 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
     }
   };
 
+  const handleCloseSidebar = () => {
+    if (isSidebarOpen) toggleSidebar();
+  };
+
   return (
     <>
       <Tabs defaultValue="chat">
         <header
-          className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
+          className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
         >
           <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
             <div className=" w-full px-4 flex h-12 items-center  ">
@@ -133,6 +147,14 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                   <BotMessageSquare className="size-3" />{" "}
                   <p className="text-[12px]">Chat</p>
                 </TabsTrigger>
+                <TabsTrigger
+                  className="data-[state=active]:dark:bg-neutral-950 flex text-[12px]  flex-row gap-1 items-center"
+                  value="both"
+                  onClick={handleCloseSidebar}
+                >
+                  <LayoutPanelLeft className="size-3" />
+                  <p className="text-[12px] ">Both</p>
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -166,14 +188,48 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                   onChange={onChange}
                 />
               </TabsContent>
+              <TabsContent className="h-full overflow-hidden" value="both">
+                <ChatBox
+                  diagramId={diagramId}
+                  code={code}
+                  onChange={onChange}
+                />
+              </TabsContent>
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel>
-              <FlowDiagram
-                code={code}
-                diagramTheme={diagramTheme}
-                diagramId={diagramId}
-              />
+              <TabsContent className="h-full overflow-hidden" value={"chat"}>
+                <FlowDiagram
+                  code={code}
+                  diagramTheme={diagramTheme}
+                  diagramId={diagramId}
+                />
+              </TabsContent>
+              <TabsContent className="h-full overflow-hidden" value={"editor"}>
+                <FlowDiagram
+                  code={code}
+                  diagramTheme={diagramTheme}
+                  diagramId={diagramId}
+                />
+              </TabsContent>
+              <TabsContent className="h-full overflow-hidden" value="both">
+                <ResizablePanelGroup direction={"horizontal"}>
+                  <ResizablePanel>
+                    {" "}
+                    <CodeEditor code={code} onChange={onChange} />
+                  </ResizablePanel>
+                  <ResizableHandle withHandle />
+
+                  <ResizablePanel>
+                    {" "}
+                    <FlowDiagram
+                      code={code}
+                      diagramTheme={diagramTheme}
+                      diagramId={diagramId}
+                    />
+                  </ResizablePanel>
+                </ResizablePanelGroup>
+              </TabsContent>
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>

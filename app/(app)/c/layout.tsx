@@ -1,4 +1,4 @@
-import { SidebarDesktop } from "@/components/sidebar-desktop";
+import { SidebarDesktop } from "@/components/sidebar/sidebar-desktop";
 import { SidebarProvider } from "@/hooks/use-sidebar";
 
 interface AppLayoutProps {
@@ -12,8 +12,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
     <SidebarProvider>
       <div className="h-screen max-h-screen overflow-hidden flex flex-col w-screen dark:bg-neutral-900  ">
         <SidebarDesktop />
-
-        <main className="flex-1  duration-300 pl-0 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[250px] dark:bg-neutral-900">
+        <main className="flex-1  duration-300 pl-0 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px] dark:bg-neutral-900">
           {children}
         </main>
       </div>

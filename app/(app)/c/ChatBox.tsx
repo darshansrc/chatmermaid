@@ -103,7 +103,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="absolute  flex justify-center items-center bottom-8 w-full   ">
+          <div className="absolute  flex justify-center border-t border-neutral-200 dark:border-neutral-800 items-center bottom-8 w-full   ">
             <CirclePlus
               size={25}
               className="absolute left-[4%] dark:text-neutral-200 rounded-full ml-4 z-50 p-1"

@@ -42,7 +42,7 @@ export async function login(formData: FormData) {
     return error.message;
   }
 
-  redirect("/mermaid");
+  redirect("/c");
 }
 
 export async function signup(formData: FormData) {
@@ -59,7 +59,7 @@ export async function signup(formData: FormData) {
     return error.message;
   }
 
-  redirect("/mermaid");
+  redirect("/c");
 }
 
 export async function getAllDiagrams() {

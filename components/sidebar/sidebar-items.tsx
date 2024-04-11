@@ -3,7 +3,7 @@
 import { Chat } from "@/lib/types";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { SidebarItem } from "@/components/sidebar-item";
+import { SidebarItem } from "@/components/sidebar/sidebar-item";
 import { useEffect, useState } from "react";
 import {
   deleteDiagram,
@@ -12,7 +12,7 @@ import {
 } from "@/actions/actions";
 import { SidebarActions } from "./sidebar-actions";
 import useDiagramStore from "@/store/diagram-store";
-import { spinner } from "./chat/spinner";
+import { spinner } from "../chat/spinner";
 
 export function SidebarItems() {
   const { diagrams, fetchDiagrams } = useDiagramStore();

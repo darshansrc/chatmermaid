@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { IconShare, IconSpinner, IconTrash } from "@/components/ui/icons";
-import { ChatShareDialog } from "@/components/chat-share-dialog";
+import { ChatShareDialog } from "@/components/sidebar/chat-share-dialog";
 import {
   Tooltip,
   TooltipContent,

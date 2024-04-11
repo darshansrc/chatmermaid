@@ -2,14 +2,14 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { SidebarList } from "@/components/sidebar-list";
+import { SidebarList } from "@/components/sidebar/sidebar-list";
 import { buttonVariants } from "@/components/ui/button";
 import { IconPlus } from "@/components/ui/icons";
 import { createNewDiagram } from "@/actions/actions";
 import { useRouter } from "next/navigation";
 import { GanttChart } from "lucide-react";
 import { siteConfig } from "@/config/site";
-import { spinner } from "./chat/spinner";
+import { spinner } from "../chat/spinner";
 import useDiagramStore from "@/store/diagram-store";
 import Image from "next/image";
 
@@ -32,7 +32,7 @@ export function ChatHistory() {
   const handleNewDiagram = async () => {
     try {
       const uuid = await createNewDiagram();
-      router.push(`/mermaid/${uuid}`);
+      router.push(`/c/${uuid}`);
       fetchDiagrams();
     } catch (error) {
       console.error(error);
