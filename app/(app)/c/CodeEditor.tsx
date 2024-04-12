@@ -31,7 +31,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
   const appTheme = theme;
   return (
     <div className=" h-full w-full flex relative flex-col">
-      <div className="absolute z-40 flex bg-neutral-900 border border-neutral-700 rounded-md flex-row  left-[50%] translate-x-[-50%] bottom-4">
+      <div className="absolute z-40 flex dark:bg-neutral-900 border dark:border-neutral-700 rounded-md flex-row  left-[50%] translate-x-[-50%] bottom-4">
         <div>
           <Select>
             <SelectTrigger className="border-none outline-none w-auto focus:border-none">

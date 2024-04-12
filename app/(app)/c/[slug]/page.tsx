@@ -50,6 +50,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [toggleTabs, setToggleTabs] = useState(false);
 
   const { toggleSidebar, isSidebarOpen } = useSidebar();
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,10 +111,12 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
             <div className=" w-full px-4 flex h-12 items-center  ">
               <SidebarToggle />
               <IconSeparator className="size-6 text-muted-foreground/50" />
-              <Popover>
-                <PopoverTrigger>
+              <Popover open={isPopoverOpen}>
+                <PopoverTrigger
+                  onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                >
                   <p className="text-sm   flex flex-row gap-1 items-center font-medium truncate">
-                    {diagramName}{" "}
+                    {diagramName}
                     <Pencil className="size-3 dark:text-neutral-600" />
                   </p>
                 </PopoverTrigger>
@@ -125,7 +128,15 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                     }}
                   ></Input>
 
-                  <Button onClick={handleNameChange}>Save Changes</Button>
+                  <Button
+                    onClick={() => {
+                      handleNameChange();
+                      setIsPopoverOpen(false);
+                    }}
+                    aria-label="Close"
+                  >
+                    Save Changes
+                  </Button>
                 </PopoverContent>
               </Popover>
             </div>
@@ -136,7 +147,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                   className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
                   value="editor"
                 >
-                  <CodeXml className="size-3" />{" "}
+                  <CodeXml className="size-3" />
                   <p className="text-[12px] ">Editor</p>
                 </TabsTrigger>
                 <TabsTrigger
@@ -144,7 +155,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                   value="chat"
                   onClick={() => setToggleTabs(!toggleTabs)}
                 >
-                  <BotMessageSquare className="size-3" />{" "}
+                  <BotMessageSquare className="size-3" />
                   <p className="text-[12px]">Chat</p>
                 </TabsTrigger>
                 <TabsTrigger
@@ -215,13 +226,11 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
               <TabsContent className="h-full overflow-hidden" value="both">
                 <ResizablePanelGroup direction={"horizontal"}>
                   <ResizablePanel>
-                    {" "}
                     <CodeEditor code={code} onChange={onChange} />
                   </ResizablePanel>
                   <ResizableHandle withHandle />
 
                   <ResizablePanel>
-                    {" "}
                     <FlowDiagram
                       code={code}
                       diagramTheme={diagramTheme}

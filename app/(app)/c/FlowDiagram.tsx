@@ -43,6 +43,8 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -144,7 +146,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
     };
 
     return (
-      <div className="absolute z-40 flex bg-neutral-900 border border-neutral-700 rounded-md flex-row gap-2 left-[50%] translate-x-[-50%] bottom-4">
+      <div className="absolute z-40 flex dark:bg-neutral-900 border dark:border-neutral-700 rounded-md flex-col gap-2 left-4  top-28">
         <Button size="icon" variant="ghost" onClick={handleZoomIn}>
           <ZoomIn className="m-1" size={15} />
         </Button>
@@ -192,8 +194,8 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <div className="flex flex-row gap-2">
-          <Select
+
+        {/* <Select
             key={mermaidTheme}
             value={mermaidTheme}
             defaultValue={mermaidTheme}
@@ -201,7 +203,6 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
           >
             <SelectTrigger className="border-none outline-none w-auto focus:none">
               <SwatchBook size={14} className="m-1" />
-              <span className="text-[11px] font-semibold">{mermaidTheme}</span>
             </SelectTrigger>
             <SelectContent
               defaultValue={mermaidTheme}
@@ -238,8 +239,36 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
                 base
               </SelectItem>
             </SelectContent>
-          </Select>
-        </div>
+          </Select> */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size={"icon"}>
+              <SwatchBook className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="right" className="w-56">
+            <DropdownMenuLabel>Diagram Ttheme</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuRadioGroup
+              key={mermaidTheme}
+              value={mermaidTheme}
+              defaultValue={mermaidTheme}
+              onValueChange={onMermaidThemeChange}
+            >
+              <DropdownMenuRadioItem value="default">
+                default
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="dark">dark</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="neutral">
+                neutral
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="forest">
+                forest
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="base">base</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     );
   };
@@ -263,6 +292,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
               nodesDraggable={false}
             >
               <ZoomControls />
+              {/* <MiniMap /> */}
             </ReactFlow>
           ) : (
             <div className="m-auto p-5 overflow-auto">

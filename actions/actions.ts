@@ -265,7 +265,8 @@ export async function getChats(id: string) {
   const { data, error } = await supabase
     .from("messages")
     .select("*")
-    .eq("diagramId", id);
+    .eq("diagramId", id)
+    .order("createdAt", { ascending: true });
 
   if (error) {
     return error.message;

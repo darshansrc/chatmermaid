@@ -16,7 +16,8 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import MermaidRaw from "@/app/(app)/c/MermaidRaw";
-import { MessageCircleCode } from "lucide-react";
+import { MessageCircleCode, MessageSquareCode } from "lucide-react";
+import MermaidPreview from "./mermaid-preview";
 
 interface SidebarItemProps {
   index: number;
@@ -73,11 +74,10 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
         )}
       </div> */}
       <div className="absolute left-2 top-1 flex size-6 items-center justify-center">
-        {" "}
-        <MessageCircleCode className="mr-2 mt-1 text-blue-500" />
+        <MessageSquareCode className="mr-2 mt-1 text-blue-500" />
       </div>
 
-      <HoverCard>
+      <HoverCard openDelay={0} closeDelay={0}>
         <HoverCardTrigger>
           <Link
             href={`/c/${diagram.id}`}
@@ -125,13 +125,11 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
             </div>
           </Link>
         </HoverCardTrigger>
-        <HoverCardContent>
-          {" "}
-          <MermaidRaw
+        <HoverCardContent side="right">
+          <MermaidPreview
             chart={diagram.code}
-            isLoading={false}
-            onChange={onChange}
-          />{" "}
+            lastUpdatedAt={diagram.last_updated_at}
+          />
         </HoverCardContent>
       </HoverCard>
       {isActive && <div className="absolute right-2 top-1">{children}</div>}

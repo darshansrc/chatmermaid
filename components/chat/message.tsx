@@ -16,7 +16,7 @@ import MarkdownPreview from "@uiw/react-markdown-preview";
 import Mermaid from "@/app/(app)/c/Mermaid";
 import { useTheme } from "next-themes";
 import { Bot } from "lucide-react";
-
+import { Code } from "./mermaid-block";
 // Different types of message bubbles.
 
 export function UserMessage({ children }: { children: React.ReactNode }) {
@@ -54,34 +54,18 @@ export function BotMessage({
         <Bot className="p-1 text-black" />
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
-        {nonMermaidText && (
-          <div data-color-mode={theme}>
-            <MarkdownPreview
-              source={text}
-              // className={theme === "dark" ? "dark:bg-neutral-900" : "bg-white"}
-              style={{
-                backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
-              }}
-            />
-          </div>
-        )}
-        {mermaidMatch && (
-          <>
-            {!isLoading && (
-              <MermaidRaw
-                chart={mermaidMatch[1]}
-                isLoading={false}
-                onChange={onChange}
-              />
-            )}
-            {/* <CodeBlock
-              language="mermaid"
-              value={mermaidMatch[1]}
-              onChange={onChange}
-            /> */}
-            {/* <code>{mermaidMatch[1]}</code> */}
-          </>
-        )}
+        <div data-color-mode={theme}>
+          <MarkdownPreview
+            source={text}
+            components={{
+              code: Code,
+            }}
+            // className={theme === "dark" ? "dark:bg-neutral-900" : "bg-white"}
+            style={{
+              backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
+            }}
+          />
+        </div>
       </div>
     </div>
   );

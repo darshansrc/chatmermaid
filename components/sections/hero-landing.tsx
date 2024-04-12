@@ -18,7 +18,7 @@ export async function HeroLanding() {
           )}
           target="_blank"
         >
-          <span className="mr-3 ">🎉</span> Introducing support for GPT 4{" "}
+          <span className="mr-3 ">🎉</span> Introducing support for GPT 4
           <ArrowRight className="ml-2" size={16} />
         </Link>
 
