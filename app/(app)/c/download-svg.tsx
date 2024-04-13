@@ -45,7 +45,7 @@ const DownloadSVG: React.FC<SvgToPngProps> = ({ chart, config }) => {
       <div className="hidden">
         <canvas ref={canvasRef} />
       </div>
-      <button onClick={downloadPng}>SVG</button>
+      <button onClick={downloadPng}>Export to SVG</button>
     </div>
   );
 };

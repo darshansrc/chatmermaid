@@ -21,6 +21,7 @@ const SvgToPng: React.FC<SvgToPngProps> = ({
   const [pngDataUrl, setPngDataUrl] = useState<string | null>(null);
 
   const convertSvgToPng = async () => {
+    console.log("convertSvgToPng");
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
@@ -47,15 +48,18 @@ const SvgToPng: React.FC<SvgToPngProps> = ({
         ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
         const newPngDataUrl = canvas.toDataURL(`image/${type}`);
         setPngDataUrl(newPngDataUrl);
+
+        return newPngDataUrl;
       }
     }
   };
 
-  const downloadPng = () => {
-    if (pngDataUrl) {
-      convertSvgToPng();
+  const downloadPng = async () => {
+    const pngUrl = await convertSvgToPng();
+
+    if (pngUrl) {
       const a = document.createElement("a");
-      a.href = pngDataUrl;
+      a.href = pngUrl;
       a.download = `chat-mermaid.${type}`;
       a.click();
     }

@@ -227,7 +227,9 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                       </DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent className="w-48 bg-neutral-50 dark:bg-neutral-900 ">
-                          <DropdownMenuLabel>Select Size</DropdownMenuLabel>
+                          <DropdownMenuLabel>
+                            Select Resolution
+                          </DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>
                             <SvgToPng
@@ -265,7 +267,9 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                       </DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent className="w-48 bg-neutral-50 dark:bg-neutral-900 ">
-                          <DropdownMenuLabel>Select Size</DropdownMenuLabel>
+                          <DropdownMenuLabel>
+                            Select Resolution
+                          </DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>
                             <SvgToPng
@@ -300,7 +304,6 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                     <DropdownMenuItem>
                       <DownloadSVG chart={code} config={{ theme: "dark" }} />
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Export as PDF</DropdownMenuItem>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
