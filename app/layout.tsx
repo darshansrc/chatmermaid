@@ -13,9 +13,25 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "ChatMermaid",
+  metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
+  title: {
+    default: "ChatMermaid",
+    template: `%s - Mermaid.js AI Chatbot`,
+  },
   description:
     "The Visual Way to Diagram | ChatMermaid is the easiest way to create professional diagrams using mermaid.js. No more struggling with complex syntax. Let the AI do the work.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "rgb(23 23 23)" },
+  ],
 };
 
 export default function RootLayout({
