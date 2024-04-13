@@ -14,6 +14,8 @@ import { kv } from "@vercel/kv";
 import { Chat } from "@/lib/types";
 import { Message } from "ai";
 import { Messages } from "@anthropic-ai/sdk/resources";
+import { createCanvas, loadImage } from "canvas";
+import mermaid from "mermaid";
 
 type DiagramData = {
   data: any[] | null;
@@ -295,4 +297,16 @@ export async function saveMessage(
   }
 
   return data;
+}
+
+export async function convertToPng(svgData: string) {
+  const img = await loadImage(`data:image/svg+xml;utf8,${svgData}`);
+  const canvas = createCanvas(img.width, img.height);
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  // Convert the canvas to a PNG buffer
+  const pngBuffer = canvas.toBuffer("image/png");
+
+  return pngBuffer;
 }

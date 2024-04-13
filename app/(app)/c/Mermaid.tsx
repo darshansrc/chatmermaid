@@ -1,16 +1,38 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import mermaid from "mermaid";
-import Image from "next/image";
+import { toast } from "sonner";
+import useSvgStore from "@/store/svg-store";
 
 interface MermaidProps {
   chart: string;
   config: any;
   theme: string | undefined;
+  panZoom: boolean;
 }
 
-const Mermaid: React.FC<MermaidProps> = ({ chart, config = {}, theme }) => {
-  const [svgUrl, setSvgUrl] = useState<string | null>(null);
+const randomid = () => parseInt(String(Math.random() * 1e15), 10).toString(36);
+
+const Mermaid: React.FC<MermaidProps> = ({
+  chart,
+  config = {},
+  theme,
+  panZoom,
+}: MermaidProps) => {
+  const demoid = useRef(`dome${randomid()}`);
+  const [container, setContainer] = useState(null);
+
+  const { svg: svgStore, setSvg: setSvgStore } = useSvgStore();
+
+  const ErrorModal = (error: string) => {
+    return (
+      <div>
+        <div>{error}</div>
+        <div>{svgStore}</div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     mermaid.initialize({
@@ -18,29 +40,44 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, config = {}, theme }) => {
       securityLevel: "loose",
       darkMode: theme === "dark" ? true : false,
       theme: theme === "dark" ? "dark" : config.theme,
-      // ...config,
     });
 
-    const renderChart = async () => {
-      try {
-        const { svg } = await mermaid.render("graphDiv", chart);
-        const blob = new Blob([svg], { type: "image/svg+xml" });
-        const url = URL.createObjectURL(blob);
-        setSvgUrl(url);
-      } catch (error: any) {
-        console.error("Error rendering chart:", error.message);
+    const reRender = async () => {
+      if (container) {
+        try {
+          const str = await mermaid.render(`mermaid`, chart);
+          setSvgStore(str.svg);
+
+          (container as HTMLElement).innerHTML = str.svg;
+        } catch (error) {
+          (
+            container as HTMLElement
+          ).innerHTML = `<div><div>${svgStore}</div></div>`;
+        }
       }
     };
+    reRender();
+  }, [container, chart, demoid, setSvgStore, theme, config]);
 
-    renderChart();
-  }, [chart, config, theme]);
+  const refElement = useCallback((node) => {
+    if (node !== null) {
+      setContainer(node);
+    }
+  }, []);
 
-  // Render the SVG as an <img> element
-  return svgUrl ? (
-    <div className="w-full h-full">
-      <img src={svgUrl} className="h-[50vh] w-full" alt="Mermaid Chart" />
+  return (
+    <div
+      className={
+        panZoom ? "w-[800px] h-[800px]" : "w-full h-full max-h-screen p-8"
+      }
+    >
+      <div
+        className={panZoom ? "w-[800px] h-[800px]" : "w-full h-full "}
+        ref={refElement}
+        data-name="mermaid"
+      />
     </div>
-  ) : null;
+  );
 };
 
 export default Mermaid;

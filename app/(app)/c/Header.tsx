@@ -82,7 +82,7 @@ const Header = ({ diagramName, diagramId }: AppLayoutProps) => {
             className="ml-auto gap-1.5 text-sm"
           >
             <Share className="size-3.5" />
-            Share
+            Export
           </Button>
           <ModeToggle />
           <DropdownMenuDemo />

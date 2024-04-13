@@ -88,3 +88,11 @@
 .react-flow__panel.react-flow__attribution {
   display: none !important;
 }
+/* 
+div[id^="ddome"] {
+  display: none;
+} */
+
+/* div[id^="dmermaid"] {
+  display: none;
+} */

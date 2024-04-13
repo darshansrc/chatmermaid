@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
 import { useTheme } from "next-themes";
-import { CodeXml, History, Copy, Forward, CirclePlus } from "lucide-react";
+import {
+  CodeXml,
+  History,
+  Copy,
+  Forward,
+  CirclePlus,
+  Bug,
+  RocketIcon,
+  SearchCheck,
+  Info,
+  ArrowDown,
+  Bot,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { syntaxTree } from "@codemirror/language";
+import { linter, Diagnostic } from "@codemirror/lint";
 import {
   Select,
   SelectContent,
@@ -13,12 +27,21 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import CopyButton from "@/components/copy-button";
+import mermaid from "mermaid";
+import { toast } from "sonner";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 interface CodeEditorProps {
   code: string;
@@ -27,11 +50,65 @@ interface CodeEditorProps {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
   const { theme } = useTheme();
+  const [error, setError] = useState<string | null>(null);
+  const [errorToolbarOpen, setErrorToolbarOpen] = useState(false);
 
   const appTheme = theme;
+
+  const regexpLinter = linter((view) => {
+    let diagnostics: Diagnostic[] = [];
+    syntaxTree(view.state)
+      .cursor()
+      .iterate((node) => {
+        if (node.name == "RegExp")
+          diagnostics.push({
+            from: node.from,
+            to: node.to,
+            severity: "warning",
+            message: "Regular expressions are FORBIDDEN",
+            actions: [
+              {
+                name: "Remove",
+                apply(view, from, to) {
+                  view.dispatch({ changes: { from, to } });
+                },
+              },
+            ],
+          });
+      });
+    return diagnostics;
+  });
+
+  useEffect(() => {
+    const checkErrors = async () => {
+      if (code) {
+        try {
+          await mermaid.parse(code);
+          setError(null);
+          setErrorToolbarOpen(false);
+        } catch (error) {
+          setError(error);
+          setErrorToolbarOpen(true);
+        }
+      }
+    };
+    checkErrors();
+  }, [code]);
+
+  // create a function which will reset errorToolbaropen after 200ms
+  const resetErrorToolbarOpen = () => {
+    setTimeout(() => {
+      setErrorToolbarOpen(false);
+    }, 4000);
+  };
+
+  useEffect(() => {
+    resetErrorToolbarOpen();
+  }, [errorToolbarOpen]);
+
   return (
     <div className=" h-full w-full flex relative flex-col">
-      <div className="absolute z-40 flex dark:bg-neutral-900 border dark:border-neutral-700 rounded-md flex-row  left-[50%] translate-x-[-50%] bottom-4">
+      <div className="absolute z-40 flex bg-neutral-50 dark:bg-neutral-900 border dark:border-neutral-700 rounded-md flex-row  left-[50%] translate-x-[-50%] bottom-4">
         <div>
           <Select>
             <SelectTrigger className="border-none outline-none w-auto focus:border-none">
@@ -49,7 +126,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
           </Select>
         </div>
         <div className="flex flex-row ">
-          <TooltipProvider>
+          <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger>
                 <Button variant={"ghost"} size={"icon"}>
@@ -60,8 +137,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                 History
               </TooltipContent>
             </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
+
             <Tooltip>
               <TooltipTrigger>
                 <Button variant={"ghost"} size={"icon"}>
@@ -72,16 +148,71 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                 Copy
               </TooltipContent>
             </Tooltip>
+
+            <HoverCard openDelay={0}>
+              <HoverCardTrigger>
+                <Tooltip open={errorToolbarOpen}>
+                  <TooltipTrigger>
+                    <Button variant={"ghost"} size={"icon"}>
+                      <Bug
+                        className={
+                          error
+                            ? "size-4 text-red-700"
+                            : "size-4 text-neutral-400"
+                        }
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="p-1 dark:bg-red-500 flex flex-row items-center gap-1 text-red-100 px-2 text-[12px]">
+                    <Info className="size-3" /> 1 Error{" "}
+                    <ArrowDown className="size-2" />
+                  </TooltipContent>
+                </Tooltip>
+              </HoverCardTrigger>
+              <HoverCardContent
+                className={`p-0 border-none dark:bg-neutral-800  ${
+                  error && "w-[400px]"
+                } `}
+              >
+                <Alert className="dark:bg-neutral-800">
+                  {error ? (
+                    <>
+                      <Bug className="size-4 text-red-700" />
+                      <AlertTitle className="text-red-700">Error!</AlertTitle>
+                      <AlertDescription className="flex flex-col gap-2">
+                        {error.toString()}
+                        <Button
+                          variant={"default"}
+                          className="flex flex-row items-center gap-2"
+                          onClick={() => {
+                            toast("Error Copied to Clipboard");
+                            navigator.clipboard.writeText(error.toString());
+                          }}
+                        >
+                          <Bot className="size-4" /> Fix with AI
+                        </Button>
+                      </AlertDescription>
+                    </>
+                  ) : (
+                    <>
+                      <SearchCheck className="size-4" />
+                      <AlertTitle>No Error!</AlertTitle>
+                      <AlertDescription>No Error Found</AlertDescription>
+                    </>
+                  )}
+                </Alert>
+              </HoverCardContent>
+            </HoverCard>
           </TooltipProvider>
         </div>
       </div>
+
       <div className="h-full  relative overflow-auto ">
         <CodeMirror
           value={code}
           minHeight="100%"
           minWidth="100%"
-          basicSetup
-          className="w-full h-full rounded-b-lg active:outline-none border-none   text-[12px] rounded-xl"
+          className="w-full h-full border-none rounded-b-lg active:outline-none   text-[12px] rounded-xl"
           lang="mermaid"
           extensions={[langs.mermaid()]}
           onChange={onChange}
@@ -92,8 +223,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                   settings: {
                     caret: "rgb(180 180 180)",
                     fontFamily: "monospace",
-                    background: "rgb(24, 24, 24)",
-                    gutterBackground: "rgb(24, 24, 24)",
+                    background: "rgb(23, 23, 23)",
+                    gutterBackground: "rgb(23, 23, 23)",
                     lineHighlight: "#28282850",
                     selection: "#036dd626",
                   },
@@ -108,21 +239,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                 })
           }
         />
-
-        {/* <div className="absolute  flex justify-center items-center bottom-8 w-full   ">
-          <CirclePlus
-            size={25}
-            className="absolute left-4 dark:text-neutral-200 rounded-full ml-4 z-50 p-1"
-          />
-          <input
-            className="h-10 mx-4  w-11/12 py-4 px-10 rounded-lg focus:ring-0 bg-neutral-200/50 dark:bg-neutral-700/50 backdrop-blur-md dark:bg-transparent/6 "
-            placeholder="Ask AI "
-          ></input>
-          <Forward
-            size={24}
-            className="absolute right-4 text-white rounded-full mr-4 bg-blue-600 p-1"
-          />
-        </div> */}
       </div>
     </div>
   );

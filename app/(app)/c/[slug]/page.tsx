@@ -37,6 +37,31 @@ import ChatBox from "../ChatBox";
 import useChatStore from "@/store/chat-store";
 import useDiagramStore from "@/store/diagram-store";
 import { useSidebar } from "@/hooks/use-sidebar";
+import { ReactFlowProvider } from "reactflow";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import useSvgStore from "@/store/svg-store";
+import mermaid from "mermaid";
+import { loadImage } from "canvas";
+import SvgToPng from "./SvgtoPng";
+
+//  async function downloadDiagram(code: string, config: {}) {
+//   mermaid.initialize(config);
+//   const str = await mermaid.render("mermaid", code);
+//   const img = await loadImage(`data:image/svg+xml;utf8,${str.svg}`);
+
+//   const canvas = createCanva(img.width, img.height);
+//   const ctx = canvas.getContext("2d");
+//   ctx.drawImage(img, 0, 0);
+//   const pngBuffer = canvas.toBuffer("image/png");
+//   return pngBuffer;
+// }
 
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
@@ -101,9 +126,23 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
     if (isSidebarOpen) toggleSidebar();
   };
 
+  const handleDownloadDiagram = async () => {
+    // const pngBuffer = await downloadDiagram(code, { theme: "forest" });
+    // // Create a temporary download link
+    // const downloadLink = document.createElement("a");
+    // downloadLink.href = URL.createObjectURL(
+    //   new Blob([pngBuffer], { type: "image/png" })
+    // );
+    // downloadLink.download = "diagram.png";
+    // // Append the link to the DOM, click it, and remove it
+    // document.body.appendChild(downloadLink);
+    // downloadLink.click();
+    // document.body.removeChild(downloadLink);
+  };
+
   return (
     <>
-      <Tabs defaultValue="chat">
+      <Tabs defaultValue="editor">
         <header
           className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
         >
@@ -169,15 +208,27 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
               </TabsList>
             </div>
 
-            <div className="flex w-full gap-2  items-center ">
-              <Button
-                variant="outline"
-                size="sm"
-                className="ml-auto gap-1.5 text-sm"
-              >
-                <Share className="size-3.5" />
-                Share
-              </Button>
+            <div className="flex flex-row w-full gap-2 justify-end items-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="ml-auto dark:bg-neutral-900 gap-1.5  text-sm"
+                  >
+                    <Share className="size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="dark:bg-neutral-900">
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem onClick={handleDownloadDiagram}>
+                      <SvgToPng chart={code} config={{ theme: "dark" }} />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>Export as SVG</DropdownMenuItem>
+                    <DropdownMenuItem>Export as PDF</DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <ModeToggle />
               <DropdownMenuDemo />
             </div>
