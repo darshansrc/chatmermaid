@@ -513,7 +513,6 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
             <ReactFlow
               nodes={nodes}
               nodeTypes={nodeTypes}
-              fitView
               snapToGrid
               selectionOnDrag={false}
               nodesDraggable={false}
@@ -587,7 +586,6 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
           <ReactFlow
             nodes={nodes}
             nodeTypes={nodeTypes}
-            fitView
             snapToGrid
             selectionOnDrag={false}
             nodesDraggable={false}
