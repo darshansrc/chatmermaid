@@ -60,18 +60,16 @@ import mermaid from "mermaid";
 import { loadImage } from "canvas";
 import SvgToPng from "../SvgtoPng";
 import DownloadSVG from "../download-svg";
-
-//  async function downloadDiagram(code: string, config: {}) {
-//   mermaid.initialize(config);
-//   const str = await mermaid.render("mermaid", code);
-//   const img = await loadImage(`data:image/svg+xml;utf8,${str.svg}`);
-
-//   const canvas = createCanva(img.width, img.height);
-//   const ctx = canvas.getContext("2d");
-//   ctx.drawImage(img, 0, 0);
-//   const pngBuffer = canvas.toBuffer("image/png");
-//   return pngBuffer;
-// }
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { ExportDiagram } from "../export-diagram";
 
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
@@ -86,6 +84,10 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
 
   const { toggleSidebar, isSidebarOpen } = useSidebar();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const [exportType, setExportType] = useState<string>("svg");
+  const [exportResolution, setExportResolution] = useState<number[]>([2048]);
+  const [exportTheme, setExportTheme] = useState<string>("default");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -176,7 +178,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
               </Popover>
             </div>
 
-            <div className="w-full flex  justify-center">
+            <div className="w-full   justify-center  hidden md:flex">
               <TabsList className="p-1 m-1">
                 <TabsTrigger
                   className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
@@ -205,108 +207,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
             </div>
 
             <div className="flex flex-row w-full gap-2 justify-end items-center">
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Button
-                    variant="outline"
-                    className="ml-auto  dark:bg-neutral-900 gap-1.5  text-sm"
-                  >
-                    <Share className="size-4" /> Export
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-neutral-50 dark:bg-neutral-900 ">
-                  <DropdownMenuLabel className="flex flex-row gap-2 items-center">
-                    <Download className="size-4" />
-                    Export Options
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuSub>
-                      <DropdownMenuSubTrigger className="flex flex-row gap-2 ">
-                        Export to PNG
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent className="w-48 bg-neutral-50 dark:bg-neutral-900 ">
-                          <DropdownMenuLabel>
-                            Select Resolution
-                          </DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <SvgToPng
-                              chart={code}
-                              config={{ theme: "dark" }}
-                              width={1024}
-                              height={1024}
-                              type="png"
-                            />
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <SvgToPng
-                              chart={code}
-                              config={{ theme: "dark" }}
-                              width={2048}
-                              height={2048}
-                              type="png"
-                            />
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <SvgToPng
-                              chart={code}
-                              config={{ theme: "dark" }}
-                              width={4096}
-                              height={4096}
-                              type="png"
-                            />
-                          </DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub>
-                    <DropdownMenuSub>
-                      <DropdownMenuSubTrigger className="flex flex-row gap-2 ">
-                        Export to JPG
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent className="w-48 bg-neutral-50 dark:bg-neutral-900 ">
-                          <DropdownMenuLabel>
-                            Select Resolution
-                          </DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <SvgToPng
-                              chart={code}
-                              config={{ theme: "dark" }}
-                              width={1024}
-                              height={1024}
-                              type="jpeg"
-                            />
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <SvgToPng
-                              chart={code}
-                              config={{ theme: "dark" }}
-                              width={2048}
-                              height={2048}
-                              type="jpeg"
-                            />
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <SvgToPng
-                              chart={code}
-                              config={{ theme: "dark" }}
-                              width={4096}
-                              height={4096}
-                              type="jpeg"
-                            />
-                          </DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub>
-                    <DropdownMenuItem>
-                      <DownloadSVG chart={code} config={{ theme: "dark" }} />
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <ExportDiagram code={code} config={{ theme: "dark" }} />
               <ModeToggle />
               <DropdownMenuDemo />
             </div>

@@ -1,3 +1,4 @@
+import { Download } from "lucide-react";
 import mermaid from "mermaid";
 import { nanoid } from "nanoid";
 import React, { useRef, useState } from "react";
@@ -70,8 +71,12 @@ const SvgToPng: React.FC<SvgToPngProps> = ({
       <div className="hidden">
         <canvas ref={canvasRef} />
       </div>
-      <button onClick={downloadPng}>
-        {width} x {height} px
+      <button
+        onClick={downloadPng}
+        className="flex flex-row gap-2 items-center"
+      >
+        {" "}
+        <Download className="size-3" /> Download
       </button>
     </div>
   );
