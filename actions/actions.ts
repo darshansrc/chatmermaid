@@ -298,14 +298,14 @@ export async function saveMessage(
 
   return data;
 }
-import { convert } from "convert-svg-to-png";
+// import { convert } from "convert-svg-to-png";
 
-export async function convertSvgToPng(svg: string, options = {}) {
-  try {
-    const pngBuffer = await convert(svg, options);
-    return pngBuffer;
-  } catch (error) {
-    console.error("Error converting SVG to PNG:", error);
-    throw error;
-  }
-}
+// export async function convertSvgToPng(svg: string, options = {}) {
+//   try {
+//     const pngBuffer = await convert(svg, options);
+//     return pngBuffer;
+//   } catch (error) {
+//     console.error("Error converting SVG to PNG:", error);
+//     throw error;
+//   }
+// }

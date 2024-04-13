@@ -1,62 +1,78 @@
-"use client";
-import { convertSvgToPng } from "@/actions/actions";
 import mermaid from "mermaid";
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 interface SvgToPngProps {
   chart: string;
   config: {};
+  width?: number;
+  height?: number;
 }
 
-const SvgToPng: React.FC<SvgToPngProps> = ({ chart, config }) => {
-  const handleConvert = async () => {
-    try {
-      mermaid.initialize({
-        startOnLoad: true,
-        securityLevel: "loose",
-        theme: "default",
-        ...config,
-      });
+const SvgToPng: React.FC<SvgToPngProps> = ({
+  chart,
+  config,
+  width = 16384,
+  height = 16384,
+}) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [pngDataUrl, setPngDataUrl] = useState<string | null>(null);
 
-      if (typeof window === "undefined") {
-        return;
+  useEffect(() => {
+    const convertSvgToPng = async () => {
+      if (canvasRef.current) {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+
+        if (ctx) {
+          mermaid.initialize({
+            startOnLoad: true,
+            securityLevel: "loose",
+            theme: "default",
+            ...config,
+          });
+
+          const str = await mermaid.render("mermaid-image", chart);
+          const img = new Image();
+          img.src = `data:image/svg+xml;base64,${btoa(str.svg)}`;
+
+          await new Promise((resolve) => {
+            img.onload = resolve;
+          });
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const scaleFactor = Math.min(width / img.width, height / img.height);
+          const drawWidth = img.width * scaleFactor;
+          const drawHeight = img.height * scaleFactor;
+          const drawX = (width - drawWidth) / 2;
+          const drawY = (height - drawHeight) / 2;
+
+          ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+          const newPngDataUrl = canvas.toDataURL("image/png");
+          setPngDataUrl(newPngDataUrl);
+        }
       }
+    };
 
-      const { svg } = await mermaid.render("mermaid-export", chart);
-      console.log("SVG:", svg);
-      const svgBuffer = Buffer.from(svg);
-      const response = await fetch(`${window.location.origin}/api/download`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ svgBuffer: svgBuffer }),
-      });
+    convertSvgToPng();
+  }, [chart, config, width, height]);
 
-      if (response.ok) {
-        const pngBlob = await response.blob();
-
-        // Create a temporary link for downloading the PNG file
-        const tempLink = document.createElement("a");
-        tempLink.href = URL.createObjectURL(pngBlob);
-        tempLink.download = "converted.png";
-        document.body.appendChild(tempLink);
-        tempLink.click();
-        document.body.removeChild(tempLink);
-      } else {
-        console.error("Error converting SVG to PNG:", await response.json());
-      }
-    } catch (error) {
-      console.error("Error converting SVG to PNG:", error);
+  const downloadPng = () => {
+    if (pngDataUrl) {
+      const a = document.createElement("a");
+      a.href = pngDataUrl;
+      a.download = "image.png";
+      a.click();
     }
   };
 
   return (
     <div>
-      <div className="hidden ">
-        <div className="w-[1024px] h-[1024px]"></div>
+      <div className="hidden">
+        <canvas ref={canvasRef} />
       </div>
-      <button onClick={handleConvert}>Download PNG</button>
+      <button onClick={downloadPng}>Download PNG</button>
     </div>
   );
 };
