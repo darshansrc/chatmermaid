@@ -67,16 +67,8 @@ const Mermaid: React.FC<MermaidProps> = ({
   }, []);
 
   return (
-    <div
-      className={
-        panZoom ? "w-[800px] h-[800px]" : "w-full h-full max-h-screen p-8"
-      }
-    >
-      <div
-        className={panZoom ? "w-[800px] h-[800px]" : "w-full h-full "}
-        ref={refElement}
-        data-name="mermaid"
-      />
+    <div>
+      <div ref={refElement} data-name="mermaid" />
     </div>
   );
 };

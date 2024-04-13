@@ -298,15 +298,14 @@ export async function saveMessage(
 
   return data;
 }
+import { convert } from "convert-svg-to-png";
 
-export async function convertToPng(svgData: string) {
-  const img = await loadImage(`data:image/svg+xml;utf8,${svgData}`);
-  const canvas = createCanvas(img.width, img.height);
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(img, 0, 0);
-
-  // Convert the canvas to a PNG buffer
-  const pngBuffer = canvas.toBuffer("image/png");
-
-  return pngBuffer;
+export async function convertSvgToPng(svg: string, options = {}) {
+  try {
+    const pngBuffer = await convert(svg, options);
+    return pngBuffer;
+  } catch (error) {
+    console.error("Error converting SVG to PNG:", error);
+    throw error;
+  }
 }

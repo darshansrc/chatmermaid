@@ -49,7 +49,7 @@ import {
 import useSvgStore from "@/store/svg-store";
 import mermaid from "mermaid";
 import { loadImage } from "canvas";
-import SvgToPng from "./SvgtoPng";
+import SvgToPng from "../SvgtoPng";
 
 //  async function downloadDiagram(code: string, config: {}) {
 //   mermaid.initialize(config);
