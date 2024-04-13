@@ -37,13 +37,14 @@ export function BotMessage({
   code,
   onChange,
   isLoading,
+  theme,
 }: {
   text: string;
   code: string;
   onChange: (val: string) => void;
   isLoading: boolean;
+  theme: any;
 }) {
-  const { theme } = useTheme();
   const mermaidRegex = /```mermaid\n([\s\S]*?)\n```/;
   const mermaidMatch = text.match(mermaidRegex);
   const nonMermaidText = mermaidMatch ? text.replace(mermaidRegex, "") : text;
@@ -56,7 +57,7 @@ export function BotMessage({
       <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
         <div data-color-mode={theme}>
           <MarkdownPreview
-            source={nonMermaidText}
+            source={text}
             style={{
               backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
             }}

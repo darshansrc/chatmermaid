@@ -1,3 +1,4 @@
+import { createNewDiagram } from "@/actions/actions";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,9 +14,23 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useDiagramStore from "@/store/diagram-store";
 import { Ellipsis, Menu } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function DropdownMenuDemo() {
+  const router = useRouter();
+  const { fetchDiagrams } = useDiagramStore();
+  const handleNewDiagram = async () => {
+    try {
+      const uuid = await createNewDiagram();
+      router.push(`/c/${uuid}`);
+      fetchDiagrams();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,9 +54,9 @@ export function DropdownMenuDemo() {
             Settings
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+          <DropdownMenuItem onClick={handleNewDiagram}>
+            New Diagram
+            <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

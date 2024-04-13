@@ -32,6 +32,7 @@ import { Button } from "@/components/ui/button";
 import { IconArrowElbow, IconPlus } from "@/components/ui/icons";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTheme } from "next-themes";
 
 type ChatBoxProps = {
   diagramId: string;
@@ -105,6 +106,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
       handleSubmit(e);
     }
   };
+  const { theme } = useTheme();
 
   return (
     <>
@@ -123,6 +125,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
                   isLoading={isLoading}
                   code={code}
                   onChange={onChange}
+                  theme={theme}
                 />
               )}
 
@@ -133,7 +136,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
               )}
             </div>
           ))}
-          <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div>
+          {/* <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div> */}
         </div>
 
         <div className="absolute bottom-0 left-0 w-full border-t  dark:bg-neutral-900 bg-white  flex justify-center items-center">
