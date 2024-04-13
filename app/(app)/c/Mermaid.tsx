@@ -38,6 +38,7 @@ const Mermaid: React.FC<MermaidProps> = ({
     mermaid.initialize({
       startOnLoad: true,
       securityLevel: "loose",
+
       darkMode: theme === "dark" ? true : false,
       theme: theme === "dark" ? "dark" : config.theme,
     });

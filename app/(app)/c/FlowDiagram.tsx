@@ -140,7 +140,7 @@ const FlowDiagram: React.FC<FlowDiagramProps> = ({
   const ZoomControls = () => {
     const reactFlowInstance = useReactFlow();
 
-    // reactFlowInstance.fitView();
+    reactFlowInstance.fitView();
 
     const handleZoomIn = () => {
       reactFlowInstance.zoomIn();
