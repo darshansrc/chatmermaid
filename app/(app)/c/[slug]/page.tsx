@@ -26,6 +26,7 @@ import {
   LayoutPanelLeft,
   Pencil,
   Share,
+  Workflow,
 } from "lucide-react";
 import { DropdownMenuDemo } from "../DropDownMenu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -290,6 +291,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
             <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
               <div className=" w-full px-4 flex h-12 items-center  ">
                 <SidebarToggle />
+
                 <IconSeparator className="size-6 text-muted-foreground/50" />
                 <Popover open={isPopoverOpen}>
                   <PopoverTrigger
@@ -350,7 +352,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                 className="data-[state=active]:dark:bg-neutral-900 flex text-[12px] w-full flex-row gap-1 items-center"
                 value="mobile-diagram"
               >
-                <LayoutPanelLeft className="size-3" />
+                <Workflow className="size-3" />
                 <p className="text-[12px] ">Diagram</p>
               </TabsTrigger>
             </TabsList>
