@@ -111,7 +111,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
       <div className="relative h-full">
         <div
           id="chatbox"
-          className="relative h-full overflow-scroll pb-32  max-w-full  pl-16 pr-4 pt-4"
+          className="relative h-full overflow-scroll pb-32  max-w-full pl-2 md:pl-16 pr-4 pt-4"
         >
           {messages.map((m) => (
             <div key={m.id}>
@@ -139,14 +139,6 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
         <div className="absolute bottom-0 left-0 w-full border-t  dark:bg-neutral-900 bg-white  flex justify-center items-center">
           <form onSubmit={handleSubmit} className="w-full p-[8px] rounded-sm">
             <div className="relative flex max-h-60   grow flex-col overflow-hidden   rounded-md  sm:border sm:px-2 bg-neutral-50 dark:bg-neutral-800">
-              {/* <Button
-                variant="outline"
-                size="icon"
-                className="absolute left-0  top-[50%] translate-y-[-50%] size-8 rounded-full  sm:left-4"
-              >
-                <IconPlus />
-              </Button> */}
-
               <Textarea
                 maxRows={4}
                 aria-label="maximum height"

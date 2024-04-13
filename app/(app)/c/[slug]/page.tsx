@@ -70,6 +70,7 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { ExportDiagram } from "../export-diagram";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
@@ -138,141 +139,253 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
     if (isSidebarOpen) toggleSidebar();
   };
 
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   return (
     <>
-      <Tabs defaultValue="editor">
-        <header
-          className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
-        >
-          <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
-            <div className=" w-full px-4 flex h-12 items-center  ">
-              <SidebarToggle />
-              <IconSeparator className="size-6 text-muted-foreground/50" />
-              <Popover open={isPopoverOpen}>
-                <PopoverTrigger
-                  onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                >
-                  <p className="text-sm   flex flex-row gap-1 items-center font-medium truncate">
-                    {diagramName}
-                    <Pencil className="size-3 dark:text-neutral-600" />
-                  </p>
-                </PopoverTrigger>
-                <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
-                  <Input
-                    value={editedName}
-                    onChange={(e) => {
-                      setEditedName(e.target.value);
-                    }}
-                  ></Input>
-
-                  <Button
-                    onClick={() => {
-                      handleNameChange();
-                      setIsPopoverOpen(false);
-                    }}
-                    aria-label="Close"
-                  >
-                    Save Changes
-                  </Button>
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            <div className="w-full   justify-center  hidden md:flex">
-              <TabsList className="p-1 m-1">
-                <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
-                  value="editor"
-                >
-                  <CodeXml className="size-3" />
-                  <p className="text-[12px] ">Editor</p>
-                </TabsTrigger>
-                <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-900 text-[12px] flex flex-row gap-1 items-center"
-                  value="chat"
-                  onClick={() => setToggleTabs(!toggleTabs)}
-                >
-                  <BotMessageSquare className="size-3" />
-                  <p className="text-[12px]">Chat</p>
-                </TabsTrigger>
-                <TabsTrigger
-                  className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
-                  value="both"
-                  onClick={handleCloseSidebar}
-                >
-                  <LayoutPanelLeft className="size-3" />
-                  <p className="text-[12px] ">Both</p>
-                </TabsTrigger>
-              </TabsList>
-            </div>
-
-            <div className="flex flex-row w-full gap-2 justify-end items-center">
-              <ExportDiagram code={code} config={{ theme: "dark" }} />
-              <ModeToggle />
-              <DropdownMenuDemo />
-            </div>
-          </div>
-        </header>
-
-        <div className="h-[calc(100vh-48px)]">
-          <ResizablePanelGroup
-            direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
+      {isDesktop && (
+        <Tabs defaultValue="editor">
+          <header
+            className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
           >
-            <ResizablePanel>
-              <TabsContent className="h-full overflow-hidden" value="editor">
+            <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
+              <div className=" w-full px-4 flex h-12 items-center  ">
+                <SidebarToggle />
+                <IconSeparator className="size-6 text-muted-foreground/50" />
+                <Popover open={isPopoverOpen}>
+                  <PopoverTrigger
+                    onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                  >
+                    <p className="text-sm   flex flex-row gap-1 items-center font-medium truncate">
+                      {diagramName}
+                      <Pencil className="size-3 dark:text-neutral-600" />
+                    </p>
+                  </PopoverTrigger>
+                  <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
+                    <Input
+                      value={editedName}
+                      onChange={(e) => {
+                        setEditedName(e.target.value);
+                      }}
+                    ></Input>
+
+                    <Button
+                      onClick={() => {
+                        handleNameChange();
+                        setIsPopoverOpen(false);
+                      }}
+                      aria-label="Close"
+                    >
+                      Save Changes
+                    </Button>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="w-full   justify-center  hidden md:flex">
+                <TabsList className="p-1 m-1">
+                  <TabsTrigger
+                    className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
+                    value="editor"
+                  >
+                    <CodeXml className="size-3" />
+                    <p className="text-[12px] ">Editor</p>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    className="data-[state=active]:dark:bg-neutral-900 text-[12px] flex flex-row gap-1 items-center"
+                    value="chat"
+                    onClick={() => setToggleTabs(!toggleTabs)}
+                  >
+                    <BotMessageSquare className="size-3" />
+                    <p className="text-[12px]">Chat</p>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
+                    value="both"
+                    onClick={handleCloseSidebar}
+                  >
+                    <LayoutPanelLeft className="size-3" />
+                    <p className="text-[12px] ">Both</p>
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+
+              <div className="flex flex-row w-full gap-2 justify-end items-center">
+                <ExportDiagram code={code} config={{ theme: "dark" }} />
+                <ModeToggle />
+                <DropdownMenuDemo />
+              </div>
+            </div>
+          </header>
+
+          <div className="h-[calc(100vh-48px)]">
+            <ResizablePanelGroup
+              direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
+            >
+              <ResizablePanel>
+                <TabsContent className="h-full overflow-hidden" value="editor">
+                  <CodeEditor code={code} onChange={onChange} />
+                </TabsContent>
+                <TabsContent className="h-full overflow-hidden" value="chat">
+                  <ChatBox
+                    diagramId={diagramId}
+                    code={code}
+                    onChange={onChange}
+                  />
+                </TabsContent>
+                <TabsContent className="h-full overflow-hidden" value="both">
+                  <ChatBox
+                    diagramId={diagramId}
+                    code={code}
+                    onChange={onChange}
+                  />
+                </TabsContent>
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel>
+                <TabsContent className="h-full overflow-hidden" value={"chat"}>
+                  <FlowDiagram
+                    code={code}
+                    diagramTheme={diagramTheme}
+                    diagramId={diagramId}
+                  />
+                </TabsContent>
+                <TabsContent
+                  className="h-full overflow-hidden"
+                  value={"editor"}
+                >
+                  <FlowDiagram
+                    code={code}
+                    diagramTheme={diagramTheme}
+                    diagramId={diagramId}
+                  />
+                </TabsContent>
+                <TabsContent className="h-full overflow-hidden" value="both">
+                  <ResizablePanelGroup direction={"horizontal"}>
+                    <ResizablePanel>
+                      <CodeEditor code={code} onChange={onChange} />
+                    </ResizablePanel>
+                    <ResizableHandle withHandle />
+
+                    <ResizablePanel>
+                      <FlowDiagram
+                        code={code}
+                        diagramTheme={diagramTheme}
+                        diagramId={diagramId}
+                      />
+                    </ResizablePanel>
+                  </ResizablePanelGroup>
+                </TabsContent>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </div>
+        </Tabs>
+      )}
+
+      {!isDesktop && (
+        <>
+          <header
+            className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
+          >
+            <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
+              <div className=" w-full px-4 flex h-12 items-center  ">
+                <SidebarToggle />
+                <IconSeparator className="size-6 text-muted-foreground/50" />
+                <Popover open={isPopoverOpen}>
+                  <PopoverTrigger
+                    onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                  >
+                    <p className="text-sm   flex flex-row gap-1 items-center font-medium truncate">
+                      {diagramName}
+                      <Pencil className="size-3 dark:text-neutral-600" />
+                    </p>
+                  </PopoverTrigger>
+                  <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
+                    <Input
+                      value={editedName}
+                      onChange={(e) => {
+                        setEditedName(e.target.value);
+                      }}
+                    ></Input>
+
+                    <Button
+                      onClick={() => {
+                        handleNameChange();
+                        setIsPopoverOpen(false);
+                      }}
+                      aria-label="Close"
+                    >
+                      Save Changes
+                    </Button>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="flex flex-row w-full gap-2 justify-end items-center">
+                <ExportDiagram code={code} config={{ theme: "dark" }} />
+                <ModeToggle />
+                <DropdownMenuDemo />
+              </div>
+            </div>
+          </header>
+
+          <Tabs defaultValue="mobile-editor">
+            <TabsList className="w-full  rounded-none">
+              <TabsTrigger
+                className="data-[state=active]:dark:bg-neutral-900 flex text-[12px] w-full  flex-row gap-1 items-center"
+                value="mobile-editor"
+              >
+                <CodeXml className="size-3" />
+                <p className="text-[12px] ">Editor</p>
+              </TabsTrigger>
+              <TabsTrigger
+                className="data-[state=active]:dark:bg-neutral-900 text-[12px] w-full flex flex-row gap-1 items-center"
+                value="mobile-chat"
+                onClick={() => setToggleTabs(!toggleTabs)}
+              >
+                <BotMessageSquare className="size-3" />
+                <p className="text-[12px]">Chat</p>
+              </TabsTrigger>
+              <TabsTrigger
+                className="data-[state=active]:dark:bg-neutral-900 flex text-[12px] w-full flex-row gap-1 items-center"
+                value="mobile-diagram"
+              >
+                <LayoutPanelLeft className="size-3" />
+                <p className="text-[12px] ">Diagram</p>
+              </TabsTrigger>
+            </TabsList>
+            <div className="h-[calc(100vh-86px)]">
+              <TabsContent className="h-full " value="editor">
                 <CodeEditor code={code} onChange={onChange} />
               </TabsContent>
-              <TabsContent className="h-full overflow-hidden" value="chat">
+              <TabsContent className="h-full " value="chat">
                 <ChatBox
                   diagramId={diagramId}
                   code={code}
                   onChange={onChange}
                 />
               </TabsContent>
-              <TabsContent className="h-full overflow-hidden" value="both">
+              <TabsContent className="h-full " value="mobile-editor">
+                <CodeEditor code={code} onChange={onChange} />
+              </TabsContent>
+              <TabsContent className="h-full " value="mobile-chat">
                 <ChatBox
                   diagramId={diagramId}
                   code={code}
                   onChange={onChange}
                 />
               </TabsContent>
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel>
-              <TabsContent className="h-full overflow-hidden" value={"chat"}>
+              <TabsContent className="h-full " value="mobile-diagram">
                 <FlowDiagram
                   code={code}
                   diagramTheme={diagramTheme}
                   diagramId={diagramId}
                 />
               </TabsContent>
-              <TabsContent className="h-full overflow-hidden" value={"editor"}>
-                <FlowDiagram
-                  code={code}
-                  diagramTheme={diagramTheme}
-                  diagramId={diagramId}
-                />
-              </TabsContent>
-              <TabsContent className="h-full overflow-hidden" value="both">
-                <ResizablePanelGroup direction={"horizontal"}>
-                  <ResizablePanel>
-                    <CodeEditor code={code} onChange={onChange} />
-                  </ResizablePanel>
-                  <ResizableHandle withHandle />
-
-                  <ResizablePanel>
-                    <FlowDiagram
-                      code={code}
-                      diagramTheme={diagramTheme}
-                      diagramId={diagramId}
-                    />
-                  </ResizablePanel>
-                </ResizablePanelGroup>
-              </TabsContent>
-            </ResizablePanel>
-          </ResizablePanelGroup>
-        </div>
-      </Tabs>
+            </div>
+          </Tabs>
+        </>
+      )}
     </>
   );
 };

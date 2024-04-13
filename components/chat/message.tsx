@@ -49,21 +49,22 @@ export function BotMessage({
   const nonMermaidText = mermaidMatch ? text.replace(mermaidRegex, "") : text;
 
   return (
-    <div className="group relative flex items-start md:-ml-12">
+    <div className="group relative flex items-start ">
       <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border  bg-neutral-200 dark:bg-neutral-200 shadow-sm">
         <Bot className="p-1 text-black" />
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
         <div data-color-mode={theme}>
           <MarkdownPreview
-            source={text}
-            components={{
-              code: Code,
-            }}
-            // className={theme === "dark" ? "dark:bg-neutral-900" : "bg-white"}
+            source={nonMermaidText}
             style={{
               backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
             }}
+          />
+          <MermaidRaw
+            chart={mermaidMatch ? mermaidMatch[1] : ""}
+            isLoading={isLoading}
+            onChange={onChange}
           />
         </div>
       </div>

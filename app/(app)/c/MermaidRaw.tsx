@@ -25,18 +25,20 @@ const MermaidRaw = ({ chart, isLoading, onChange }) => {
     toast.success("Diagram replaced!");
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center dark:bg-neutral-800 rounded-lg p-2">
-      <div className="mermaid">{chart}</div>
-      <Button
-        variant={"outline"}
-        className="w-11/12 my-2"
-        onClick={handleReplace}
-      >
-        Use this diagram
-      </Button>
-    </div>
-  );
+  if (!isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center dark:bg-neutral-900 rounded-lg p-2">
+        <div className="mermaid">{chart}</div>
+        <Button
+          variant={"outline"}
+          className="w-11/12 my-2 dark:bg-neutral-900"
+          onClick={handleReplace}
+        >
+          Use this diagram
+        </Button>
+      </div>
+    );
+  }
 };
 
 export default MermaidRaw;

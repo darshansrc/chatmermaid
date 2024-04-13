@@ -84,7 +84,9 @@ export function ExportDiagram({ code, config }: ExportDiagramProps) {
         <DownloadForm code={code} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" className="dark:bg-neutral-900">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
