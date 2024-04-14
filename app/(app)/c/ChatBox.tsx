@@ -136,7 +136,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
               )}
             </div>
           ))}
-          {/* <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div> */}
+          <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div>
         </div>
 
         <div className="absolute bottom-0 left-0 w-full border-t  dark:bg-neutral-900 bg-white  flex justify-center items-center">

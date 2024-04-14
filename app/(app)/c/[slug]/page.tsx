@@ -76,7 +76,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
   const [diagramName, setDiagramName] = useState<string>("");
-  const [editedName, setEditedName] = useState<string>("");
+
   const [diagram, setDiagram] = useState<any>(null);
   const [diagramId, setDiagramId] = useState<string>("");
   const [diagramTheme, setDiagramTheme] = useState<string>("default");
@@ -110,6 +110,8 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
     fetchData();
   }, [params.slug, fetchChat]);
 
+  const [editedName, setEditedName] = useState<string>(diagramName);
+
   const onChange = useCallback(
     (val: string) => {
       setCode(val);
@@ -128,6 +130,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   );
 
   const handleNameChange = async () => {
+    if (editedName === diagramName) return;
     const data = await changeDiagramName(diagramId, editedName);
     if (data) {
       toast.success("Diagram name changed successfully");
@@ -142,6 +145,10 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
+  useEffect(() => {
+    setEditedName(diagramName);
+  }, [diagramName]);
+
   return (
     <>
       {isDesktop && (
@@ -153,34 +160,14 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
               <div className=" w-full px-4 flex h-12 items-center  ">
                 <SidebarToggle />
                 <IconSeparator className="size-6 text-muted-foreground/50" />
-                <Popover open={isPopoverOpen}>
-                  <PopoverTrigger
-                    onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                  >
-                    <p className="text-sm   flex flex-row gap-1 items-center font-medium truncate">
-                      {diagramName}
-                      <Pencil className="size-3 dark:text-neutral-600" />
-                    </p>
-                  </PopoverTrigger>
-                  <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
-                    <Input
-                      value={editedName}
-                      onChange={(e) => {
-                        setEditedName(e.target.value);
-                      }}
-                    ></Input>
 
-                    <Button
-                      onClick={() => {
-                        handleNameChange();
-                        setIsPopoverOpen(false);
-                      }}
-                      aria-label="Close"
-                    >
-                      Save Changes
-                    </Button>
-                  </PopoverContent>
-                </Popover>
+                <Input
+                  value={editedName}
+                  defaultValue={diagramName}
+                  onChange={(e) => setEditedName(e.target.value)}
+                  onBlur={handleNameChange}
+                  className="text-sm  font-medium border-none dark:border-none p-1 py-0 focus-visible:ring-1 focus-visible:dark:ring-neutral-800"
+                />
               </div>
 
               <div className="w-full   justify-center  hidden md:flex">
@@ -218,67 +205,68 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
               </div>
             </div>
           </header>
-
           <div className="h-[calc(100vh-48px)]">
-            <ResizablePanelGroup
-              direction={window.innerWidth < 768 ? "vertical" : "horizontal"}
-            >
-              <ResizablePanel>
-                <TabsContent className="h-full overflow-hidden" value="editor">
+            <TabsContent className="h-full overflow-hidden" value="editor">
+              <ResizablePanelGroup direction="horizontal">
+                <ResizablePanel>
                   <CodeEditor code={code} onChange={onChange} />
-                </TabsContent>
-                <TabsContent className="h-full overflow-hidden" value="chat">
-                  <ChatBox
-                    diagramId={diagramId}
-                    code={code}
-                    onChange={onChange}
-                  />
-                </TabsContent>
-                <TabsContent className="h-full overflow-hidden" value="both">
-                  <ChatBox
-                    diagramId={diagramId}
-                    code={code}
-                    onChange={onChange}
-                  />
-                </TabsContent>
-              </ResizablePanel>
-              <ResizableHandle withHandle />
-              <ResizablePanel>
-                <TabsContent className="h-full overflow-hidden" value={"chat"}>
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </TabsContent>
-                <TabsContent
-                  className="h-full overflow-hidden"
-                  value={"editor"}
-                >
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </TabsContent>
-                <TabsContent className="h-full overflow-hidden" value="both">
-                  <ResizablePanelGroup direction={"horizontal"}>
-                    <ResizablePanel>
-                      <CodeEditor code={code} onChange={onChange} />
-                    </ResizablePanel>
-                    <ResizableHandle withHandle />
+                </ResizablePanel>
 
-                    <ResizablePanel>
-                      <FlowDiagram
-                        code={code}
-                        diagramTheme={diagramTheme}
-                        diagramId={diagramId}
-                      />
-                    </ResizablePanel>
-                  </ResizablePanelGroup>
-                </TabsContent>
-              </ResizablePanel>
-            </ResizablePanelGroup>
+                <ResizableHandle withHandle />
+                <ResizablePanel>
+                  <FlowDiagram
+                    code={code}
+                    diagramTheme={diagramTheme}
+                    diagramId={diagramId}
+                  />
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </TabsContent>
+            <TabsContent className="h-full overflow-hidden" value="chat">
+              <ResizablePanelGroup direction="horizontal">
+                <ResizablePanel>
+                  <ChatBox
+                    diagramId={diagramId}
+                    code={code}
+                    onChange={onChange}
+                  />
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel>
+                  <FlowDiagram
+                    code={code}
+                    diagramTheme={diagramTheme}
+                    diagramId={diagramId}
+                  />
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </TabsContent>
+            <TabsContent className="h-full overflow-hidden" value="both">
+              <ResizablePanelGroup direction="horizontal">
+                <ResizablePanel>
+                  <ChatBox
+                    diagramId={diagramId}
+                    code={code}
+                    onChange={onChange}
+                  />
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+
+                <ResizablePanel>
+                  <CodeEditor code={code} onChange={onChange} />
+                </ResizablePanel>
+
+                <ResizableHandle withHandle />
+
+                <ResizablePanel>
+                  <FlowDiagram
+                    code={code}
+                    diagramTheme={diagramTheme}
+                    diagramId={diagramId}
+                  />
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </TabsContent>
           </div>
         </Tabs>
       )}

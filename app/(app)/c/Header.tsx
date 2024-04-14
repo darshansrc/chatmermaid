@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import useDiagramStore from "@/store/diagram-store";
 
 interface AppLayoutProps {
   diagramName: string;
@@ -24,11 +25,14 @@ interface AppLayoutProps {
 
 const Header = ({ diagramName, diagramId }: AppLayoutProps) => {
   const [editedName, setEditedName] = useState(diagramName);
+  const { fetchDiagrams } = useDiagramStore();
 
   const handleNameChange = async () => {
     const data = await changeDiagramName(diagramId, editedName);
     if (data) {
+      diagramName = editedName;
       toast.success("Diagram name changed successfully");
+      fetchDiagrams();
     } else {
       toast.error("Failed to change diagram name");
     }
@@ -42,26 +46,14 @@ const Header = ({ diagramName, diagramId }: AppLayoutProps) => {
           <SidebarToggle />
           <IconSeparator className="size-6 text-muted-foreground/50" />
 
-          <Popover>
-            <PopoverTrigger>
-              <p className="text-sm flex flex-row font-medium truncate">
-                {diagramName}
-              </p>
-            </PopoverTrigger>
-            <PopoverContent className="dark:bg-neutral-800 flex flex-col gap-2 flex-end justify-end">
-              <Input
-                value={editedName}
-                defaultValue={editedName}
-                onChange={(e) => setEditedName(e.target.value)}
-              ></Input>
-              <Button
-                onClick={handleNameChange}
-                className="dark:text-black dark:bg-white"
-              >
-                Save Changes
-              </Button>
-            </PopoverContent>
-          </Popover>
+          <form>
+            <Input
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              onBlur={handleNameChange}
+              className="text-lg font-semibold"
+            />
+          </form>
         </div>
 
         <div className="w-full flex pl-[210px] justify-center">

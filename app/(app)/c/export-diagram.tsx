@@ -49,7 +49,7 @@ export function ExportDiagram({ code, config }: ExportDiagramProps) {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="flex flex-row gap-1 items-center"
+            className="flex flex-row gap-1 dark:bg-neutral-900 items-center"
           >
             <Share className="size-4" />
             Export

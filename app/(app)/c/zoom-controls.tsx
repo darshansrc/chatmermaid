@@ -250,7 +250,10 @@ const ZoomControls = ({
                 </Button>
               </DropdownMenuTrigger>
             </TooltipTrigger>
-            <DropdownMenuContent side="top" className="w-56">
+            <DropdownMenuContent
+              side="top"
+              className="w-56 dark:bg-neutral-900"
+            >
               <DropdownMenuLabel>Background Variant</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
@@ -278,17 +281,6 @@ const ZoomControls = ({
           </DropdownMenu>
           <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
             Background Variant
-          </TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger>
-            <Button size="icon" variant="ghost">
-              <Download className="h-4 w-4 text-neutral-800  dark:text-white" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-            Download
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

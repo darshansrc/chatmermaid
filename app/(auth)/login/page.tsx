@@ -23,6 +23,7 @@ import { AlertCircle } from "lucide-react";
 import GoogleSignInButton from "@/components/auth/google-oauth-button";
 import GithubSignInButton from "@/components/auth/github-oauth-button";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -48,13 +49,15 @@ export default function LoginForm() {
       </div>
       <Card className="mx-auto max-w-sm dark:bg-neutral-900">
         <CardHeader>
-          <CardTitle className="text-2xl flex flex-row w-full items-center py-4 justify-center">
-            <GanttChart
-              strokeWidth={3}
-              color="#6366f1"
-              className="text-gradient_indigo-purple font-extrabold"
+          <CardTitle className="text-2xl flex flex-row w-full items-center gap-3 py-4 justify-center">
+            <Image
+              src="/mermaid.png"
+              alt="logo"
+              width={30}
+              height={30}
+              className="rounded-full"
             />
-            <span className="hidden font-urban text-xl font-bold sm:inline-block">
+            <span className=" font-urban text-xl font-bold inline-block">
               {siteConfig.name}
             </span>
           </CardTitle>

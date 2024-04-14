@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -9,6 +9,9 @@ import CodeEditor from "./CodeEditor";
 import FlowDiagram from "./FlowDiagram";
 import Header from "./Header";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
+import useDiagramStore from "@/store/diagram-store";
+import { createNewDiagram, getUser } from "@/actions/actions";
 
 const Page: React.FC = () => {
   const [code, setCode] = useState("");
@@ -17,6 +20,27 @@ const Page: React.FC = () => {
   const onChange = useCallback((val: string) => {
     setCode(val);
   }, []);
+
+  const router = useRouter();
+  const { fetchDiagrams } = useDiagramStore();
+  const user = getUser();
+
+  const handleNewDiagram = async () => {
+    try {
+      if (!user) {
+        router.push("/login");
+      }
+      const uuid = await createNewDiagram();
+      router.push(`/c/${uuid}`);
+      fetchDiagrams();
+    } catch (error) {
+      router.push("/login");
+    }
+  };
+
+  useEffect(() => {
+    handleNewDiagram();
+  });
 
   return (
     <>

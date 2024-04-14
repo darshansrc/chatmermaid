@@ -50,12 +50,23 @@ export async function login(formData: FormData) {
 export async function signup(formData: FormData) {
   const supabase = createClient();
 
+  console.log(formData);
+
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
 
   const { error } = await supabase.auth.signUp(data);
+
+  const { error: updateError } = await supabase.auth.updateUser({
+    data: {
+      name: formData.get("first_name") as string,
+      full_name: ((formData.get("first_name") as string) +
+        " " +
+        formData.get("last_name")) as string,
+    },
+  });
 
   if (error) {
     return error.message;
