@@ -309,14 +309,23 @@ export async function saveMessage(
 
   return data;
 }
-// import { convert } from "convert-svg-to-png";
 
-// export async function convertSvgToPng(svg: string, options = {}) {
-//   try {
-//     const pngBuffer = await convert(svg, options);
-//     return pngBuffer;
-//   } catch (error) {
-//     console.error("Error converting SVG to PNG:", error);
-//     throw error;
-//   }
-// }
+interface GithubProps {
+  origin: string;
+  nextUrl: string;
+}
+
+export const handleSignInWithGithub = async () => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: `http://localhost:3000/oauth/callback`,
+    },
+  });
+
+  if (data.url) {
+    redirect(data.url); // use the redirect API for your server framework
+  }
+};

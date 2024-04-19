@@ -3,19 +3,18 @@
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "../ui/button";
 import { FaGithub } from "react-icons/fa";
+import { handleSignInWithGithub } from "@/actions/actions";
 
 export default function GithubSignInButton(props: { nextUrl?: string }) {
   const supabase = createClient();
 
   const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "github",
-      options: {
-        redirectTo: `${location.origin}/auth/callback?next=${
-          props.nextUrl || ""
-        }`,
-      },
-    });
+    const nextUrl = props.nextUrl;
+    await handleSignInWithGithub();
+
+    // redirectTo: `${location.origin}/auth/callback?next=${
+    //       props.nextUrl || ""
+    //     }`,
   };
 
   return (

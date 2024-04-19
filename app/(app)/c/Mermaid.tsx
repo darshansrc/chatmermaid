@@ -25,15 +25,6 @@ const Mermaid: React.FC<MermaidProps> = ({
 
   const { svg: svgStore, setSvg: setSvgStore } = useSvgStore();
 
-  const ErrorModal = (error: string) => {
-    return (
-      <div>
-        <div>{error}</div>
-        <div>{svgStore}</div>
-      </div>
-    );
-  };
-
   useEffect(() => {
     mermaid.initialize({
       startOnLoad: true,
@@ -68,7 +59,7 @@ const Mermaid: React.FC<MermaidProps> = ({
 
   return (
     <div className="w-full h-full  align-center justify-center flex">
-      <div className="w-[1200px]" ref={refElement} data-name="mermaid" />
+      <div className="w-[1200px] h-[1200px]" ref={refElement} data-name="mermaid" />
     </div>
   );
 };
