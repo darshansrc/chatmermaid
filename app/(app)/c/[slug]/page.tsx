@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, memo } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -72,6 +72,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { ExportDiagram } from "../export-diagram";
 import { useMediaQuery } from "@/hooks/use-media-query";
+const MemoizedFlowDiagram = memo(FlowDiagram);
 
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
@@ -213,13 +214,6 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                 </ResizablePanel>
 
                 <ResizableHandle withHandle />
-                <ResizablePanel>
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </ResizablePanel>
               </ResizablePanelGroup>
             </TabsContent>
             <TabsContent className="h-full overflow-hidden" value="chat">
@@ -232,13 +226,6 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                   />
                 </ResizablePanel>
                 <ResizableHandle withHandle />
-                <ResizablePanel>
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </ResizablePanel>
               </ResizablePanelGroup>
             </TabsContent>
             <TabsContent className="h-full overflow-hidden" value="both">
@@ -257,16 +244,18 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                 </ResizablePanel>
 
                 <ResizableHandle withHandle />
-
-                <ResizablePanel>
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </ResizablePanel>
               </ResizablePanelGroup>
             </TabsContent>
+            <ResizablePanelGroup direction="horizontal">
+              <ResizableHandle withHandle />
+              <ResizablePanel>
+                <MemoizedFlowDiagram
+                  code={code}
+                  diagramTheme={diagramTheme}
+                  diagramId={diagramId}
+                />
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </div>
         </Tabs>
       )}

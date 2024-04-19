@@ -40,7 +40,7 @@ const Mermaid: React.FC<MermaidProps> = ({
       securityLevel: "loose",
 
       darkMode: theme === "dark" ? true : false,
-      theme: theme === "dark" ? "dark" : config.theme,
+      theme: config.theme,
     });
 
     const reRender = async () => {
@@ -67,8 +67,8 @@ const Mermaid: React.FC<MermaidProps> = ({
   }, []);
 
   return (
-    <div>
-      <div ref={refElement} data-name="mermaid" />
+    <div className="w-full h-full  align-center justify-center flex">
+      <div className="w-[1200px]" ref={refElement} data-name="mermaid" />
     </div>
   );
 };
