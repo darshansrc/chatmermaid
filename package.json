@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/bedrock-sdk": "^0.9.6",
     "@anthropic-ai/sdk": "^0.20.1",
+    "@aws-sdk/client-bedrock-runtime": "^3.556.0",
     "@codemirror/language": "^6.10.1",
     "@codemirror/lint": "^6.5.0",
     "@emotion/cache": "^11.11.0",

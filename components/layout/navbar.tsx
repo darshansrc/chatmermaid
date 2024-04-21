@@ -13,9 +13,11 @@ import { Icons } from "../shared/icons";
 import { MainNav } from "./main-nav";
 import { UserAccountNav } from "./user-account-nav";
 import { ModeToggle } from "../mode-toggle";
+import { getUser } from "@/actions/actions";
+import { useEffect, useState } from "react";
 
 interface NavBarProps {
-  user: Pick<User, "name" | "image" | "email"> | undefined;
+  // user: Pick<User, "name" | "image" | "email"> | undefined;
   items?: MainNavItem[];
   children?: React.ReactNode;
   rightElements?: React.ReactNode;
@@ -23,7 +25,6 @@ interface NavBarProps {
 }
 
 export function NavBar({
-  user,
   items,
   children,
   rightElements,
@@ -31,6 +32,16 @@ export function NavBar({
 }: NavBarProps) {
   const scrolled = useScroll(50);
   const signInModal = useSigninModal();
+
+  const [user, setUser] = useState<any>();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getUser();
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
 
   return (
     <header
@@ -59,14 +70,12 @@ export function NavBar({
             </Link>
           ) : null} */}
 
-          <ModeToggle />
           {user ? (
             <UserAccountNav user={user} />
           ) : (
             <Button
               className="gap-2 px-4 rounded-full"
               variant="default"
-              size="icon"
               onClick={signInModal.onOpen}
             >
               <span>Sign In</span>

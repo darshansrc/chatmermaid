@@ -47,11 +47,7 @@ export function Features() {
                   </p>
 
                   <div className="-mb-5 flex gap-3 border-t border-muted py-4 md:-mb-7">
-                    <Button
-                      size="icon"
-                      variant="secondary"
-                      className="px-4 rounded-xl"
-                    >
+                    <Button variant="secondary" className="px-4 rounded-xl">
                       <Link href="/" className="flex items-center gap-2">
                         <span>Visit the site</span>
                         <Icons.arrowUpRight className="size-4" />

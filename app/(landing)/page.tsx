@@ -10,7 +10,7 @@ import React from "react";
 const page = () => {
   return (
     <div className="flex min-h-screen flex-col">
-      <NavBar user={undefined} items={marketingConfig.mainNav} scroll={true} />
+      <NavBar items={marketingConfig.mainNav} scroll={true} />
       <HeroLanding />
       <PreviewLanding />
       <Features />

@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/shared/icons";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { GanttChart } from "lucide-react";
+import Image from "next/image";
+import MermaidLogo from "@/lib/assets/logo";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -41,11 +43,8 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex gap-6   md:gap-10">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <GanttChart
-          strokeWidth={3}
-          color="#6366f1"
-          className="text-gradient_indigo-purple font-extrabold"
-        />
+        <MermaidLogo />
+
         <span className="hidden font-urban text-xl font-bold sm:inline-block">
           {siteConfig.name}
         </span>
@@ -73,15 +72,7 @@ export function MainNav({ items, children }: MainNavProps) {
         className="flex items-center space-x-2 md:hidden"
         onClick={toggleMobileMenu}
       >
-        {showMobileMenu ? (
-          <Icons.close />
-        ) : (
-          <GanttChart
-            strokeWidth={3}
-            color="#6366f1"
-            className="text-gradient_indigo-purple font-extrabold"
-          />
-        )}
+        {showMobileMenu ? <Icons.close /> : <MermaidLogo />}
         <span className="font-bold">ChatMermaid</span>
       </button>
       {showMobileMenu && items && (

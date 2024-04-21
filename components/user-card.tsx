@@ -18,7 +18,7 @@ const UserCard = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getUser();
-      console.log(user);
+
       setUser(user);
     };
 

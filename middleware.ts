@@ -54,13 +54,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`/login`, request.url));
   }
 
-  if (request.nextUrl.pathname === "/" && userData?.user?.email) {
-    return NextResponse.redirect(new URL("/c", request.url));
-  }
+  // if (request.nextUrl.pathname === "/" && userData?.user?.email) {
+  //   return NextResponse.redirect(new URL("/c", request.url));
+  // }
 
-  if (request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/signup", request.url));
-  }
+  // if (request.nextUrl.pathname === "/") {
+  //   return NextResponse.redirect(new URL("/signup", request.url));
+  // }
 
   return NextResponse.next({
     request: {

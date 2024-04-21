@@ -12,19 +12,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
 import type { User } from "next-auth";
+import Image from "next/image";
 
-interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: Pick<User, "name" | "image" | "email">;
-}
-
-export function UserAccountNav({ user }: UserAccountNavProps) {
+export function UserAccountNav({ user }: any) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger></DropdownMenuTrigger>
+      <DropdownMenuTrigger className="">
+        <Image
+          src={user?.user_metadata.avatar_url}
+          alt="pfp"
+          width={35}
+          height={35}
+          className="rounded-full cursor-pointer"
+        />
+      </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user?.name && <p className="font-medium">{user?.name}</p>}
+            {user?.user_metadata.name && (
+              <p className="font-medium">{user?.user_metadata.name}</p>
+            )}
             {user?.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
                 {user?.email}
