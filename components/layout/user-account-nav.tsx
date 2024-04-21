@@ -11,10 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
-import type { User } from "next-auth";
 import Image from "next/image";
+import { logout } from "@/actions/actions";
 
 export function UserAccountNav({ user }: any) {
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="">
@@ -65,15 +69,7 @@ export function UserAccountNav({ user }: any) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onSelect={(event) => {
-            event.preventDefault();
-            signOut({
-              callbackUrl: `${window.location.origin}/`,
-            });
-          }}
-        >
+        <DropdownMenuItem className="cursor-pointer" onSelect={handleLogout}>
           <div className="flex items-center space-x-2.5">
             <LogOut className="size-4" />
             <p className="text-sm">Log out </p>

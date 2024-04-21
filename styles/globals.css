@@ -96,3 +96,55 @@ div[id^="ddome"] {
 /* div[id^="dmermaid"] {
   display: none;
 } */
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.2s ease-in-out;
+}
+
+.animate-slide-out-left {
+  animation: slide-out-left 0.2s ease-in-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.2s ease-in-out;
+}
+
+.animate-slide-out-right {
+  animation: slide-out-right 0.2s ease-in-out;
+}

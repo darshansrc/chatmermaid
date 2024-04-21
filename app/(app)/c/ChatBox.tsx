@@ -7,31 +7,14 @@ import {
 } from "@/components/chat/message";
 import { Separator } from "@/components/ui/separator";
 import { useChat } from "ai/react";
-import {
-  ArrowUp,
-  CircleArrowRight,
-  CirclePlus,
-  Forward,
-  Key,
-  TextCursor,
-} from "lucide-react";
+import { CircleArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { spinner } from "@/components/chat/spinner";
-import { getChats, updateChats } from "@/actions/actions";
 import { Message } from "ai";
 import useChatStore from "@/store/chat-store";
 import Textarea from "react-textarea-autosize";
-import { TextareaAutosize as BaseTextareaAutosize } from "@mui/base/TextareaAutosize";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { Button } from "@/components/ui/button";
-import { IconArrowElbow, IconPlus } from "@/components/ui/icons";
-import ReactTextareaAutosize from "react-textarea-autosize";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import { useTheme } from "next-themes";
 
 type ChatBoxProps = {
@@ -45,8 +28,6 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
   const [initialChats, setInitialChats] = useState<Message[]>([]);
   const [hasResponseStarted, setHasResponseStarted] = useState(false);
   const { chat, fetchChat } = useChatStore();
-  const [isMounted, setIsMounted] = useState(false);
-  const inputRef = React.useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     const fetchData = async () => {
       setInitialChats(chat);
@@ -56,7 +37,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
     fetchData();
   }, [chat, diagramId]);
 
-  const { messages, input, data, isLoading, handleInputChange, handleSubmit } =
+  const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       initialMessages: initialChats,
       onResponse: () => setHasResponseStarted(true),

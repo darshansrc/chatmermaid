@@ -15,6 +15,7 @@ import { UserAccountNav } from "./user-account-nav";
 import { ModeToggle } from "../mode-toggle";
 import { getUser } from "@/actions/actions";
 import { useEffect, useState } from "react";
+import useAuthModal from "@/store/auth-modal-store";
 
 interface NavBarProps {
   // user: Pick<User, "name" | "image" | "email"> | undefined;
@@ -34,6 +35,7 @@ export function NavBar({
   const signInModal = useSigninModal();
 
   const [user, setUser] = useState<any>();
+  const { isAuthModalOpen, setIsAuthModalOpen } = useAuthModal();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -70,13 +72,15 @@ export function NavBar({
             </Link>
           ) : null} */}
 
+          <ModeToggle />
+
           {user ? (
             <UserAccountNav user={user} />
           ) : (
             <Button
               className="gap-2 px-4 rounded-full"
               variant="default"
-              onClick={signInModal.onOpen}
+              onClick={() => setIsAuthModalOpen(!isAuthModalOpen)}
             >
               <span>Sign In</span>
               <Icons.arrowRight className="size-4" />

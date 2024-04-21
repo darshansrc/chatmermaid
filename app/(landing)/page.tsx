@@ -1,3 +1,4 @@
+import { AuthModal } from "@/components/auth/auth-modal";
 import { NavBar } from "@/components/layout/navbar";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Features } from "@/components/sections/features";
@@ -11,6 +12,7 @@ const page = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <NavBar items={marketingConfig.mainNav} scroll={true} />
+      <AuthModal />
       <HeroLanding />
       <PreviewLanding />
       <Features />

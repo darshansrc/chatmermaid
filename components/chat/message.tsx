@@ -17,6 +17,7 @@ import Mermaid from "@/app/(app)/c/Mermaid";
 import { useTheme } from "next-themes";
 import { Bot } from "lucide-react";
 import { Code } from "./mermaid-block";
+import { Spinner } from "@geist-ui/core";
 // Different types of message bubbles.
 
 export function UserMessage({ children }: { children: React.ReactNode }) {

@@ -1,31 +1,20 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
-import Anthropic from "@anthropic-ai/sdk";
-import { AnthropicStream, StreamingTextResponse } from "ai";
-
 import { createClient } from "@/utils/supabase/server";
 import { PostgrestError } from "@supabase/supabase-js";
-import { v4 as uuidv4 } from "uuid";
 import { customAlphabet, nanoid } from "nanoid";
-import { kv } from "@vercel/kv";
-import { Chat } from "@/lib/types";
 import { Message } from "ai";
-import { Messages } from "@anthropic-ai/sdk/resources";
-import { createCanvas, loadImage } from "canvas";
-import mermaid from "mermaid";
 
 type DiagramData = {
   data: any[] | null;
   error: PostgrestError | null;
 };
 
-// export const nanoid = customAlphabet(
+// const nanoid = customAlphabet(
 //   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
 //   7
-// ); // 7-character random string
+// );
 
 export async function login(formData: FormData) {
   const supabase = createClient();
@@ -75,6 +64,38 @@ export async function signup(formData: FormData) {
   redirect("/c");
 }
 
+export async function logout() {
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    return error.message;
+  }
+
+  redirect("/");
+}
+
+export async function sendMagicLink(email: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.signInWithOtp({
+    email,
+    options: {
+      // set this to false if you do not want the user to be automatically signed up
+      shouldCreateUser: true,
+      emailRedirectTo: "https://chatmermaid.com/oauth/callback",
+    },
+  });
+
+  if (error) {
+    console.log("error: ", error);
+    return error.message;
+  }
+
+  return { data, error };
+}
+
 export async function getAllDiagrams() {
   const supabase = createClient();
 
@@ -90,10 +111,6 @@ export async function getAllDiagrams() {
       .eq("user_id", user.id)
       .order("last_updated_at", { ascending: false });
 
-    // if (error) {
-    //   return error.message;
-    // }
-
     return data;
   }
 
@@ -108,7 +125,7 @@ export async function createNewDiagram() {
     7
   );
 
-  const id = nanoid();
+  const id = newNanoid();
 
   const {
     data: { user },
