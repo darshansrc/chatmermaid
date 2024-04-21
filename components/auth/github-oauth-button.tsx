@@ -4,17 +4,30 @@ import { createClient } from "@/utils/supabase/client";
 import { Button } from "../ui/button";
 import { FaGithub } from "react-icons/fa";
 import { handleSignInWithGithub } from "@/actions/actions";
+import { useState } from "react";
+import { spinner } from "../chat/spinner";
+import { toast } from "sonner";
 
 export default function GithubSignInButton(props: { nextUrl?: string }) {
   const supabase = createClient();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    const nextUrl = props.nextUrl;
-    await handleSignInWithGithub();
-
-    // redirectTo: `${location.origin}/auth/callback?next=${
-    //       props.nextUrl || ""
-    //     }`,
+    try {
+      setLoading(true);
+      await supabase.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: `${location.origin}/oauth/callback?next=${
+            props.nextUrl || ""
+          }`,
+        },
+      });
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      toast.error("An error occured, please try google");
+    }
   };
 
   return (
@@ -23,7 +36,16 @@ export default function GithubSignInButton(props: { nextUrl?: string }) {
       className="w-full flex flex-row gap-2 items-center justify-center"
       onClick={handleLogin}
     >
-      <FaGithub size={16} /> Continue with Github
+      {loading ? (
+        <>
+          {spinner} <p>Please wait...</p>
+        </>
+      ) : (
+        <>
+          <FaGithub />
+          <p>Continue with GitHub</p>
+        </>
+      )}
     </Button>
   );
 }
