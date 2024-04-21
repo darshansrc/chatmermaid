@@ -11,30 +11,31 @@ export async function HeroLanding() {
       <div className="container flex max-w-5xl flex-col items-center gap-5 text-center">
         {/* Want animations? Check here: https://github.com/mickasmt/next-saas-stripe-starter/blob/76eb9f2b70b29c7a734ff0e5b047796ed2dac28d/app/(marketing)/page.tsx */}
         <Link
-          href="https://twitter.com/miickasmt/status/1719892161095745801"
+          href="/"
           className={cn(
             buttonVariants({ variant: "outline", size: "sm" }),
             "px-4 rounded-full"
           )}
-          target="_blank"
         >
-          <span className="mr-3 ">🎉</span> Introducing support for GPT 4
+          <span className="mr-3 ">🎉</span> Introducing support for Claude
           <ArrowRight className="ml-2" size={16} />
         </Link>
 
         <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[50px]">
-          The Visual Way to {""}
+          Generate{" "}
           <span className="text-gradient_indigo-purple font-extrabold">
-            Diagram
-          </span>
+            Mermaid.js
+          </span>{" "}
+          Diagrams with AI
         </h1>
 
         <p
           className=" text-balance text-sm leading-normal text-muted-foreground sm:text-xl sm:leading-2"
           style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
         >
-          Easily create complex diagrams from markdown-style code and
-          collaborate with team members in real-time.
+          {`
+          ChatMermaid is an AI-powered tool that helps you create beautiful, interactive Mermaid.js diagrams with ease. No more manual coding, just describe your diagram and let the AI do the work.
+          `}
         </p>
 
         <div

@@ -10,7 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
+import {
+  CreditCard,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  UserCircle,
+} from "lucide-react";
 import Image from "next/image";
 import { logout } from "@/actions/actions";
 
@@ -22,13 +28,17 @@ export function UserAccountNav({ user }: any) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="">
-        <Image
-          src={user?.user_metadata.avatar_url}
-          alt="pfp"
-          width={35}
-          height={35}
-          className="rounded-full cursor-pointer"
-        />
+        {user?.user_metadata.avatar_url ? (
+          <Image
+            src={user?.user_metadata.avatar_url}
+            alt="pfp"
+            width={35}
+            height={35}
+            className="rounded-full cursor-pointer"
+          />
+        ) : (
+          <UserCircle className="size-6" />
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">

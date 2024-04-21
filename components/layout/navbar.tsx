@@ -72,7 +72,7 @@ export function NavBar({
             </Link>
           ) : null} */}
 
-          <ModeToggle />
+          
 
           {user ? (
             <UserAccountNav user={user} />

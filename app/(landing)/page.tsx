@@ -4,6 +4,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Features } from "@/components/sections/features";
 import { HeroLanding } from "@/components/sections/hero-landing";
 import { PreviewLanding } from "@/components/sections/preview-landing";
+import { SiteFooter } from "@/components/sections/site-footer";
 import { Testimonials } from "@/components/sections/testimonials";
 import { marketingConfig } from "@/config/marketing";
 import React from "react";
@@ -15,8 +16,9 @@ const page = () => {
       <AuthModal />
       <HeroLanding />
       <PreviewLanding />
-      <Features />
-      <Testimonials />
+      {/* <Features />
+      <Testimonials /> */}
+      <SiteFooter />
     </div>
   );
 };
