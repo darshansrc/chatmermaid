@@ -161,7 +161,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
   return (
     <>
       <div id="pricing" />
-      <section className="container flex flex-col items-center my-20 text-center">
+      <section className="container flex flex-col items-center lg:my-20 mb-6 text-center">
         <HeaderSection label="Pricing" title="Start at full speed !" />
 
         <div className="mb-4 mt-10 flex items-center gap-5">

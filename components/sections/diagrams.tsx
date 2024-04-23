@@ -50,31 +50,21 @@ export const StickyScroll = ({
     setActiveCard(closestBreakpointIndex);
   });
 
-  const backgroundColors = [
-    "var(--slate-900)",
-    "var(--black)",
-    "var(--neutral-900)",
-  ];
-  const linearGradients = [
-    "linear-gradient(to bottom right, var(--cyan-500), var(--emerald-500))",
-    "linear-gradient(to bottom right, var(--pink-500), var(--indigo-500))",
-    "linear-gradient(to bottom right, var(--orange-500), var(--yellow-500))",
-  ];
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 pt-8 lg:pt-0">
       <HeaderSection
         label="Features"
         title="Discover all Diagrams."
         subtitle=""
       />
       <div className="flex flex-col items-center justify-center w-full">
-        <Carousel className="w-10/12  ">
+        <Carousel className="w-9/12  ">
           <CarouselContent>
             {content.map((item, index) => (
               <CarouselItem key={index}>
-                <div className="p-1">
+                <div className="py-1">
                   <div>
-                    <div className="flex flex-col gap-8 lg:flex-row   lg:items-center lg:justify-center p-6">
+                    <div className="flex flex-col gap-8 lg:flex-row   lg:items-center lg:justify-center py-6">
                       <div className="lg:my-20">
                         <h2 className="text-2xl font-bold  text-gradient_indigo-purple ">
                           {item.title}
@@ -85,7 +75,7 @@ export const StickyScroll = ({
                       </div>
                       <div
                         className={cn(
-                          " h-[350px] w-full flex items-center justify-center   bg-transparent bg-neutral-50 rounded-xl overflow-hidden"
+                          "  w-full flex items-center justify-center aspect-video   bg-transparent bg-neutral-50 rounded-xl overflow-hidden"
                         )}
                       >
                         {item.content ?? null}

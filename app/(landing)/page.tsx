@@ -13,7 +13,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-grid">
+    <div className="flex min-h-screen flex-col ">
       <NavBar items={marketingConfig.mainNav} scroll={true} />
       <AuthModal />
       <HeroLanding />

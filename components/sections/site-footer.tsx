@@ -10,10 +10,10 @@ import { Icons } from "../shared/icons";
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
     <footer className={cn("border-t-[0.5px] ", className)}>
-      <div className="border-t py-2">
+      <div className=" py-2">
         <div className="container flex items-center justify-between">
-          <p className="text-left flex flex-row gap-4 text-sm text-muted-foreground">
-            <span className="text-muted-foreground text-sm">
+          <p className="text-left flex flex-row gap-4 text-[10px] lg:text-sm text-muted-foreground">
+            <span className="text-muted-foreground ">
               &copy; 2024 Chat Mermaid. All rights reserved.
             </span>
             <Link
