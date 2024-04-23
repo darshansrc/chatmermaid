@@ -4,6 +4,7 @@ import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { HeaderSection } from "../shared/header-section";
+import Autoplay from "embla-carousel-autoplay";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -58,7 +59,18 @@ export const StickyScroll = ({
         subtitle=""
       />
       <div className="flex flex-col items-center justify-center w-full">
-        <Carousel className="w-9/12  ">
+        <Carousel
+          className="w-9/12  "
+          // plugins={[
+          //   Autoplay({
+          //     delay: 4000,
+          //   }),
+          // ]}
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
           <CarouselContent>
             {content.map((item, index) => (
               <CarouselItem key={index}>

@@ -195,21 +195,6 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
             <PricingCard offer={offer} key={offer.title} />
           ))}
         </div>
-
-        <p className="mt-3 text-balance text-center text-base text-muted-foreground">
-          Email{" "}
-          <a
-            className="font-medium text-primary hover:underline"
-            href="mailto:support@saas-starter.com"
-          >
-            support@chatmermaid.com
-          </a>{" "}
-          to contact our support team.
-          <br />
-          {/* <strong>
-      You can test the subscriptions and won&apos;t be charged.
-    </strong> */}
-        </p>
       </section>
     </>
   );

@@ -2,6 +2,7 @@ import { AuthModal } from "@/components/auth/auth-modal";
 import { NavBar } from "@/components/layout/navbar";
 import { ModeToggle } from "@/components/mode-toggle";
 import { StickyScroll } from "@/components/sections/diagrams";
+import { PricingFaq } from "@/components/sections/faq";
 import { Features } from "@/components/sections/features";
 import { HeroLanding } from "@/components/sections/hero-landing";
 import { PreviewLanding } from "@/components/sections/preview-landing";
@@ -20,6 +21,7 @@ const page = () => {
       <PreviewLanding />
       <StickyScroll content={marketingConfig.stickyScroll} />
       <PricingCards />
+      <PricingFaq />
       <SiteFooter />
     </div>
   );

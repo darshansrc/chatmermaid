@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+import { withContentlayer } from "next-contentlayer";
+const nextConfig = withContentlayer({
   reactStrictMode: true,
   swcMinify: true,
   images: {
@@ -21,6 +22,6 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["@prisma/client"],
   },
-};
+});
 
 export default nextConfig;
