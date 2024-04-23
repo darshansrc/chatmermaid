@@ -5,6 +5,15 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { HeaderSection } from "../shared/header-section";
 
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
 export const StickyScroll = ({
   content,
   contentClassName,
@@ -58,7 +67,41 @@ export const StickyScroll = ({
         title="Discover all Diagrams."
         subtitle=""
       />
-      <motion.div
+      <div className="flex flex-col items-center justify-center w-full">
+        <Carousel className="w-10/12  ">
+          <CarouselContent>
+            {content.map((item, index) => (
+              <CarouselItem key={index}>
+                <div className="p-1">
+                  <div>
+                    <div className="flex flex-col gap-8 lg:flex-row   lg:items-center lg:justify-center p-6">
+                      <div className="lg:my-20">
+                        <h2 className="text-2xl font-bold  text-gradient_indigo-purple ">
+                          {item.title}
+                        </h2>
+                        <p className="text-kg dark:text-slate-300 mt-2  lg:max-w-4xl  lg:mt-10">
+                          {item.description}
+                        </p>
+                      </div>
+                      <div
+                        className={cn(
+                          " h-[350px] w-full flex items-center justify-center   bg-transparent bg-neutral-50 rounded-xl overflow-hidden"
+                        )}
+                      >
+                        {item.content ?? null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
+
+      {/* <motion.div
         className="h-[26rem] overflow-y-auto flex justify-center relative space-x-10 rounded-md p-10"
         ref={ref}
       >
@@ -108,7 +151,7 @@ export const StickyScroll = ({
         >
           {content[activeCard].content ?? null}
         </motion.div>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 };

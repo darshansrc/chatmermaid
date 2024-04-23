@@ -1,0 +1,105 @@
+"use client";
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+import { useTheme } from "next-themes";
+import { NavBar } from "@/components/layout/navbar";
+import { marketingConfig } from "@/config/marketing";
+import { SiteFooter } from "@/components/sections/site-footer";
+const PrivacyPolicy = () => {
+  const { theme } = useTheme();
+  return (
+    <>
+      <NavBar items={marketingConfig.mainNav} scroll={true} />
+      <div className="flex flex-col items-center justify-center w-full ">
+        <div className="max-w-4xl py-6" data-color-mode={theme}>
+          <MarkdownPreview
+            source={`
+# Terms and Conditions
+
+## 1. Acceptance of Terms
+By accessing or using the chatmermaid service ("Service"), you ("User") agree to be bound by these Terms and Conditions ("Terms") and our Privacy Policy. If you do not agree with any part of these Terms, you may not use the Service.
+
+## 2. Description of Service
+chatmermaid provides an online platform for creating, editing, and generating mermaid.js diagrams ("Diagrams"). The Service is provided on a software-as-a-service (SaaS) basis and is owned and operated by [Company Name] ("Company").
+
+## 3. Account Registration
+3.1. To access certain features of the Service, you may be required to register for an account ("Account"). You agree to provide accurate and complete information when creating or updating your Account.
+
+3.2. You are solely responsible for maintaining the confidentiality of your Account credentials and for any activities that occur under your Account.
+
+## 4. Intellectual Property
+4.1. The Service, including but not limited to its software, content, graphics, user interface, and functionality, is the intellectual property of the Company and is protected by intellectual property laws, including copyright, patent, trademark, and trade secret laws.
+
+4.2. You acknowledge and agree that you shall not modify, reproduce, distribute, or create derivative works of the Service or any part thereof without the Company's prior written consent.
+
+## 5. User Content
+5.1. You retain ownership of any Diagrams or other content ("User Content") that you create or upload using the Service.
+
+5.2. By posting or uploading User Content, you grant the Company a non-exclusive, transferable, sub-licensable, royalty-free, worldwide license to use, host, store, reproduce, modify, create derivative works of, distribute, and publicly display your User Content for the purpose of providing and promoting the Service.
+
+5.3. You represent and warrant that you have all necessary rights and permissions to grant the Company the license set forth in Section 5.2.
+
+## 6. Acceptable Use
+6.1. You agree to use the Service only for lawful purposes and in a manner that does not infringe the rights of others or restrict the use and enjoyment of the Service by others.
+
+6.2. You shall not use the Service to transmit, store, or distribute any content that is harmful, illegal, defamatory, obscene, or otherwise objectionable.
+
+## 7. Prohibited Conduct
+7.1. You shall not use the Service to:
+- Breach or attempt to breach the security of the Service or any network, server, or computer system connected to the Service.
+- Disrupt or interfere with the Service or servers or networks connected to the Service.
+- Gain unauthorized access to any systems, networks, or data not intended for public access.
+- Impersonate any person or entity or misrepresent your affiliation with a person or entity.
+- Engage in any activities that could disable, overburden, or impair the proper functioning of the Service.
+
+## 8. Third-Party Services
+8.1. The Service may integrate or link to third-party services, websites, or applications ("Third-Party Services"). The Company does not control and is not responsible for the performance, quality, or policies of any Third-Party Services.
+
+8.2. Your use of any Third-Party Services is at your own risk and subject to the terms and conditions of such Third-Party Services.
+
+## 9. Termination
+9.1. The Company reserves the right to terminate or suspend your access to the Service at any time, for any reason, without prior notice or liability.
+
+9.2. Upon termination, your right to use the Service will immediately cease, and you must cease all use of the Service and delete any copies of the Service or any part thereof in your possession or control.
+
+## 10. Disclaimers and Limitation of Liability
+10.1. The Service is provided "as is" and "as available" without warranties of any kind, whether express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+10.2. The Company shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Service or inability to use the Service, including but not limited to damages for loss of profits, data, or other intangible losses.
+
+## 11. Indemnification
+11.1. You agree to indemnify, defend, and hold harmless the Company, its affiliates, officers, directors, employees, agents, and representatives from and against any and all claims, demands, liabilities, damages, losses, and expenses, including reasonable attorneys' fees, arising from or related to your use of the Service or violation of these Terms.
+
+## 12. Changes to Terms
+12.1. The Company reserves the right to modify or update these Terms at any time without prior notice. Your continued use of the Service after any such changes constitutes your acceptance of the new Terms.
+
+12.2. The Company will make reasonable efforts to notify you of any material changes to these Terms, but you are responsible for regularly reviewing the most current version of these Terms.
+
+## 13. Governing Law
+13.1. These Terms shall be governed by and construed in accordance with the laws of [Jurisdiction], without giving effect to any principles of conflicts of law.
+
+## 14. Severability
+14.1. If any provision of these Terms is found to be invalid, illegal, or unenforceable, the remaining provisions shall remain in full force and effect.
+
+## 15. Entire Agreement
+15.1. These Terms, together with our Privacy Policy, constitute the entire agreement between you and the Company regarding your use of the Service and supersede all prior or contemporaneous communications and proposals, whether electronic, oral, or written, between you and the Company.
+
+## 16. Contact Information
+If you have any questions about these Terms or the Service, please contact us at support@chatmermaid.com.
+
+    `}
+            style={{
+              background: "transparent",
+              color: theme === "dark" ? "#fff" : "#222",
+            }}
+            className="dark:bg-transparent "
+          ></MarkdownPreview>
+        </div>
+      </div>
+      <SiteFooter />
+    </>
+  );
+};
+
+export default PrivacyPolicy;

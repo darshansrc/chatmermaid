@@ -101,7 +101,7 @@ export function AuthModal() {
           <DialogDescription className="pt-2 pb-6 text-left pl-2">
             By continuing you agree to our{" "}
             <Link
-              href={"/"}
+              href={"/terms-and-conditions"}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
@@ -110,7 +110,7 @@ export function AuthModal() {
             </Link>{" "}
             and{" "}
             <Link
-              href={"/"}
+              href={"/privacy-policy"}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"

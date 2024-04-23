@@ -8,7 +8,7 @@ export const marketingConfig = {
   mainNav: [
     {
       title: "Pricing",
-      href: "/pricing",
+      href: "/#pricing",
     },
     {
       title: "Blog",

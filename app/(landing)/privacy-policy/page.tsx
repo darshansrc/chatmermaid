@@ -1,0 +1,111 @@
+"use client";
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+import { useTheme } from "next-themes";
+import { NavBar } from "@/components/layout/navbar";
+import { marketingConfig } from "@/config/marketing";
+import { SiteFooter } from "@/components/sections/site-footer";
+const PrivacyPolicy = () => {
+  const { theme } = useTheme();
+  return (
+    <>
+      <NavBar items={marketingConfig.mainNav} scroll={true} />
+      <div className="flex flex-col items-center justify-center w-full ">
+        <div className="max-w-4xl py-6" data-color-mode={theme}>
+          <MarkdownPreview
+            source={`
+# Privacy Policy
+
+Effective as of April 17, 2024  
+
+ChatMermaid  ("ChatMermaid," "we," "us," or "our") provides a software-as-a-service (SaaS) platform that enables users to create and collaborate on mermaid.js diagrams. This Privacy Policy outlines how ChatMermaid processes personal information collected through our website, applications, and services (collectively, the "Service").
+
+Our Service is designed for individual and business users. This Privacy Policy applies to information we collect from end-users of the Service. It does not apply to information we process on behalf of our business customers, which is governed by our agreements with those customers.
+
+## Personal Information We Collect
+
+**Information you provide to us:**
+- Account and profile information, such as your name, email address, and account credentials.
+- Communications, such as messages and comments you send through the Service.
+- Other information you choose to provide through the Service or directly to us.
+
+**Information we collect automatically:**
+- Device data, such as IP address, device type, operating system, and browser information.
+- Usage data, such as pages visited, diagrams created/edited, and interactions with the Service.
+- Log data, such as access times, duration of use, and error logs.
+
+We may also collect information from third-party sources and combine it with other personal information we hold about you.
+
+## Tracking Technologies
+
+We use cookies, web beacons, and similar technologies to collect information about your interactions with the Service. You can control the use of certain tracking technologies through your browser or device settings.
+
+## How We Use Your Personal Information
+
+- To provide, maintain, and improve the Service.
+- To communicate with you about your account, respond to inquiries, and provide customer support.
+- To personalize your experience and deliver relevant content and advertisements.
+- To analyze usage trends and improve our products and services.
+- To protect the rights, property, and safety of ChatMermaid, our users, and others.
+- To comply with legal obligations and enforce our policies.
+
+We may also use your personal information for other purposes with your consent or as permitted by applicable law.
+
+## Sharing Your Personal Information
+
+We may share your personal information with:
+
+- Service providers that help us operate and improve the Service.
+- Business partners for marketing, advertising, and other lawful purposes.
+- Parties involved in a corporate transaction, such as a merger or acquisition.
+- Authorities and other parties as required by law or to protect our rights and interests.
+
+We may also share aggregated or de-identified information that cannot reasonably be used to identify you.
+
+## Your Choices
+
+You can manage your preferences and opt-out of certain uses of your personal information, such as marketing communications, through your account settings or by contacting us. You can also control certain tracking technologies through your browser or device settings.
+
+Please note that if you choose not to provide certain information or opt-out of certain uses, we may not be able to provide you with the full functionality of the Service.
+
+## Other Websites and Services
+
+The Service may contain links to third-party websites and services. This Privacy Policy does not apply to those third-party resources, and we encourage you to review their privacy policies.
+
+## Data Security
+
+We implement reasonable technical, administrative, and physical safeguards to protect your personal information from unauthorized access, use, or disclosure. However, no data transmission or storage can be guaranteed to be 100% secure.
+
+## International Data Transfers
+
+Your personal information may be transferred and processed in countries other than your country of residence, including the United States, which may have different data protection laws.
+
+## Children's Privacy
+
+The Service is not intended for use by children under the age of 13. We do not knowingly collect personal information from children without parental consent.
+
+## Changes to This Privacy Policy
+
+We may update this Privacy Policy from time to time. We will notify you of any material changes by updating the effective date and posting the revised policy on our website.
+
+## Contact Us
+
+If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at support@chatmermaid.com.
+
+© 2024 Chat Mermaid
+
+    `}
+            style={{
+              background: "transparent",
+            }}
+            className="bg-transparent"
+          ></MarkdownPreview>
+        </div>
+      </div>
+      <SiteFooter />
+    </>
+  );
+};
+
+export default PrivacyPolicy;

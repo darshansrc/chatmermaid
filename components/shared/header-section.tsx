@@ -2,9 +2,15 @@ interface HeaderSectionProps {
   label?: string;
   title: string;
   subtitle?: string;
+  id?: string;
 }
 
-export function HeaderSection({ label, title, subtitle }: HeaderSectionProps) {
+export function HeaderSection({
+  label,
+  id,
+  title,
+  subtitle,
+}: HeaderSectionProps) {
   return (
     <div className="flex flex-col items-center text-center">
       {label ? (
@@ -12,7 +18,7 @@ export function HeaderSection({ label, title, subtitle }: HeaderSectionProps) {
           {label}
         </div>
       ) : null}
-      <h2 className="font-heading text-3xl md:text-4xl lg:text-[40px]">
+      <h2 id={id} className="font-heading text-3xl md:text-4xl lg:text-[40px]">
         {title}
       </h2>
       {subtitle ? (

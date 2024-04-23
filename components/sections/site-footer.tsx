@@ -17,7 +17,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               &copy; 2024 Chat Mermaid. All rights reserved.
             </span>
             <Link
-              href={siteConfig.links.twitter}
+              href={"/privacy-policy"}
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
@@ -26,7 +26,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             </Link>
             {"  "}
             <Link
-              href="https://vercel.com"
+              href="/terms-and-conditions"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"

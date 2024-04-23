@@ -75,7 +75,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
     setIsYearly(!isYearly);
   };
 
-  const PricingCard = ({ offer }: { offer: any }) => {
+  const PricingCard = ({ offer }) => {
     return (
       <div
         className={cn(
@@ -159,55 +159,58 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
   };
 
   return (
-    <section className="container flex flex-col items-center py-20 text-center">
-      <HeaderSection label="Pricing" title="Start at full speed !" />
+    <>
+      <div id="pricing" />
+      <section className="container flex flex-col items-center my-20 text-center">
+        <HeaderSection label="Pricing" title="Start at full speed !" />
 
-      <div className="mb-4 mt-10 flex items-center gap-5">
-        <ToggleGroup
-          type="single"
-          size="sm"
-          defaultValue={isYearly ? "yearly" : "monthly"}
-          onValueChange={toggleBilling}
-          aria-label="toggle-year"
-          className="h-9 overflow-hidden rounded-full border bg-background p-1 *:h-7 *:text-muted-foreground"
-        >
-          <ToggleGroupItem
-            value="yearly"
-            className="rounded-full px-5 data-[state=on]:!bg-primary data-[state=on]:!text-primary-foreground"
-            aria-label="Toggle yearly billing"
+        <div className="mb-4 mt-10 flex items-center gap-5">
+          <ToggleGroup
+            type="single"
+            size="sm"
+            defaultValue={isYearly ? "yearly" : "monthly"}
+            onValueChange={toggleBilling}
+            aria-label="toggle-year"
+            className="h-9 overflow-hidden rounded-full border bg-background p-1 *:h-7 *:text-muted-foreground"
           >
-            Yearly (-20%)
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value="monthly"
-            className="rounded-full px-5 data-[state=on]:!bg-primary data-[state=on]:!text-primary-foreground"
-            aria-label="Toggle monthly billing"
+            <ToggleGroupItem
+              value="yearly"
+              className="rounded-full px-5 data-[state=on]:!bg-primary data-[state=on]:!text-primary-foreground"
+              aria-label="Toggle yearly billing"
+            >
+              Yearly (-20%)
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="monthly"
+              className="rounded-full px-5 data-[state=on]:!bg-primary data-[state=on]:!text-primary-foreground"
+              aria-label="Toggle monthly billing"
+            >
+              Monthly
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+
+        <div className="mx-auto grid max-w-6xl gap-5 bg-inherit py-5 md:grid-cols-3 lg:grid-cols-3">
+          {pricingData.map((offer) => (
+            <PricingCard offer={offer} key={offer.title} />
+          ))}
+        </div>
+
+        <p className="mt-3 text-balance text-center text-base text-muted-foreground">
+          Email{" "}
+          <a
+            className="font-medium text-primary hover:underline"
+            href="mailto:support@saas-starter.com"
           >
-            Monthly
-          </ToggleGroupItem>
-        </ToggleGroup>
-      </div>
-
-      <div className="mx-auto grid max-w-6xl gap-5 bg-inherit py-5 md:grid-cols-3 lg:grid-cols-3">
-        {pricingData.map((offer) => (
-          <PricingCard offer={offer} key={offer.title} />
-        ))}
-      </div>
-
-      <p className="mt-3 text-balance text-center text-base text-muted-foreground">
-        Email{" "}
-        <a
-          className="font-medium text-primary hover:underline"
-          href="mailto:support@saas-starter.com"
-        >
-          support@chatmermaid.com
-        </a>{" "}
-        to contact our support team.
-        <br />
-        {/* <strong>
-          You can test the subscriptions and won&apos;t be charged.
-        </strong> */}
-      </p>
-    </section>
+            support@chatmermaid.com
+          </a>{" "}
+          to contact our support team.
+          <br />
+          {/* <strong>
+      You can test the subscriptions and won&apos;t be charged.
+    </strong> */}
+        </p>
+      </section>
+    </>
   );
 }

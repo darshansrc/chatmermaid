@@ -57,23 +57,6 @@ export function NavBar({
         <div className="flex items-center space-x-3">
           {rightElements}
 
-          {/* {!user ? (
-            <Link
-              href="/login"
-              className={cn(
-                buttonVariants({
-                  variant: "outline",
-                  rounded: "full",
-                }),
-                "px-4",
-              )}
-            >
-              Login Page
-            </Link>
-          ) : null} */}
-
-          
-
           {user ? (
             <UserAccountNav user={user} />
           ) : (

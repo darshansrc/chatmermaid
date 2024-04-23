@@ -13,14 +13,12 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-grid">
       <NavBar items={marketingConfig.mainNav} scroll={true} />
       <AuthModal />
       <HeroLanding />
       <PreviewLanding />
       <StickyScroll content={marketingConfig.stickyScroll} />
-      {/* <Features />
-      <Testimonials /> */}
       <PricingCards />
       <SiteFooter />
     </div>

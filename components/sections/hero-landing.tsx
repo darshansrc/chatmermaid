@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { cn, nFormatter } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
-import { ModeToggle } from "../mode-toggle";
 import { ArrowRight } from "lucide-react";
+import StartEditing from "./cta-button";
 
 export async function HeroLanding() {
   return (
@@ -42,13 +42,7 @@ export async function HeroLanding() {
           className="flex justify-center rounded-full space-x-2 md:space-x-4"
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
-          <Link
-            href="/c"
-            className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
-          >
-            <span>Start Editing </span>
-            <Icons.arrowRight className="size-4" />
-          </Link>
+          <StartEditing />
         </div>
       </div>
     </section>
