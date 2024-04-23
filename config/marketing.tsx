@@ -2,6 +2,7 @@
 import { MarketingConfig } from "@/types/index";
 import Image from "next/image";
 import { title } from "process";
+import { motion } from "framer-motion";
 
 export const marketingConfig = {
   mainNav: [
@@ -40,7 +41,7 @@ export const marketingConfig = {
       description:
         "Flowcharts are composed of nodes (geometric shapes) and edges (arrows or lines). The Mermaid code defines how nodes and edges are made and accommodates different arrow types, multi-directional arrows, and any linking to and from subgraphs.",
       content: (
-        <div className="h-full w-full  flex items-center justify-center text-white ">
+        <div className="h-full w-full  flex items-center p-2 justify-center ">
           <img
             src="/examples/flowchart.png"
             className="h-full w-full object-cover"
@@ -69,7 +70,7 @@ export const marketingConfig = {
       description:
         "Class diagrams are the main building block of object oriented modeling. They are used to show the different classes in a system, their fields, methods, and relationships among objects.",
       content: (
-        <div className="h-full w-full  px-8   ">
+        <div className="h-full w-full  px-8  flex items-center  justify-center     ">
           <img
             src="/examples/classDiagramM.png"
             className="h-full w-full object-cover"
@@ -97,7 +98,7 @@ export const marketingConfig = {
       description:
         "Gantt charts are a type of bar chart that illustrates a project schedule. This chart lists the tasks to be performed on the vertical axis, and time intervals on the horizontal axis.",
       content: (
-        <div className="h-full w-full   flex items-center px-2  justify-center ">
+        <div className="h-full w-full   flex items-center pl-4  justify-center ">
           <img
             src="/examples/gaantDiagram.png"
             className="h-full w-full object-cover"

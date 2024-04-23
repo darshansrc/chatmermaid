@@ -94,8 +94,15 @@ export const StickyScroll = ({
           </div>
         </div>
         <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{ duration: 1 }}
           className={cn(
-            "hidden lg:block h-80 w-[600px]  bg-transparent bg-neutral-50 rounded-xl  sticky top-0 overflow-hidden",
+            "hidden lg:block h-80 w-[600px] animate-in   bg-transparent bg-neutral-50 rounded-xl  sticky top-0 overflow-hidden",
             contentClassName
           )}
         >

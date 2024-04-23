@@ -46,7 +46,7 @@ export async function HeroLanding() {
             href="/c"
             className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
           >
-            <span>Start Designing </span>
+            <span>Start Editing </span>
             <Icons.arrowRight className="size-4" />
           </Link>
         </div>
