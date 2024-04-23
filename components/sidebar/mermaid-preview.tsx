@@ -8,7 +8,7 @@ import { CalendarIcon } from "lucide-react";
 import timesago from "timesago";
 
 interface MermaidPreviewProps {
-  chart: string;
+  chart: string | undefined;
   lastUpdatedAt: string;
 }
 

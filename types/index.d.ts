@@ -46,6 +46,11 @@ export type DocsConfig = {
 
 export type MarketingConfig = {
   mainNav: MainNavItem[];
+  stickyScroll: {
+    title: string;
+    description: string;
+    content: string;
+  }[];
 };
 
 export type DashboardConfig = {
