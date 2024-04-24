@@ -1,12 +1,14 @@
 import * as React from "react";
 import NextImage, { ImageProps } from "next/image";
 import Link from "next/link";
-import { useMDXComponent } from "next-contentlayer/src/hooks";
+// eslint-disable-next-line import/no-unresolved
+import { useMDXComponent } from "next-contentlayer/hooks";
 
 import { cn } from "@/lib/utils";
 import { MdxCard } from "@/components/content/mdx-card";
 import { Callout } from "@/components/shared/callout";
 import { CopyButton } from "@/components/shared/copy-button";
+import MermaidPreviewMD from "../shared/mermaid";
 
 const components = {
   h1: ({ className, ...props }) => (
@@ -166,6 +168,7 @@ const components = {
   ),
   Image: (props: ImageProps) => <NextImage {...props} />,
   Callout,
+  MermaidPreviewMD,
   Card: MdxCard,
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3

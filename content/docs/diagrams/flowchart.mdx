@@ -3,14 +3,12 @@ title: Flowcharts Syntax
 ---
 
 
+
 Flowcharts are composed of **nodes** (geometric shapes) and **edges** (arrows or lines). The Mermaid code defines how nodes and edges are made and accommodates different arrow types, multi-directional arrows, and any linking to and from subgraphs.
 
-<Callout type="warning">
- 
-
- If you are using the word "end" in a Flowchart node, capitalize the entire word or any of the letters (e.g., "End" or "END"), or apply this [workaround](https://github.com/mermaid-js/mermaid/issues/1444#issuecomment-639528897). Typing "end" in all lowercase letters will break the Flowchart.
-</Callout>
-
+```warning
+If you are using the word "end" in a Flowchart node, capitalize the entire word or any of the letters (e.g., "End" or "END"), or apply this [workaround](https://github.com/mermaid-js/mermaid/issues/1444#issuecomment-639528897). Typing "end" in all lowercase letters will break the Flowchart.
+```
 
 ```warning
 If you are using the letter "o" or "x" as the first letter in a connecting Flowchart node, add a space before the letter or capitalize the letter (e.g., "dev--- ops", "dev---Ops").
@@ -26,7 +24,7 @@ Typing "A---xB" will create a [cross edge](#cross-edge-example).
 ---
 title: Node
 ---
-flowchart L
+flowchart LR
     id
 ```
 
@@ -74,11 +72,6 @@ flowchart LR
     Line 3`"]
     markdown --> newLines
 ```
-
-<MermaidPreviewMD chart="flowchart LR
-   A -- text --> B -- text2 --> C">
-
-</MermaidPreviewMD>
 
 ### Direction
 
@@ -147,7 +140,7 @@ flowchart LR
 
 ```mermaid-example
 flowchart LR
-    id1>This is the text in the box
+    id1>This is the text in the box]
 ```
 
 Currently only the shape above is possible and not its mirror. _This might change with future releases._
@@ -877,3 +870,5 @@ mermaid.flowchartConfig = {
     width: 100%
 }
 ```
+
+
