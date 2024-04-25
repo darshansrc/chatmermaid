@@ -20,6 +20,10 @@ export const docsConfig: DocsConfig = {
           href: "/docs",
         },
         {
+          title: "About Mermaid JS",
+          href: "/docs/about-mermaid-js",
+        },
+        {
           title: "Installation",
           href: "/docs/installation",
         },

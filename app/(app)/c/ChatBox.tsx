@@ -110,7 +110,9 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
                 />
               )}
 
-              {m.id !== messages[messages.length - 1].id || isLoading ? (
+              {m.id !== messages[messages.length - 1].id ||
+              isLoading ||
+              hasResponseStarted ? (
                 <Separator className="my-4" />
               ) : (
                 <div className="my-4" />

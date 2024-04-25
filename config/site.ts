@@ -42,6 +42,7 @@ export const footerLinks: SidebarNavItem[] = [
       { title: "Installation", href: "#" },
       { title: "Components", href: "#" },
       { title: "Code Blocks", href: "#" },
+      { title: "About Mermaid.js", href: "#" },
     ],
   },
 ];

@@ -48,7 +48,6 @@ export function BotMessage({
 }) {
   const mermaidRegex = /```mermaid\n([\s\S]*?)\n```/;
   const mermaidMatch = text.match(mermaidRegex);
-  const nonMermaidText = mermaidMatch ? text.replace(mermaidRegex, "") : text;
 
   return (
     <div className="group relative flex items-start md:-ml-12">

@@ -151,25 +151,15 @@ const CodeBlock = ({
         height="100%"
         readOnly
         aria-disabled
-        theme={
-          theme === "dark"
-            ? githubDarkInit({
-                settings: {
-                  fontFamily: "monospace",
-                  background: "rgb(24, 24, 24)",
-                  gutterBackground: "rgb(24, 24, 24)",
-                  lineHighlight: "rgb(40 40 40)",
-                  selection: "#036dd626",
-                },
-              })
-            : githubLightInit({
-                settings: {
-                  fontFamily: "monospace",
-                  background: "rgb(255, 255, 255)",
-                  gutterBackground: "rgb(255, 255, 255)",
-                },
-              })
-        }
+        theme={githubDarkInit({
+          settings: {
+            fontFamily: "monospace",
+            background: "rgb(24, 24, 24)",
+            gutterBackground: "rgb(24, 24, 24)",
+            lineHighlight: "rgb(40 40 40)",
+            selection: "#036dd626",
+          },
+        })}
       />
     </div>
   );

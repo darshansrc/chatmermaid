@@ -2,6 +2,8 @@
 import React, { useEffect } from "react";
 import mermaid from "mermaid";
 import { useTheme } from "next-themes";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+import { CodeBlock } from "../chat/codeblock";
 
 const MermaidPreviewMD = ({ chart }) => {
   const { theme } = useTheme();
@@ -17,7 +19,10 @@ const MermaidPreviewMD = ({ chart }) => {
   }, [theme]);
 
   return (
-    <div className="mt-6 flex items-start rounded-md border px-4 py-3">
+    <div
+      data-color-mode={theme}
+      className="py-2 w-full h-full flex flex-col items-center justify-center pt-4"
+    >
       <div className="mermaid">{chart}</div>
     </div>
   );
