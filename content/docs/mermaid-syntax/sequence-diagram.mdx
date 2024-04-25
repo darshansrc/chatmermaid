@@ -4,6 +4,11 @@ title: Sequence Diagram Syntax
 
 A Sequence diagram is an interaction diagram that shows how processes operate with one another and in what order.
 
+<Callout type="warning">
+  This page is a reference for the Mermaid syntax for sequence diagrams. For a more detailed explanation of the syntax, visit the [official Mermaid documentation](https://mermaid.js.org/syntax/sequenceDiagram.html).
+</Callout>
+
+
 ```mermaid-example
 sequenceDiagram
     Alice->>John: Hello John, how are you?
@@ -18,11 +23,6 @@ sequenceDiagram
     Alice-)John: See you later!
 `}/>
 
-{/* ```note
-A note on nodes, the word "end" could potentially break the diagram, due to the way that the mermaid language is scripted.
-
-If unavoidable, one must use parentheses(), quotation marks "", or brackets {},[], to enclose the word "end". i.e : (end), [end], {end}.
-``` */}
 
 ## Syntax
 
@@ -89,7 +89,7 @@ sequenceDiagram
     J->>A: Great!
 `}/>
 
-### Actor Creation and Destruction (v10.3.0+)
+### Actor Creation and Destruction
 
 It is possible to create and destroy actors by messages. To do so, add a create or destroy directive before the message.
 
@@ -650,7 +650,7 @@ Actors can have popup-menus containing individualized links to external pages. F
 
 This can be configured by adding one or more link lines with the format:
 
-```
+```mermaid
 link <actor>: <link-label> @ <link-url>
 ```
 
@@ -679,146 +679,4 @@ sequenceDiagram
     John-->>Alice: Great!
     Alice-)John: See you later!
 `}/>
-
-
-
-## Styling
-
-Styling of a sequence diagram is done by defining a number of css classes. During rendering these classes are extracted from the file located at src/themes/sequence.scss
-
-### Classes used
-
-| Class          | Description                                                    |
-| -------------- | -------------------------------------------------------------- |
-| actor          | Styles for the actor box.                                      |
-| actor-top      | Styles for the actor figure/ box at the top of the diagram.    |
-| actor-bottom   | Styles for the actor figure/ box at the bottom of the diagram. |
-| text.actor     | Styles for text of all of the actors.                          |
-| text.actor-box | Styles for text of the actor box.                              |
-| text.actor-man | Styles for text of the actor figure.                           |
-| actor-line     | The vertical line for an actor.                                |
-| messageLine0   | Styles for the solid message line.                             |
-| messageLine1   | Styles for the dotted message line.                            |
-| messageText    | Defines styles for the text on the message arrows.             |
-| labelBox       | Defines styles label to left in a loop.                        |
-| labelText      | Styles for the text in label for loops.                        |
-| loopText       | Styles for the text in the loop box.                           |
-| loopLine       | Defines styles for the lines in the loop box.                  |
-| note           | Styles for the note box.                                       |
-| noteText       | Styles for the text on in the note boxes.                      |
-
-### Sample stylesheet
-
-```css
-body {
-  background: white;
-}
-
-.actor {
-  stroke: #ccccff;
-  fill: #ececff;
-}
-text.actor {
-  fill: black;
-  stroke: none;
-  font-family: Helvetica;
-}
-
-.actor-line {
-  stroke: grey;
-}
-
-.messageLine0 {
-  stroke-width: 1.5;
-  stroke-dasharray: '2 2';
-  marker-end: 'url(#arrowhead)';
-  stroke: black;
-}
-
-.messageLine1 {
-  stroke-width: 1.5;
-  stroke-dasharray: '2 2';
-  stroke: black;
-}
-
-#arrowhead {
-  fill: black;
-}
-
-.messageText {
-  fill: black;
-  stroke: none;
-  font-family: 'trebuchet ms', verdana, arial;
-  font-size: 14px;
-}
-
-.labelBox {
-  stroke: #ccccff;
-  fill: #ececff;
-}
-
-.labelText {
-  fill: black;
-  stroke: none;
-  font-family: 'trebuchet ms', verdana, arial;
-}
-
-.loopText {
-  fill: black;
-  stroke: none;
-  font-family: 'trebuchet ms', verdana, arial;
-}
-
-.loopLine {
-  stroke-width: 2;
-  stroke-dasharray: '2 2';
-  marker-end: 'url(#arrowhead)';
-  stroke: #ccccff;
-}
-
-.note {
-  stroke: #decc93;
-  fill: #fff5ad;
-}
-
-.noteText {
-  fill: black;
-  stroke: none;
-  font-family: 'trebuchet ms', verdana, arial;
-  font-size: 14px;
-}
-```
-
-## Configuration
-
-It is possible to adjust the margins for rendering the sequence diagram.
-
-This is done by defining `mermaid.sequenceConfig` or by the CLI to use a json file with the configuration.
-How to use the CLI is described in the [mermaidCLI](../config/mermaidCLI.md) page.
-`mermaid.sequenceConfig` can be set to a JSON string with config parameters or the corresponding object.
-
-```javascript
-mermaid.sequenceConfig = {
-  diagramMarginX: 50,
-  diagramMarginY: 10,
-  boxTextMargin: 5,
-  noteMargin: 10,
-  messageMargin: 35,
-  mirrorActors: true,
-};
-```
-
-### Possible configuration parameters:
-
-| Parameter         | Description                                                                                                                                | Default value                  |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
-| mirrorActors      | Turns on/off the rendering of actors below the diagram as well as above it                                                                 | false                          |
-| bottomMarginAdj   | Adjusts how far down the graph ended. Wide borders styles with css could generate unwanted clipping which is why this config param exists. | 1                              |
-| actorFontSize     | Sets the font size for the actor's description                                                                                             | 14                             |
-| actorFontFamily   | Sets the font family for the actor's description                                                                                           | "Open Sans", sans-serif        |
-| actorFontWeight   | Sets the font weight for the actor's description                                                                                           | "Open Sans", sans-serif        |
-| noteFontSize      | Sets the font size for actor-attached notes                                                                                                | 14                             |
-| noteFontFamily    | Sets the font family for actor-attached notes                                                                                              | "trebuchet ms", verdana, arial |
-| noteFontWeight    | Sets the font weight for actor-attached notes                                                                                              | "trebuchet ms", verdana, arial |
-| noteAlign         | Sets the text alignment for text in actor-attached notes                                                                                   | center                         |
 

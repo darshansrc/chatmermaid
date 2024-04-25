@@ -174,12 +174,7 @@ flowchart LR
     id1((This is the text in the circle))
 `}/>
 
-### A node in an asymmetric shape
 
-```mermaid-example
-flowchart LR
-    id1>This is the text in the box
-```
 
 <MermaidPreviewMD chart={`
 flowchart LR
@@ -236,29 +231,9 @@ flowchart TD
     id1[\This is the text in the box\]
 `}/>
 
-### Trapezoid
 
-```mermaid-example
-flowchart TD
-    A[/Christmas\]
-```
 
-<MermaidPreviewMD chart={`
-flowchart TD
-    A[/Christmas\]
-`}/>
 
-### Trapezoid alt
-
-```mermaid-example
-flowchart TD
-    B[\Go shopping/]
-```
-
-<MermaidPreviewMD chart={`
-flowchart TD
-    B[\Go shopping/]
-`}/>
 
 ### Double circle
 
@@ -746,31 +721,6 @@ flowchart LR
 `}/>
 
 ## Styling and classes
-
-### Styling links
-
-It is possible to style links. For instance, you might want to style a link that is going backwards in the flow. As links
-have no ids in the same way as nodes, some other way of deciding what style the links should be attached to is required.
-Instead of ids, the order number of when the link was defined in the graph is used, or use default to apply to all links.
-In the example below the style defined in the linkStyle statement will belong to the fourth link in the graph:
-
-```mermaid
-linkStyle 3 stroke:#ff3,stroke-width:4px,color:red;
-```
-
-It is also possible to add style to multiple links in a single statement, by separating link numbers with commas:
-
-```mermaid
-linkStyle 1,2,7 color:blue;
-```
-
-### Styling line curves
-
-It is possible to style the type of curve used for lines between items, if the default method does not meet your needs.
-Available curve styles include `basis`, `bumpX`, `bumpY`, `cardinal`, `catmullRom`, `linear`, `monotoneX`, `monotoneY`,
-`natural`, `step`, `stepAfter`, and `stepBefore`.
-
-In this example, a left-to-right graph uses the `stepBefore` curve style:
 
 
 ### Styling a node

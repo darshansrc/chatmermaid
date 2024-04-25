@@ -58,28 +58,12 @@ export const docsConfig: DocsConfig = {
           href: "/docs/mermaid-syntax/user-journey",
         },
         {
-          title: "Pie Chart",
-          href: "/docs/mermaid-syntax/pie-chart",
+          title: "Mind Map",
+          href: "/docs/mermaid-syntax/mind-map",
         },
         {
-          title: "Requirement Diagram",
-          href: "/docs/mermaid-syntax/requirement-diagram",
-        },
-        {
-          title: "Journey Diagram",
-          href: "/docs/mermaid-syntax/journey-diagram",
-        },
-        {
-          title: "Pie Chart",
-          href: "/docs/mermaid-syntax/pie-chart",
-        },
-        {
-          title: "Requirement Diagram",
-          href: "/docs/mermaid-syntax/requirement-diagram",
-        },
-        {
-          title: "Journey Diagram",
-          href: "/docs/mermaid-syntax/journey-diagram",
+          title: "Other Diagrams",
+          href: "https://mermaid.js.org/intro/",
         },
       ],
     },
