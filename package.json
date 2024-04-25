@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "cl-dev": "contentlayer dev",
-    "dev": "concurrently \"contentlayer dev\" \"next dev --turbo\"",
+    "nigga": "concurrently \"contentlayer dev\" \"next dev --turbo\"",
+    "dev": "next dev --turbo",
     "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint"
