@@ -14,12 +14,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const UserCard = () => {
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
+      setLoading(true);
       const user = await getUser();
-
       setUser(user);
+      setLoading(false);
     };
 
     fetchUser();
@@ -27,7 +29,7 @@ const UserCard = () => {
 
   return (
     <div className="w-full">
-      {user ? (
+      {!loading && user ? (
         <DropdownMenu>
           <DropdownMenuTrigger className="w-full">
             <Button variant="ghost" className="p-2 w-full justify-start">
@@ -59,10 +61,10 @@ const UserCard = () => {
         </DropdownMenu>
       ) : (
         <div className="flex items-center space-x-4">
-          <Skeleton className="h-12 w-12 rounded-full" />
+          <Skeleton className="h-10 w-10 rounded-full" />
           <div className="space-y-2">
-            <Skeleton className="h-4 w-[250px]" />
-            <Skeleton className="h-4 w-[200px]" />
+            <Skeleton className="h-3 w-[100px]" />
+            <Skeleton className="h-3 w-[80px]" />
           </div>
         </div>
       )}

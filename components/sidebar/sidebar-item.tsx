@@ -40,7 +40,7 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
 
   return (
     <motion.div
-      className="relative h-8"
+      className="relative h-8 my-2"
       variants={{
         initial: {
           height: 0,

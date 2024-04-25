@@ -4,12 +4,12 @@ interface LogoProps {
   size?: number;
 }
 
-const MermaidLogo = (props: LogoProps) => {
+const MermaidLogo = ({ size }: LogoProps) => {
   return (
     <div>
       <svg
-        width={props.size || 35}
-        height={props.size || 35}
+        width={size || 35}
+        height={size || 35}
         viewBox="0 0 491 491"
         xmlns="http://www.w3.org/2000/svg"
         className="fill-current text-black dark:text-white"
