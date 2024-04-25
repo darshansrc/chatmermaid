@@ -18,14 +18,7 @@ const MermaidPreviewMD = ({ chart }) => {
     mermaid.contentLoaded();
   }, [theme]);
 
-  return (
-    <div
-      data-color-mode={theme}
-      className="py-2 w-full h-full flex flex-col items-center justify-center pt-4"
-    >
-      <div className="mermaid">{chart}</div>
-    </div>
-  );
+  return <pre className="mermaid">{chart}</pre>;
 };
 
 export default MermaidPreviewMD;

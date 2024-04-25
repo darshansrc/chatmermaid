@@ -23,42 +23,63 @@ export const docsConfig: DocsConfig = {
           title: "About Mermaid JS",
           href: "/docs/about-mermaid-js",
         },
-        {
-          title: "Installation",
-          href: "/docs/installation",
-        },
       ],
     },
+
     {
-      title: "Configuration",
+      title: "Mermaid Synatx",
       items: [
         {
-          title: "Database",
-          href: "/docs/configuration/database",
+          title: "Flowchart",
+          href: "/docs/mermaid-syntax/flowchart",
         },
         {
-          title: "Subscriptions",
-          href: "/docs/configuration/subscriptions",
+          title: "Sequence Diagram",
+          href: "/docs/mermaid-syntax/sequence-diagram",
         },
         {
-          title: "Config files",
-          href: "/docs/configuration/config-files",
+          title: "Gantt Chart",
+          href: "/docs/mermaid-syntax/gantt-chart",
         },
         {
-          title: "Markdown files",
-          href: "/docs/configuration/markdown-files",
+          title: "Class Diagram",
+          href: "/docs/mermaid-syntax/class-diagram",
         },
         {
-          title: "Authentification",
-          href: "/docs/configuration/authentification",
+          title: "State Diagram",
+          href: "/docs/mermaid-syntax/state-diagram",
         },
         {
-          title: "Email",
-          href: "/docs/configuration/email",
+          title: "Entity Relationship Diagram",
+          href: "/docs/mermaid-syntax/entity-relationship-diagram",
         },
         {
-          title: "Components",
-          href: "/docs/configuration/components",
+          title: "User Journey",
+          href: "/docs/mermaid-syntax/user-journey",
+        },
+        {
+          title: "Pie Chart",
+          href: "/docs/mermaid-syntax/pie-chart",
+        },
+        {
+          title: "Requirement Diagram",
+          href: "/docs/mermaid-syntax/requirement-diagram",
+        },
+        {
+          title: "Journey Diagram",
+          href: "/docs/mermaid-syntax/journey-diagram",
+        },
+        {
+          title: "Pie Chart",
+          href: "/docs/mermaid-syntax/pie-chart",
+        },
+        {
+          title: "Requirement Diagram",
+          href: "/docs/mermaid-syntax/requirement-diagram",
+        },
+        {
+          title: "Journey Diagram",
+          href: "/docs/mermaid-syntax/journey-diagram",
         },
       ],
     },
