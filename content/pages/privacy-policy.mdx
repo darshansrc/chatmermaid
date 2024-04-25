@@ -1,23 +1,8 @@
-"use client";
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import MarkdownPreview from "@uiw/react-markdown-preview";
-import { useTheme } from "next-themes";
-import { NavBar } from "@/components/layout/navbar";
-import { marketingConfig } from "@/config/marketing";
-import { SiteFooter } from "@/components/sections/site-footer";
-const PrivacyPolicy = () => {
-  const { theme } = useTheme();
-  return (
-    <>
-      <NavBar items={marketingConfig.mainNav} scroll={true} />
-      <div className="flex flex-col items-center justify-center w-full ">
-        <div className="max-w-4xl py-6" data-color-mode={theme}>
-          <MarkdownPreview
-            source={`
-# Privacy Policy
+---
+title: Privacy Policy
+description: Effective as of April 17, 2024.
+---
 
-Effective as of April 17, 2024  
 
 ChatMermaid  ("ChatMermaid," "we," "us," or "our") provides a software-as-a-service (SaaS) platform that enables users to create and collaborate on mermaid.js diagrams. This Privacy Policy outlines how ChatMermaid processes personal information collected through our website, applications, and services (collectively, the "Service").
 
@@ -95,17 +80,4 @@ If you have any questions or concerns about this Privacy Policy or our data prac
 
 © 2024 Chat Mermaid
 
-    `}
-            style={{
-              background: "transparent",
-            }}
-            className="bg-transparent"
-          ></MarkdownPreview>
-        </div>
-      </div>
-      <SiteFooter />
-    </>
-  );
-};
-
-export default PrivacyPolicy;
+   

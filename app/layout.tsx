@@ -7,6 +7,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AuthModal } from "@/components/auth/auth-modal";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -55,7 +56,7 @@ export default function RootLayout({
         >
           <AppRouterCacheProvider>
             <main>
-              {children} <Analytics /> <SpeedInsights />
+              {children} <Analytics /> <SpeedInsights /> <AuthModal />
             </main>
             <Toaster />
           </AppRouterCacheProvider>

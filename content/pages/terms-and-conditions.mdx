@@ -1,21 +1,7 @@
-"use client";
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import MarkdownPreview from "@uiw/react-markdown-preview";
-import { useTheme } from "next-themes";
-import { NavBar } from "@/components/layout/navbar";
-import { marketingConfig } from "@/config/marketing";
-import { SiteFooter } from "@/components/sections/site-footer";
-const PrivacyPolicy = () => {
-  const { theme } = useTheme();
-  return (
-    <>
-      <NavBar items={marketingConfig.mainNav} scroll={true} />
-      <div className="flex flex-col items-center justify-center w-full ">
-        <div className="max-w-4xl py-6" data-color-mode={theme}>
-          <MarkdownPreview
-            source={`
-# Terms and Conditions
+---
+title: Terms & Conditions
+description: Effective as of April 17, 2024.
+---
 
 ## 1. Acceptance of Terms
 By accessing or using the chatmermaid service ("Service"), you ("User") agree to be bound by these Terms and Conditions ("Terms") and our Privacy Policy. If you do not agree with any part of these Terms, you may not use the Service.
@@ -88,18 +74,4 @@ chatmermaid provides an online platform for creating, editing, and generating me
 ## 16. Contact Information
 If you have any questions about these Terms or the Service, please contact us at support@chatmermaid.com.
 
-    `}
-            style={{
-              background: "transparent",
-              color: theme === "dark" ? "#fff" : "#222",
-            }}
-            className="dark:bg-transparent "
-          ></MarkdownPreview>
-        </div>
-      </div>
-      <SiteFooter />
-    </>
-  );
-};
-
-export default PrivacyPolicy;
+    

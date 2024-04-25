@@ -16,7 +16,7 @@ const page = () => {
   return (
     <div className="flex min-h-screen flex-col ">
       <NavBar items={marketingConfig.mainNav} scroll={true} />
-      <AuthModal />
+
       <HeroLanding />
       <PreviewLanding />
       <StickyScroll content={marketingConfig.stickyScroll} />
