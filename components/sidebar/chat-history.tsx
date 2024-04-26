@@ -13,6 +13,7 @@ import { spinner } from "../chat/spinner";
 import useDiagramStore from "@/store/diagram-store";
 import Image from "next/image";
 import MermaidLogo from "@/lib/assets/logo";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 interface ChatHistoryProps {
   userId?: string;
@@ -29,6 +30,7 @@ interface diagram {
 }
 export function ChatHistory() {
   const router = useRouter();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const { fetchDiagrams } = useDiagramStore();
   const handleNewDiagram = async () => {
     try {
@@ -55,7 +57,7 @@ export function ChatHistory() {
           </span>
         </Link>
       </div> */}
-      <div className="mb-2 px-2">
+      <div className={`${!isDesktop && "mt-6"}  px-2`}>
         <div
           onClick={handleNewDiagram}
           className={cn(

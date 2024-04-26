@@ -72,6 +72,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { ExportDiagram } from "../export-diagram";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { SidebarMobile } from "@/components/sidebar/sidebar-mobile";
+import { ChatHistory } from "@/components/sidebar/chat-history";
 
 const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   const [code, setCode] = useState<string>("");
@@ -158,7 +160,10 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
           >
             <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
               <div className=" w-full px-4 flex h-12 items-center  ">
-                <SidebarToggle />
+                <div className="">
+                  <SidebarToggle />
+                </div>
+
                 <IconSeparator className="size-6 text-muted-foreground/50" />
 
                 <Input
@@ -278,7 +283,11 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
           >
             <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
               <div className=" w-full px-4 flex h-12 items-center  ">
-                <SidebarToggle />
+                <div>
+                  <SidebarMobile>
+                    <ChatHistory />
+                  </SidebarMobile>
+                </div>
 
                 <IconSeparator className="size-6 text-muted-foreground/50" />
                 <Popover open={isPopoverOpen}>
