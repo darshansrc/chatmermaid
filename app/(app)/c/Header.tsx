@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import useDiagramStore from "@/store/diagram-store";
+import { SidebarMobile } from "@/components/sidebar/sidebar-mobile";
+import { ChatHistory } from "@/components/sidebar/chat-history";
 
 interface AppLayoutProps {
   diagramName: string;

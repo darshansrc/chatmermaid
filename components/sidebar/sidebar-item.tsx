@@ -74,7 +74,7 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
         )}
       </div> */}
       <div className="absolute left-2 top-1 flex size-6 items-center justify-center">
-        <MessageSquareCode className="mr-2 mt-1 text-blue-500" />
+        <MessageSquareCode className="mr-2 mt-1 text-purple-500" />
       </div>
 
       <HoverCard openDelay={0} closeDelay={0}>
@@ -84,7 +84,7 @@ export function SidebarItem({ index, diagram, children }: SidebarItemProps) {
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "group w-full px-8 transition-colors hover:bg-zinc-200/40 dark:hover:bg-zinc-300/10",
-              isActive && "bg-zinc-200 pr-16 font-semibold dark:bg-zinc-800"
+              isActive && "bg-zinc-200 pr-16 font-semibold dark:bg-zinc-300/10"
             )}
           >
             <div
