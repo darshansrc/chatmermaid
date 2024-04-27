@@ -11,25 +11,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import useUser from "@/store/user-store";
 
 const UserCard = () => {
-  const [user, setUser] = useState<any>(null);
+  const { user } = useUser();
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-      const user = await getUser();
-      setUser(user);
-      setLoading(false);
-    };
-
-    fetchUser();
-  }, []);
 
   return (
     <div className="w-full">
-      {!loading && user ? (
+      {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger className="w-full">
             <Button variant="ghost" className="p-2 w-full justify-start">

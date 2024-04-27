@@ -18,11 +18,12 @@ import {
   UserCircle,
 } from "lucide-react";
 import Image from "next/image";
-import { logout } from "@/actions/actions";
+import useUser from "@/store/user-store";
 
 export function UserAccountNav({ user }: any) {
+  const { logoutUser } = useUser();
   const handleLogout = async () => {
-    await logout();
+    logoutUser();
   };
 
   return (

@@ -16,6 +16,7 @@ import { ModeToggle } from "../mode-toggle";
 import { getUser } from "@/actions/actions";
 import { useEffect, useState } from "react";
 import useAuthModal from "@/store/auth-modal-store";
+import useUser from "@/store/user-store";
 
 interface NavBarProps {
   // user: Pick<User, "name" | "image" | "email"> | undefined;
@@ -34,16 +35,16 @@ export function NavBar({
   const scrolled = useScroll(50);
   const signInModal = useSigninModal();
 
-  const [user, setUser] = useState<any>();
+  const { user } = useUser();
   const { isAuthModalOpen, setIsAuthModalOpen } = useAuthModal();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getUser();
-      setUser(user);
-    };
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const user = await getUser();
+  //     setUser(user);
+  //   };
+  //   fetchUser();
+  // }, []);
 
   return (
     <header
