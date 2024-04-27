@@ -11,6 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BillingFormButton } from "./billing-form-button";
 import { HeaderSection } from "@/components/shared/header-section";
 import { Icons } from "@/components/shared/icons";
+import usePaddle from "@/hooks/use-paddle";
 
 const pricingData = [
   {
@@ -70,9 +71,27 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
   const isYearlyDefault = true;
   const [isYearly, setIsYearly] = useState<boolean>(!!isYearlyDefault);
   const signInModal = useSigninModal();
+  const paddle = usePaddle();
 
   const toggleBilling = () => {
     setIsYearly(!isYearly);
+  };
+
+  const openCheckout = () => {
+    paddle?.Checkout.open({
+      items: [
+        {
+          priceId: "pri_01hvxe05mqtga1rxvxb41jjjan",
+          quantity: 1,
+        },
+      ],
+      customer: {
+        email: "darshansr1618@gmail.com",
+      },
+      settings: {
+        allowLogout: false,
+      },
+    });
   };
 
   const PricingCard = ({ offer }) => {
@@ -149,7 +168,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
             variant={
               offer.title.toLocaleLowerCase() === "pro" ? "default" : "outline"
             }
-            onClick={signInModal.onOpen}
+            onClick={openCheckout}
           >
             {offer.free ? "Get Started" : "Coming Soon!"}
           </Button>

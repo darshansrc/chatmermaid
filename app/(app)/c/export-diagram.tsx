@@ -99,7 +99,7 @@ function DownloadForm({ code }: { code: string }) {
   const [exportResolution, setExportResolution] = React.useState([4096]);
   const [mermaidTheme, setMermaidTheme] = React.useState("default");
   return (
-    <div className="flex flex-col gap-4 px-4 ">
+    <div className="flex flex-col gap-4 px-4 md:px-0 ">
       <div>
         <Label className="mx-2">File Type</Label>
         <Select onValueChange={setExportType} value={exportType}>
