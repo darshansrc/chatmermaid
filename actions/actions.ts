@@ -120,10 +120,7 @@ export async function getAllDiagrams() {
 export async function createNewDiagram() {
   const supabase = createClient();
 
-  const newNanoid = customAlphabet(
-    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-    7
-  );
+  const newNanoid = customAlphabet("abcdefhiklmnorstuvwxz", 10);
 
   const id = newNanoid();
 

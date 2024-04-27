@@ -41,7 +41,6 @@ import {
 import CopyButton from "@/components/copy-button";
 import mermaid from "mermaid";
 import { toast } from "sonner";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 interface CodeEditorProps {
   code: string;
@@ -54,30 +53,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
   const [errorToolbarOpen, setErrorToolbarOpen] = useState(false);
 
   const appTheme = theme;
-
-  const regexpLinter = linter((view) => {
-    let diagnostics: Diagnostic[] = [];
-    syntaxTree(view.state)
-      .cursor()
-      .iterate((node) => {
-        if (node.name == "RegExp")
-          diagnostics.push({
-            from: node.from,
-            to: node.to,
-            severity: "warning",
-            message: "Regular expressions are FORBIDDEN",
-            actions: [
-              {
-                name: "Remove",
-                apply(view, from, to) {
-                  view.dispatch({ changes: { from, to } });
-                },
-              },
-            ],
-          });
-      });
-    return diagnostics;
-  });
 
   useEffect(() => {
     const checkErrors = async () => {
@@ -95,7 +70,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
     checkErrors();
   }, [code]);
 
-  // create a function which will reset errorToolbaropen after 200ms
   const resetErrorToolbarOpen = () => {
     setTimeout(() => {
       setErrorToolbarOpen(false);
@@ -235,6 +209,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                     fontFamily: "monospace",
                     background: "rgb(255, 255, 255)",
                     gutterBackground: "rgb(255, 255, 255)",
+                    lineHighlight: "#e8e8e850",
+                    selection: "#036dd626",
+                    gutterBorder: "#ffffff01",
                   },
                 })
           }
