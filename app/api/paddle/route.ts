@@ -26,32 +26,32 @@ export async function POST(req: NextRequest) {
       }
     );
   const parsedBody = JSON.parse(body);
-  console.log("webhook", parsedBody);
 
   switch (parsedBody.event_type) {
     case "subscription.created":
       await supabase.from("user_payment_data").upsert({
-        user_id: parsedBody.custom_data.user_id,
-        user_email: parsedBody.custom_data.user_email,
+        user_id: parsedBody.data.custom_data.userId,
+        user_email: parsedBody.data.custom_data.userEmail,
         subscription_id: parsedBody.data.id,
         subscription_status: parsedBody.data.status,
-        subscription_plan_id: parsedBody.data.billing_cycle.interval,
-        subscription_end_date: parsedBody.data.next_billed_at,
+        // subscription_plan_id: parsedBody.data.billing_cycle.interval,
+        // subscription_end_date: parsedBody.data.next_billed_at,
       });
       break;
     case "subscription.updated":
       await supabase.from("user_payment_data").update({
-        subscriptionStatus: parsedBody.status,
-        subscriptionPlanId: parsedBody.subscription_plan_id,
-        subscriptionEndDate: parsedBody.next_bill_date,
-        subscriptionUpdateUrl: parsedBody.update_url,
-        subscriptionCancelUrl: parsedBody.cancel_url,
+        user_id: parsedBody.data.custom_data.userId,
+        user_email: parsedBody.data.custom_data.userEmail,
+        subscription_id: parsedBody.data.id,
+        subscription_status: parsedBody.data.status,
       });
       break;
     case "subscription.cancelled":
       await supabase.from("user_payment_data").update({
-        subscriptionStatus: parsedBody.status,
-        subscriptionEndDate: parsedBody.cancellation_effective_date,
+        user_id: parsedBody.data.custom_data.userId,
+        user_email: parsedBody.data.custom_data.userEmail,
+        subscription_id: parsedBody.data.id,
+        subscription_status: parsedBody.data.status,
       });
       //   .match({ userId: passthrough.userId });
       break;
