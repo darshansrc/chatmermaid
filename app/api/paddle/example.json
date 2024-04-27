@@ -1,112 +1,148 @@
 {
-  "event_id": "evt_01hv8x2acma2gz7he8kg2s0hna",
-  "event_type": "subscription.created",
-  "occurred_at": "2024-04-12T10:18:49.621022Z",
-  "notification_id": "ntf_01hv8x2af22vrrz7k67g06x1kq",
   "data": {
-    "id": "sub_01hv8x29kz0t586xy6zn1a62ny",
+    "id": "txn_01hwfn1k8zsh42r351eyh8p0s1",
     "items": [
       {
         "price": {
-          "id": "pri_01gsz8x8sawmvhz1pv30nge1ke",
-          "name": "Monthly (per seat)",
+          "id": "pri_01hvxe42bcf88wxsy0pnmp7se5",
+          "name": "Yearly Premium",
           "type": "standard",
           "status": "active",
-          "quantity": {
-            "maximum": 999,
-            "minimum": 1
-          },
+          "quantity": { "maximum": 1, "minimum": 1 },
           "tax_mode": "account_setting",
-          "created_at": "2023-02-23T13:55:22.538367Z",
-          "product_id": "pro_01gsz4t5hdjse780zja8vvr7jg",
-          "unit_price": {
-            "amount": "3000",
-            "currency_code": "USD"
-          },
-          "updated_at": "2024-04-11T13:54:52.254748Z",
+          "created_at": "2024-04-20T09:41:41.356137Z",
+          "product_id": "pro_01hvxdvxv2zzrg7scg6q6td9cd",
+          "unit_price": { "amount": "4797", "currency_code": "USD" },
+          "updated_at": "2024-04-27T06:49:06.446053Z",
           "custom_data": null,
-          "description": "Monthly",
-          "import_meta": null,
+          "description": "Yearly Premium",
           "trial_period": null,
-          "billing_cycle": {
-            "interval": "month",
-            "frequency": 1
-          },
+          "billing_cycle": { "interval": "year", "frequency": 1 },
           "unit_price_overrides": []
         },
-        "status": "active",
-        "quantity": 10,
-        "recurring": true,
-        "created_at": "2024-04-12T10:18:48.831Z",
-        "updated_at": "2024-04-12T10:18:48.831Z",
-        "trial_dates": null,
-        "next_billed_at": "2024-05-12T10:18:47.635628Z",
-        "previously_billed_at": "2024-04-12T10:18:47.635628Z"
-      },
-      {
-        "price": {
-          "id": "pri_01h1vjfevh5etwq3rb416a23h2",
-          "name": "Monthly (recurring addon)",
-          "type": "standard",
-          "status": "active",
-          "quantity": {
-            "maximum": 100,
-            "minimum": 1
-          },
-          "tax_mode": "account_setting",
-          "created_at": "2023-06-01T13:31:12.625056Z",
-          "product_id": "pro_01h1vjes1y163xfj1rh1tkfb65",
-          "unit_price": {
-            "amount": "10000",
-            "currency_code": "USD"
-          },
-          "updated_at": "2024-04-09T07:23:00.907834Z",
-          "custom_data": null,
-          "description": "Monthly",
-          "import_meta": null,
-          "trial_period": null,
-          "billing_cycle": {
-            "interval": "month",
-            "frequency": 1
-          },
-          "unit_price_overrides": []
-        },
-        "status": "active",
+        "price_id": "pri_01hvxe42bcf88wxsy0pnmp7se5",
         "quantity": 1,
-        "recurring": true,
-        "created_at": "2024-04-12T10:18:48.831Z",
-        "updated_at": "2024-04-12T10:18:48.831Z",
-        "trial_dates": null,
-        "next_billed_at": "2024-05-12T10:18:47.635628Z",
-        "previously_billed_at": "2024-04-12T10:18:47.635628Z"
+        "proration": null
       }
     ],
-    "status": "active",
-    "discount": null,
-    "paused_at": null,
-    "address_id": "add_01hv8wt8ny8ms5vtm71bj8vcdd",
-    "created_at": "2024-04-12T10:18:48.831Z",
-    "started_at": "2024-04-12T10:18:47.635628Z",
-    "updated_at": "2024-04-12T10:18:48.831Z",
-    "business_id": null,
-    "canceled_at": null,
-    "custom_data": null,
-    "customer_id": "ctm_01hv8wt8nffez4p2t6typn4a5j",
-    "import_meta": null,
-    "billing_cycle": {
-      "interval": "month",
-      "frequency": 1
+    "origin": "web",
+    "status": "paid",
+    "details": {
+      "totals": {
+        "fee": null,
+        "tax": "863",
+        "total": "5660",
+        "credit": "0",
+        "balance": "0",
+        "discount": "0",
+        "earnings": null,
+        "subtotal": "4797",
+        "grand_total": "5660",
+        "currency_code": "USD",
+        "credit_to_balance": "0"
+      },
+      "line_items": [
+        {
+          "id": "txnitm_01hwfn1qn14tzfm4m3brbvf5ay",
+          "totals": {
+            "tax": "863",
+            "total": "5660",
+            "discount": "0",
+            "subtotal": "4797"
+          },
+          "item_id": null,
+          "product": {
+            "id": "pro_01hvxdvxv2zzrg7scg6q6td9cd",
+            "name": "Premium Plan",
+            "type": "standard",
+            "status": "active",
+            "image_url": null,
+            "created_at": "2024-04-20T09:37:14.594Z",
+            "updated_at": "2024-04-20T09:42:23.972Z",
+            "custom_data": null,
+            "description": "Choose an item associated with the category\nSelect an item",
+            "tax_category": "saas"
+          },
+          "price_id": "pri_01hvxe42bcf88wxsy0pnmp7se5",
+          "quantity": 1,
+          "tax_rate": "0.18",
+          "unit_totals": {
+            "tax": "863",
+            "total": "5660",
+            "discount": "0",
+            "subtotal": "4797"
+          }
+        }
+      ],
+      "payout_totals": null,
+      "tax_rates_used": [
+        {
+          "totals": {
+            "tax": "863",
+            "total": "5660",
+            "discount": "0",
+            "subtotal": "4797"
+          },
+          "tax_rate": "0.18"
+        }
+      ],
+      "adjusted_totals": {
+        "fee": "0",
+        "tax": "863",
+        "total": "5660",
+        "earnings": "0",
+        "subtotal": "4797",
+        "grand_total": "5660",
+        "currency_code": "USD"
+      }
     },
+    "checkout": {
+      "url": "https://chatmermaid.com?_ptxn=txn_01hwfn1k8zsh42r351eyh8p0s1"
+    },
+    "payments": [
+      {
+        "amount": "5660",
+        "status": "captured",
+        "created_at": "2024-04-27T11:29:34.905672Z",
+        "error_code": null,
+        "captured_at": "2024-04-27T11:29:37.692353Z",
+        "method_details": {
+          "card": {
+            "type": "visa",
+            "last4": "5556",
+            "expiry_year": 2028,
+            "expiry_month": 1,
+            "cardholder_name": "Darshan Gowda"
+          },
+          "type": "card"
+        },
+        "payment_method_id": "paymtd_01hwfn2n4qh28n282k19h4960q",
+        "payment_attempt_id": "777f14e0-6aaf-4c34-b6f7-7a49e27e6812",
+        "stored_payment_method_id": "2f23e9ab-e6c5-4976-8c2a-811b686db779"
+      }
+    ],
+    "billed_at": "2024-04-27T11:29:38.351591943Z",
+    "address_id": "add_01hwfn1q9grtdtrdakz7a1tped",
+    "created_at": "2024-04-27T11:29:00.299693Z",
+    "invoice_id": null,
+    "updated_at": "2024-04-27T11:29:38.351593646Z",
+    "business_id": null,
+    "custom_data": {
+      "userId": "dfd5b29f-a1e0-4c46-abf5-72a2c61aa1c7",
+      "userEmail": "darshansr1618@gmail.com"
+    },
+    "customer_id": "ctm_01hwf437sgjx2a1tdw7wfm9wfc",
+    "discount_id": null,
+    "receipt_data": null,
     "currency_code": "USD",
-    "next_billed_at": "2024-05-12T10:18:47.635628Z",
-    "transaction_id": "txn_01hv8wptq8987qeep44cyrewp9",
+    "billing_period": null,
+    "invoice_number": null,
     "billing_details": null,
     "collection_mode": "automatic",
-    "first_billed_at": "2024-04-12T10:18:47.635628Z",
-    "scheduled_change": null,
-    "current_billing_period": {
-      "ends_at": "2024-05-12T10:18:47.635628Z",
-      "starts_at": "2024-04-12T10:18:47.635628Z"
-    }
-  }
+    "subscription_id": null
+  },
+  "event_id": "evt_01hwfn2rz49nr4m02639ekc6ad",
+  "event_type": "transaction.paid",
+  "occurred_at": "2024-04-27T11:29:38.788581Z",
+  "notification_id": "ntf_01hwfn2s1kv1sg2xp68ckd5mza"
 }
