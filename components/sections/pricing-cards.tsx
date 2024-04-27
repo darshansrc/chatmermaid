@@ -11,6 +11,10 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BillingFormButton } from "./billing-form-button";
 import { HeaderSection } from "@/components/shared/header-section";
 import { Icons } from "@/components/shared/icons";
+import usePaddle from "@/hooks/use-paddle";
+import useUser from "@/store/user-store";
+import useAuthModal from "@/store/auth-modal-store";
+import { useRouter } from "next/navigation";
 
 const pricingData = [
   {
@@ -38,27 +42,27 @@ const pricingData = [
       "Collab",
       "Unlimited Diagrams",
       "Timeline of Diagram",
-      "Unlimited AI Prompts ( Claude Haiku ) ",
+      "Unlimited AI Prompts",
       "Repair diagram with AI when goes into error",
       "14 day Refund policy",
     ],
     limitations: [],
   },
-  {
-    title: "Enterprise",
-    free: false,
-    prices: {
-      monthly: 17.97,
-      yearly: 107.97,
-    },
-    benefits: [
-      "Everything included in Pro",
-      "Collab more than 5 people",
-      "Unlimited AI Prompts",
-      "Access to GPT-4, Claude opus, Claude sonnet",
-    ],
-    limitations: [],
-  },
+  // {
+  //   title: "Enterprise",
+  //   free: false,
+  //   prices: {
+  //     monthly: 17.97,
+  //     yearly: 107.97,
+  //   },
+  //   benefits: [
+  //     "Everything included in Pro",
+  //     "Collab more than 5 people",
+  //     "Unlimited AI Prompts",
+  //     "Access to GPT-4, Claude opus, Claude sonnet",
+  //   ],
+  //   limitations: [],
+  // },
 ];
 
 interface PricingCardsProps {
@@ -70,9 +74,38 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
   const isYearlyDefault = true;
   const [isYearly, setIsYearly] = useState<boolean>(!!isYearlyDefault);
   const signInModal = useSigninModal();
+  const paddle = usePaddle();
+  const { setIsAuthModalOpen } = useAuthModal();
+  const router = useRouter();
+
+  const { user } = useUser();
 
   const toggleBilling = () => {
     setIsYearly(!isYearly);
+  };
+
+  const openCheckout = () => {
+    if (!user?.email) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    paddle?.Checkout.open({
+      items: [
+        {
+          priceId: isYearly
+            ? "pri_01hvxe42bcf88wxsy0pnmp7se5"
+            : "pri_01hvxe05mqtga1rxvxb41jjjan",
+          quantity: 1,
+        },
+      ],
+      customer: {
+        email: user?.email || "",
+      },
+      settings: {
+        allowLogout: user?.email && false,
+      },
+    });
   };
 
   const PricingCard = ({ offer }) => {
@@ -149,7 +182,13 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
             variant={
               offer.title.toLocaleLowerCase() === "pro" ? "default" : "outline"
             }
-            onClick={signInModal.onOpen}
+            onClick={
+              !offer.free
+                ? openCheckout
+                : () => {
+                    router.push("/c");
+                  }
+            }
           >
             {offer.free ? "Get Started" : "Coming Soon!"}
           </Button>
@@ -190,7 +229,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
           </ToggleGroup>
         </div>
 
-        <div className="mx-auto grid max-w-6xl gap-5 bg-inherit py-5 md:grid-cols-3 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl gap-5 bg-inherit py-5 md:grid-cols-2 lg:grid-cols-2">
           {pricingData.map((offer) => (
             <PricingCard offer={offer} key={offer.title} />
           ))}
