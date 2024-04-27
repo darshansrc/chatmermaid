@@ -84,10 +84,6 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
     setIsYearly(!isYearly);
   };
 
-  const passthrough = {
-    userId: user.id,
-  };
-
   const openCheckout = () => {
     if (!user?.email) {
       setIsAuthModalOpen(true);
