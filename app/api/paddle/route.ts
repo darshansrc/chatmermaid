@@ -3,10 +3,13 @@ import { validateSignature } from "@/utils/paddle";
 import { createClient } from "@/utils/supabase/server";
 
 export async function POST(req: NextRequest) {
-  const supabase = createClient();
-  const signature = req.headers.get("Paddle-Signature")!;
+  console.log("req:", req);
   const body = await req.text();
+  console.log("body", body);
+  console.log("bodyParsed", JSON.parse(body));
+  const signature = req.headers.get("Paddle-Signature")!;
   // mentioned later in the blog
+  const supabase = createClient();
   const isValid = await validateSignature(
     signature,
     body,
