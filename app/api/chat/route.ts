@@ -36,8 +36,10 @@ export async function POST(req: Request) {
 
     const stream = AnthropicStream(message, {
       onCompletion: async (completion: string) => {
-        await saveMessage(prompt, "user", diagramId);
-        await saveMessage(completion, "assistant", diagramId);
+        if (diagramId) {
+          await saveMessage(prompt, "user", diagramId);
+          await saveMessage(completion, "assistant", diagramId);
+        }
       },
     });
 

@@ -41,8 +41,8 @@ export function BotMessage({
   theme,
 }: {
   text: string;
-  code: string;
-  onChange: (val: string) => void;
+  code?: string;
+  onChange?: (val: string) => void;
   isLoading: boolean;
   theme: any;
 }) {
