@@ -107,11 +107,6 @@ function DownloadForm({ code }: { code: string }) {
             <div className="flex flex-row gap-2 items-center">
               <ImageDown className="size-4" /> <p>{exportType.toUpperCase()}</p>
             </div>
-            {exportType === "png" && (
-              <Badge className="absolute right-[15%] top-[50%] translate-y-[-50%] bg-blue-600 dark:bg-blue-600 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600  text-white">
-                Suggested
-              </Badge>
-            )}
           </SelectTrigger>
           <SelectContent className="dark:bg-neutral-900">
             <SelectItem
@@ -119,9 +114,6 @@ function DownloadForm({ code }: { code: string }) {
               className="flex relative flex-row items-center gap-12"
             >
               PNG
-              <Badge className="absolute right-[15%] top-[50%] translate-y-[-50%] bg-blue-600 dark:bg-blue-600 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600  text-white">
-                Suggested
-              </Badge>
             </SelectItem>
             <SelectItem value="svg">SVG</SelectItem>
             <SelectItem value="jpeg">JPEG</SelectItem>
@@ -163,7 +155,7 @@ function DownloadForm({ code }: { code: string }) {
       </div>
 
       <div>
-        <Button className="w-full  mt-2 bg-blue-600 dark:bg-blue-600 dark:text-white hover:dark:bg-blue-700 hover:bg-blue-700 text-white">
+        <Button className="w-full  mt-2 ">
           <SvgToPng
             chart={code}
             config={{ theme: mermaidTheme }}

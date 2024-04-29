@@ -20,7 +20,15 @@ const nextConfig = withContentlayer({
     ],
   },
   experimental: {
-    serverComponentsExternalPackages: ["@prisma/client"],
+    // serverComponentsExternalPackages: ["@prisma/client"],
+    turbo: {
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
+      },
+    },
   },
 });
 

@@ -124,7 +124,7 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
 
         <div className="absolute bottom-0 left-0 w-full border-t  dark:bg-neutral-900 bg-white  flex justify-center items-center">
           <form onSubmit={handleSubmit} className="w-full p-[8px] rounded-sm">
-            <div className="relative flex max-h-60   grow flex-col overflow-hidden   rounded-md  sm:border sm:px-2 bg-neutral-50 dark:bg-neutral-800">
+            <div className="relative flex max-h-60   grow flex-col overflow-hidden   rounded-md  sm:border sm:px-2 bg-neutral-50 dark:bg-[rgb(16,16,16)]">
               <Textarea
                 maxRows={4}
                 aria-label="maximum height"

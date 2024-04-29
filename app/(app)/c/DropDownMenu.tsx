@@ -23,8 +23,8 @@ export function DropdownMenuDemo() {
   const { fetchDiagrams } = useDiagramStore();
   const handleNewDiagram = async () => {
     try {
-      const uuid = await createNewDiagram();
-      router.push(`/c/${uuid}`);
+      // const uuid = await createNewDiagram();
+      router.push(`/c/new`);
       fetchDiagrams();
     } catch (error) {
       console.error(error);
