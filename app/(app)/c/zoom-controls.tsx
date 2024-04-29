@@ -212,7 +212,10 @@ const ZoomControls = ({
                 </Button>
               </DropdownMenuTrigger>
             </TooltipTrigger>
-            <DropdownMenuContent side="top" className="w-56">
+            <DropdownMenuContent
+              side="top"
+              className="w-56 dark:bg-neutral-900"
+            >
               <DropdownMenuLabel>Diagram Theme</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup

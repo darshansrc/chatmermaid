@@ -23,11 +23,10 @@ const StartEditing = () => {
 
   const handleClick = () => {
     if (user) {
-      router.push("/c");
-    }else{
+      router.push("/c/new");
+    } else {
       setIsAuthModalOpen(true);
     }
-    
   };
 
   return (

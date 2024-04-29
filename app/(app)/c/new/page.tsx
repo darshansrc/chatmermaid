@@ -28,6 +28,13 @@ import {
 } from "@/components/ui/select";
 import { EmptyScreen } from "@/app/new/empty-screen";
 import { ModeToggle } from "@/components/mode-toggle";
+import { DropdownMenuDemo } from "../DropDownMenu";
+import { Input } from "@/components/ui/input";
+import { IconSeparator } from "@/components/ui/icons";
+import { SidebarToggle } from "@/components/sidebar/sidebar-toggle";
+import { useSidebar } from "@/hooks/use-sidebar";
+import { createNewDiagramWithContent } from "@/actions/actions";
+import { useRouter } from "next/navigation";
 
 type ChatBoxProps = {
   diagramId: string;
@@ -89,54 +96,96 @@ export default function ChatBox() {
     }
   };
   const { theme } = useTheme();
+  const { isSidebarOpen } = useSidebar();
+
+  const router = useRouter();
+
+  const onChange = (val: string) => {
+    const id = createNewDiagramWithContent(val, "New Diagram");
+    router.push(`/c/${id}`);
+  };
 
   return (
     <div className="relative h-full min-h-screen dark:bg-neutral-900 w-full">
-      <div
-        id="chatbox"
-        className="relative max-h-screen overflow-scroll pb-32  max-w-full pl-2 md:pl-16 pr-4 pt-4"
+      <header
+        className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900  `}
       >
-        {messages.map((m) => (
-          <div key={m.id}>
-            {m.role === "user" ? (
-              <UserMessage>{m.content}</UserMessage>
-            ) : (
-              <BotMessage
-                text={m.content}
-                isLoading={isLoading}
-                theme={theme}
-              />
-            )}
+        <div className="w-full m-auto px-4 flex h-12 items-center justify-stretch ">
+          <div className=" w-full px-4 flex h-12 items-center  ">
+            <div className="">
+              <SidebarToggle />
+            </div>
 
-            {m.id !== messages[messages.length - 1].id ||
-            isLoading ||
-            hasResponseStarted ? (
-              <Separator className="my-4" />
-            ) : (
-              <div className="my-4" />
-            )}
+            <IconSeparator className="size-6 text-muted-foreground/50" />
+
+            <Input
+              defaultValue={"New Diagram"}
+              className="text-sm  font-medium border-none dark:border-none p-1 py-0 focus-visible:ring-1 focus-visible:dark:ring-neutral-800"
+            />
           </div>
-        ))}
-        <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div>
-      </div>
 
-      {messages.length === 0 && <EmptyScreen />}
+          <div className="flex flex-row w-full gap-2 justify-end items-center">
+            <ModeToggle />
+            <DropdownMenuDemo />
+          </div>
+        </div>
+      </header>
 
-      <div className="absolute  bottom-0 left-0 w-full  md:px-28 lg:px-32  dark:bg-neutral-900 bg-white  flex justify-center items-center">
-        <form onSubmit={handleSubmit} className="w-full p-[10px]  rounded-md">
-          <div className="relative flex max-h-60   grow flex-col overflow-hidden   rounded-md  sm:border sm:px-2 bg-neutral-50 dark:bg-[rgb(16,16,16)]">
+      {messages.length === 0 ? (
+        <EmptyScreen />
+      ) : (
+        <div
+          id="chatbox"
+          className="pl-4  md:px-48 md:pl-64 max-h-screen relative  overflow-scroll  pb-32 max-w-full pr-4 pt-4"
+        >
+          {messages.map((m) => (
+            <div key={m.id}>
+              {m.role === "user" ? (
+                <UserMessage>{m.content}</UserMessage>
+              ) : (
+                <BotMessage
+                  text={m.content}
+                  isLoading={isLoading}
+                  theme={theme}
+                  onChange={onChange}
+                />
+              )}
+
+              {m.id !== messages[messages.length - 1].id ||
+              isLoading ||
+              hasResponseStarted ? (
+                <Separator className="my-4" />
+              ) : (
+                <div className="my-4" />
+              )}
+            </div>
+          ))}
+          <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div>
+        </div>
+      )}
+
+      <div
+        className={` pl-0 max-h-screen fixed bottom-0   overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 ${
+          !isSidebarOpen
+            ? "w-full"
+            : "w-full lg:w-[calc(100%-200px)] xl:w-[calc(100%-220px)]"
+        }  `}
+      >
+        <form
+          onSubmit={handleSubmit}
+          className="w-full p-[10px] lg:px-48  rounded-lg"
+        >
+          <div className="relative flex max-h-60   grow flex-col overflow-hidden   rounded-lg   sm:border sm:px-2 bg-neutral-50 dark:bg-[rgb(16,16,16)]">
             <Textarea
               maxRows={4}
-              aria-label="maximum height"
               placeholder="Describe your diagram..."
               onKeyDown={handleKeyDown}
-              className="min-h-[30px] w-11/12 resize-none bg-transparent px-2 pt-4 pb-10 focus-within:outline-none sm:text-sm"
+              className="min-h-[60px] w-11/12 resize-none bg-transparent px-2 pt-4 pb-10 focus-within:outline-none sm:text-sm"
               value={input}
               onChange={handleInputChange}
             />
 
             <div className="absolute  right-2 bottom-2 flex flex-row gap-2   ">
-              <ModeToggle />
               <Select value={diagramType} onValueChange={setDiagramType}>
                 <SelectTrigger className="border-none dark:border-none dark:bg-[rgb(16,16,16)] outline-none dark:outline-none">
                   <SelectValue placeholder="Select a fruit" />

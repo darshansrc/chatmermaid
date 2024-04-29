@@ -343,3 +343,42 @@ export const handleSignInWithGithub = async () => {
     redirect(data.url); // use the redirect API for your server framework
   }
 };
+
+type DiagramContentData = {
+  code?: any;
+};
+
+export async function createNewDiagramWithContent(code: any, diagramType: any) {
+  const supabase = createClient();
+
+  const newNanoid = customAlphabet("abcdefhiklmnorstuvwxz", 10);
+
+  const id = newNanoid();
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return "User not found.";
+  }
+  const { data, error } = await supabase
+    .from("diagrams")
+    .insert([
+      {
+        id: id,
+        user_id: user.id,
+        diagram_name: diagramType,
+        code: code,
+      },
+    ])
+    .select();
+  if (data) {
+    return id;
+  }
+
+  if (error) {
+    return error.message;
+  }
+}
