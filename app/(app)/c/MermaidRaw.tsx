@@ -27,15 +27,15 @@ const MermaidRaw = ({ chart, isLoading, onChange }) => {
 
   if (!isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center dark:bg-neutral-900 rounded-lg p-2">
-        <div className="mermaid">{chart}</div>
-        <Button
+      <div className="flex flex-col items-center border my-2 py-2 justify-center dark:bg-neutral-900 rounded-lg p-2">
+        {/* <Button
           variant={"outline"}
           className="w-11/12 my-2 dark:bg-neutral-900"
           onClick={handleReplace}
         >
           Use this diagram
-        </Button>
+        </Button> */}
+        <div className="mermaid">{chart}</div>
       </div>
     );
   }

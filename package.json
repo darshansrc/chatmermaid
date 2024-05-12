@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "cl-dev": "contentlayer dev",
-    "dev": "concurrently \"contentlayer dev\" \"next dev --turbo\"",
+    "cl-dev": "concurrently \"contentlayer dev\" \"next dev\"",
+    "cl-turbo": "concurrently \"contentlayer dev\" \"next dev --turbo\"",
     "turbo": "next dev --turbo",
+    "dev": "next dev",
     "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint"
@@ -74,7 +75,6 @@
     "@vercel/kv": "^1.0.1",
     "@vercel/speed-insights": "^1.0.10",
     "ai": "^3.0.29",
-    "canvas": "^2.11.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",

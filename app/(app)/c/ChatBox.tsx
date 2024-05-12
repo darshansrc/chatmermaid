@@ -16,6 +16,7 @@ import Textarea from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
 
 import { useTheme } from "next-themes";
+import { EmptyScreen } from "@/app/new/empty-screen";
 
 type ChatBoxProps = {
   diagramId: string;
@@ -94,35 +95,39 @@ export default function ChatBox({ diagramId, code, onChange }: ChatBoxProps) {
       <div className="relative h-full">
         <div
           id="chatbox"
-          className="relative h-full overflow-scroll pb-32  max-w-full pl-2 md:pl-16 pr-4 pt-4"
+          className="relative h-full overflow-scroll pb-32 md:pl-16  max-w-full pl-2  pr-4 pt-4"
         >
-          {messages.map((m) => (
-            <div key={m.id}>
-              {m.role === "user" ? (
-                <UserMessage>{m.content}</UserMessage>
-              ) : (
-                <BotMessage
-                  text={m.content}
-                  isLoading={isLoading}
-                  code={code}
-                  onChange={onChange}
-                  theme={theme}
-                />
-              )}
+          {messages.length != 0 ? (
+            messages.map((m) => (
+              <div key={m.id}>
+                {m.role === "user" ? (
+                  <UserMessage>{m.content}</UserMessage>
+                ) : (
+                  <BotMessage
+                    text={m.content}
+                    isLoading={isLoading}
+                    code={code}
+                    onChange={onChange}
+                    theme={theme}
+                  />
+                )}
 
-              {m.id !== messages[messages.length - 1].id ||
-              isLoading ||
-              hasResponseStarted ? (
-                <Separator className="my-4" />
-              ) : (
-                <div className="my-4" />
-              )}
-            </div>
-          ))}
+                {m.id !== messages[messages.length - 1].id ||
+                isLoading ||
+                hasResponseStarted ? (
+                  <Separator className="my-4" />
+                ) : (
+                  <div className="my-4" />
+                )}
+              </div>
+            ))
+          ) : (
+            <EmptyScreen />
+          )}
           <div> {isLoading && !hasResponseStarted && <SpinnerMessage />}</div>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full border-t  dark:bg-neutral-900 bg-white  flex justify-center items-center">
+        <div className="absolute bottom-0 left-0 w-full border-t    flex justify-center items-center">
           <form onSubmit={handleSubmit} className="w-full p-[8px] rounded-sm">
             <div className="relative flex max-h-60   grow flex-col overflow-hidden   rounded-md  sm:border sm:px-2 bg-neutral-50 dark:bg-[rgb(16,16,16)]">
               <Textarea

@@ -60,6 +60,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
         try {
           await mermaid.parse(code);
           setError(null);
+          console.log(typeof error);
+          console.log(error);
           setErrorToolbarOpen(false);
         } catch (error) {
           setError(error);
@@ -83,7 +85,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
   return (
     <div className=" h-full w-full flex relative flex-col">
       <div className="absolute z-40 flex bg-neutral-50 dark:bg-neutral-900 border dark:border-neutral-700 rounded-md flex-row  left-[50%] translate-x-[-50%] bottom-4">
-        <div>
+        {/* <div>
           <Select>
             <SelectTrigger className="border-none outline-none w-auto focus:border-none">
               <CodeXml size={14} className="m-1" />
@@ -98,7 +100,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
               </SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
         <div className="flex flex-row ">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
@@ -123,7 +125,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
               </TooltipContent>
             </Tooltip>
 
-            <HoverCard openDelay={0}>
+            {/* <HoverCard openDelay={0}>
               <HoverCardTrigger>
                 <Tooltip open={errorToolbarOpen}>
                   <TooltipTrigger>
@@ -176,10 +178,30 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
                   )}
                 </Alert>
               </HoverCardContent>
-            </HoverCard>
+            </HoverCard> */}
           </TooltipProvider>
         </div>
       </div>
+
+      {error && (
+        <div className="absolute z-30 p-4 pb-20  flex bg-neutral-50 dark:bg-neutral-900 border-t dark:border-neutral-700  flex-row  left-0  bottom-4">
+          <Bug className="size-4 text-red-700" />
+          <AlertTitle className="text-red-700">Error!</AlertTitle>
+          <AlertDescription className="flex flex-col gap-2">
+            {error.toString()}
+            <Button
+              variant={"default"}
+              className="flex flex-row items-center gap-2"
+              onClick={() => {
+                toast("Error Copied to Clipboard");
+                navigator.clipboard.writeText(error.toString());
+              }}
+            >
+              <Bot className="size-4" /> Fix with AI
+            </Button>
+          </AlertDescription>
+        </div>
+      )}
 
       <div className="h-full  relative overflow-auto ">
         <CodeMirror

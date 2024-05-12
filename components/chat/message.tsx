@@ -1,24 +1,10 @@
 "use client";
 
-import { IconOpenAI, IconUser } from "@/components/ui/icons";
-import { cn } from "@/lib/utils";
+import { IconUser } from "@/components/ui/icons";
 import { spinner } from "./spinner";
-import { CodeBlock } from "./codeblock";
-import { MemoizedReactMarkdown } from "./markdown";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
-import { StreamableValue } from "ai/rsc";
-import { useStreamableText } from "@/hooks/use-streamable-text";
-import { AnthropicStream } from "ai";
 import MermaidRaw from "@/app/(app)/c/MermaidRaw";
-import ReactMarkdown from "react-markdown";
 import MarkdownPreview from "@uiw/react-markdown-preview";
-import Mermaid from "@/app/(app)/c/Mermaid";
-import { useTheme } from "next-themes";
 import { Bot } from "lucide-react";
-import { Code } from "./mermaid-block";
-import { Spinner } from "@geist-ui/core";
-// Different types of message bubbles.
 
 export function UserMessage({ children }: { children: React.ReactNode }) {
   return (
@@ -35,7 +21,6 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
 
 export function BotMessage({
   text,
-  code,
   onChange,
   isLoading,
   theme,
@@ -51,8 +36,8 @@ export function BotMessage({
 
   return (
     <div className="group relative flex items-start md:-ml-12">
-      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border  bg-neutral-200 dark:bg-neutral-200 shadow-sm">
-        <Bot className="p-1 text-black" />
+      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border  bg-neutral-900 dark:bg-neutral-200 shadow-sm">
+        <Bot className="p-1 text-white dark:text-black" />
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
         <div data-color-mode={theme}>
@@ -62,7 +47,7 @@ export function BotMessage({
               backgroundColor: theme === "dark" ? "rgb(23 23 23)" : "#fff",
             }}
           />
-          {!isLoading && mermaidMatch && (
+          {mermaidMatch && (
             <MermaidRaw
               chart={mermaidMatch ? mermaidMatch[1] : ""}
               isLoading={isLoading}
@@ -75,45 +60,11 @@ export function BotMessage({
   );
 }
 
-export function BotCard({
-  children,
-  showAvatar = true,
-}: {
-  children: React.ReactNode;
-  showAvatar?: boolean;
-}) {
-  return (
-    <div className="group relative flex items-start md:-ml-12">
-      <div
-        className={cn(
-          "flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm",
-          !showAvatar && "invisible"
-        )}
-      >
-        <IconOpenAI />
-      </div>
-      <div className="ml-4 flex-1 pl-2">{children}</div>
-    </div>
-  );
-}
-
-export function SystemMessage({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className={
-        "mt-2 flex items-center justify-center gap-2 text-xs text-gray-500"
-      }
-    >
-      <div className={"max-w-[600px] flex-initial p-2"}>{children}</div>
-    </div>
-  );
-}
-
 export function SpinnerMessage() {
   return (
     <div className="group relative flex items-start md:-ml-12 mb-4">
-      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border  bg-neutral-200 dark:bg-neutral-200 shadow-sm">
-        <Bot className="p-1 text-black" />
+      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border  bg-neutral-900 dark:bg-neutral-200 shadow-sm">
+        <Bot className="p-1 text-white dark:text-black" />
       </div>
       <div className="ml-4 h-[24px] flex flex-row items-center flex-1 space-y-2 overflow-hidden px-1">
         {spinner}
@@ -121,70 +72,3 @@ export function SpinnerMessage() {
     </div>
   );
 }
-
-// export function AIMessage({
-//   content,
-//   className,
-// }: {
-//   content: string | StreamableValue<string>;
-//   className?: string;
-// }) {
-//   const text = useStreamableText(content);
-
-//   return (
-//     <div className={cn("group relative flex items-start md:-ml-12", className)}>
-//       <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
-//         <IconOpenAI />
-//       </div>
-//       <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
-//         <MemoizedReactMarkdown
-//           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
-//           remarkPlugins={[remarkGfm, remarkMath]}
-//           components={{
-//             p({ children }) {
-//               return <p className="mb-2 last:mb-0">{children}</p>;
-//             },
-//             code({ node, inline, className, children, ...props }) {
-//               if (children.length) {
-//                 if (children[0] == "▍") {
-//                   return (
-//                     <span className="mt-1 animate-pulse cursor-default">▍</span>
-//                   );
-//                 }
-
-//                 children[0] = (children[0] as string).replace("`▍`", "▍");
-//               }
-
-//               const match = /language-(\w+)/.exec(className || "");
-
-//               if (inline) {
-//                 return (
-//                   <code className={className} {...props}>
-//                     {children}
-//                   </code>
-//                 );
-//               }
-
-//               return (
-//                 <>
-//                   <CodeBlock
-//                     key={Math.random()}
-//                     language={(match && match[1]) || ""}
-//                     value={String(children).replace(/\n$/, "")}
-//                     {...props}
-//                   />
-//                   <MermaidRaw
-//                     chart={String(children).replace(/\n$/, "")}
-//                     isLoading={false}
-//                   />
-//                 </>
-//               );
-//             },
-//           }}
-//         >
-//           {text}
-//         </MemoizedReactMarkdown>
-//       </div>
-//     </div>
-//   );
-// }

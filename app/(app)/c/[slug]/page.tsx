@@ -152,9 +152,9 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
   }, [diagramName]);
 
   return (
-    <>
+    <div>
       {isDesktop && (
-        <Tabs defaultValue="editor">
+        <Tabs defaultValue="chat">
           <header
             className={` pl-0 max-h-screen overflow-hidden  duration-300 peer-[[data-state=open]]:lg:pl-[200px] peer-[[data-state=open]]:xl:pl-[220px]  dark:bg-neutral-900 border-b border-gray-200 dark:border-neutral-800 `}
           >
@@ -171,7 +171,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                   defaultValue={diagramName}
                   onChange={(e) => setEditedName(e.target.value)}
                   onBlur={handleNameChange}
-                  className="text-sm  font-medium border-none dark:border-none p-1 py-0 focus-visible:ring-1 focus-visible:dark:ring-neutral-800"
+                  className="text-sm shadow-none dark:shadow-none  font-medium border-none dark:border-none p-1 py-0 focus-visible:ring-1 focus-visible:dark:ring-neutral-800"
                 />
               </div>
 
@@ -192,14 +192,6 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
                     <BotMessageSquare className="size-3" />
                     <p className="text-[12px]">Chat</p>
                   </TabsTrigger>
-                  <TabsTrigger
-                    className="data-[state=active]:dark:bg-neutral-900 flex text-[12px]  flex-row gap-1 items-center"
-                    value="both"
-                    onClick={handleCloseSidebar}
-                  >
-                    <LayoutPanelLeft className="size-3" />
-                    <p className="text-[12px] ">Both</p>
-                  </TabsTrigger>
                 </TabsList>
               </div>
 
@@ -211,67 +203,28 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
             </div>
           </header>
           <div className="h-[calc(100vh-48px)]">
-            <TabsContent className="h-full overflow-hidden" value="editor">
-              <ResizablePanelGroup direction="horizontal">
-                <ResizablePanel>
+            <ResizablePanelGroup direction="horizontal">
+              <ResizablePanel>
+                <TabsContent className="h-full overflow-hidden" value="editor">
                   <CodeEditor code={code} onChange={onChange} />
-                </ResizablePanel>
-
-                <ResizableHandle withHandle />
-                <ResizablePanel>
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </ResizablePanel>
-              </ResizablePanelGroup>
-            </TabsContent>
-            <TabsContent className="h-full overflow-hidden" value="chat">
-              <ResizablePanelGroup direction="horizontal">
-                <ResizablePanel>
+                </TabsContent>
+                <TabsContent className="h-full overflow-hidden" value="chat">
                   <ChatBox
                     diagramId={diagramId}
                     code={code}
                     onChange={onChange}
                   />
-                </ResizablePanel>
-                <ResizableHandle withHandle />
-                <ResizablePanel>
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </ResizablePanel>
-              </ResizablePanelGroup>
-            </TabsContent>
-            <TabsContent className="h-full overflow-hidden" value="both">
-              <ResizablePanelGroup direction="horizontal">
-                <ResizablePanel>
-                  <ChatBox
-                    diagramId={diagramId}
-                    code={code}
-                    onChange={onChange}
-                  />
-                </ResizablePanel>
-                <ResizableHandle withHandle />
-
-                <ResizablePanel>
-                  <CodeEditor code={code} onChange={onChange} />
-                </ResizablePanel>
-
-                <ResizableHandle withHandle />
-
-                <ResizablePanel>
-                  <FlowDiagram
-                    code={code}
-                    diagramTheme={diagramTheme}
-                    diagramId={diagramId}
-                  />
-                </ResizablePanel>
-              </ResizablePanelGroup>
-            </TabsContent>
+                </TabsContent>
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel>
+                <FlowDiagram
+                  code={code}
+                  diagramTheme={diagramTheme}
+                  diagramId={diagramId}
+                />
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </div>
         </Tabs>
       )}
@@ -385,7 +338,7 @@ const Page: React.FC = ({ params }: { params: { slug: string } }) => {
           </Tabs>
         </>
       )}
-    </>
+    </div>
   );
 };
 
